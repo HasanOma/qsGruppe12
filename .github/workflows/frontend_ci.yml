@@ -7,11 +7,11 @@ on:
   # Triggers the workflow on push or pull request events but only for the main branch
   push:
     branches: 
-    - main,
+    - main
     - frontend
   pull_request:
     branches: 
-    - main,
+    - main
     - frontend
 
   # Allows you to run this workflow manually from the Actions tab

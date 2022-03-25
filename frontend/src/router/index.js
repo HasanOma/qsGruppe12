@@ -23,4 +23,21 @@ const router = createRouter({
   routes,
 });
 
+
+// {
+//   path: '/contact/:afterEvent(.*)',
+//       redirect: to => {
+//   return { path: '/contact/' + to.params.afterEvent }
+// }
+// },
+// ];
+
+// router.beforeEach(() => {
+//   NProgress.start()
+// })
+//
+// router.afterEach(() => {
+//   NProgress.done()
+// })
+
 export default router;

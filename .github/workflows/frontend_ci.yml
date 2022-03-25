@@ -2,6 +2,10 @@
 
 name: CI_CD_Frontend
 
+defaults:
+  run:
+    working-directory: frontend
+    
 # Controls when the workflow will run
 on:
   # Triggers the workflow on push or pull request events but only for the main branch
@@ -37,11 +41,9 @@ jobs:
          npm install
 
       - name: npm build
-        run: npm build --if-present
+        run: npm run build
 
       - name: npm test
         id: tests
         run: |
-         npm test:unit
-         env:
-         CI: true
+         npm run test:unit

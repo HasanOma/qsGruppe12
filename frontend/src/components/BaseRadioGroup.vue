@@ -22,20 +22,20 @@ export default {
   props: {
     vertical: {
       type: Boolean,
-      default: false
+      default: false,
     },
     modelValue: {
       type: [String, Number],
-      required: true
+      required: true,
     },
     options: {
       type: Array,
-      required: true
+      required: true,
     },
     name: {
       type: String,
-      required: true
-    }
-  }
-}
+      required: true,
+    },
+  },
+};
 </script>

@@ -1,15 +1,12 @@
 <template>
-  <label
-    v-if="label"
-    :for="uuid"
-  >
+  <label v-if="label" :for="uuid">
     {{ label }}
   </label>
   <select
     class="field"
     v-bind="{
       ...$attrs,
-      onChange: updateValue
+      onChange: updateValue,
     }"
     :value="modelValue"
     :id="uuid"
@@ -26,44 +23,41 @@
       {{ option }}
     </option>
   </select>
-  <BaseErrorMessage
-    v-if="error"
-    :id="`${uuid}-error`"
-  >
+  <BaseErrorMessage v-if="error" :id="`${uuid}-error`">
     {{ error }}
   </BaseErrorMessage>
 </template>
 
 <script>
-import SetupForm from '@/features/SetupForm'
-import UniqueID from '@/features/UniqueID'
+import SetupForm from "@/features/SetupForm";
+import UniqueID from "@/features/UniqueID";
 
 export default {
   props: {
     options: {
       type: Array,
-      required: true
+      required: true,
     },
     label: {
       type: String,
-      default: ''
+      default: "",
     },
     error: {
       type: String,
-      default: ''
+      default: "",
     },
     modelValue: {
-      type: [String, Number]
-    }
+      type: [String, Number],
+    },
   },
-  setup (props, context) {
-    const { updateValue } = SetupForm(props, context)
-    const uuid = UniqueID().getID()
+  setup(props, context) {
+    const { updateValue } = SetupForm(props, context);
+    const uuid = UniqueID().getID();
 
     return {
       updateValue,
-      uuid
-    }
-  }
-}
+      uuid,
+    };
+  },
+};
 </script>

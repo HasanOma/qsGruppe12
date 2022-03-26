@@ -23,7 +23,6 @@ const router = createRouter({
   routes,
 });
 
-
 // {
 //   path: '/contact/:afterEvent(.*)',
 //       redirect: to => {

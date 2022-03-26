@@ -9,7 +9,6 @@ import lombok.experimental.SuperBuilder;
 import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
-import java.util.UUID;
 
 @Getter
 @Setter
@@ -21,7 +20,7 @@ public abstract class User {
 
     @Id
     @Column
-    private UUID id;
+    private Long id;
     String firstName;
     String lastName;
     @Column(unique = true)

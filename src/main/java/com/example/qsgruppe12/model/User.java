@@ -21,9 +21,13 @@ public abstract class User {
     @Id
     @Column
     private Long id;
+    @Column(nullable = false)
     String firstName;
+    @Column(nullable = false)
     String lastName;
-    @Column(unique = true)
+    @Column(unique = true,
+            nullable = false)
     String email;
+    @Column(nullable = false)
     String password;
 }

@@ -9,10 +9,12 @@ on:
     branches: 
     - main
     - backend
+    - src
   pull_request:
     branches: 
     - main
     - backend
+    - src
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:

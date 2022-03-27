@@ -12,9 +12,4 @@ public class QsGruppe12Application {
         SpringApplication.run(QsGruppe12Application.class, args);
     }
 
-//    @Bean(name="entityManagerFactory")
-//    public LocalSessionFactoryBean sessionFactory() {
-//        LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
-//        return sessionFactory;
-//    }
 }

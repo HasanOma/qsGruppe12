@@ -6,24 +6,26 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
-import javax.persistence.*;
-import java.util.List;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import java.util.Set;
 
 @Entity
-@ToString(callSuper = true)
 @SuperBuilder
 @NoArgsConstructor
-public class TA extends User{
+public class TA{
 
+//    @SequenceGenerator(
+//            name = "ta_sequence",
+//            sequenceName = "user_sequence",
+//            allocationSize = 1
+//    )
+//    @GeneratedValue(
+//            generator = "ta_sequence",
+//            strategy = GenerationType.SEQUENCE)
     @Id
-    @SequenceGenerator(
-            name = "user_sequence",
-            sequenceName = "user_sequence",
-            allocationSize = 1
-    )
-    @GeneratedValue(
-            generator = "user_sequence",
-            strategy = GenerationType.SEQUENCE)
     @Column(name = "ta_id")
     private Long id;
     @NotBlank
@@ -40,22 +42,9 @@ public class TA extends User{
     @Column(nullable = false)
     String password;
 
-//    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-//    @JoinTable(name = "courses", joinColumns = @JoinColumn(name = "ta_id", referencedColumnName = "id" ),
-//            inverseJoinColumns = @JoinColumn(name = "course_id", referencedColumnName = "id"),
-//            uniqueConstraints = @UniqueConstraint(columnNames = {"ta_id", "course_id"}))
-//    @ToString.Exclude
-//    private List<Course> courses;
 
     @OneToMany(mappedBy = "ta")
     @ToString.Exclude
-    private List<TA_Course> courses;
+    private Set<TA_Course> courses;
 
-    public void setCourses(List<TA_Course> courses) {
-        this.courses = courses;
-    }
-
-    public List<TA_Course> getCourses() {
-        return courses;
-    }
 }

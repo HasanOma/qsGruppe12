@@ -15,7 +15,7 @@ import java.util.List;
 @Entity
 @SuperBuilder
 @NoArgsConstructor
-public class Student{
+public class Student extends User{
 
 //    @SequenceGenerator(
 //            name = "student_sequence",

@@ -15,7 +15,7 @@ import java.util.Set;
 @Entity
 @SuperBuilder
 @NoArgsConstructor
-public class Teacher{
+public class Teacher extends User{
 
 //    @SequenceGenerator(
 //            name = "teacher_sequence",

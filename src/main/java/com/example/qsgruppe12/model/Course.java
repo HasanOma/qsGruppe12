@@ -1,5 +1,9 @@
 package com.example.qsgruppe12.model;
 
+import com.example.qsgruppe12.model.relationship.StudentWorkApproved;
+import com.example.qsgruppe12.model.relationship.Student_Course;
+import com.example.qsgruppe12.model.relationship.TA_Course;
+import com.example.qsgruppe12.model.relationship.Teacher_Course;
 import lombok.*;
 
 import javax.persistence.Column;

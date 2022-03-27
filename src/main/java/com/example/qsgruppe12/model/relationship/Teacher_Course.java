@@ -1,5 +1,7 @@
-package com.example.qsgruppe12.model;
+package com.example.qsgruppe12.model.relationship;
 
+import com.example.qsgruppe12.model.Course;
+import com.example.qsgruppe12.model.Teacher;
 import com.example.qsgruppe12.model.relationshipkey.TeacherCourseKey;
 import lombok.Getter;
 import lombok.Setter;

@@ -1,5 +1,7 @@
 package com.example.qsgruppe12.model;
 
+import com.example.qsgruppe12.model.relationship.StudentWorkApproved;
+import com.example.qsgruppe12.model.relationship.Student_Course;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;

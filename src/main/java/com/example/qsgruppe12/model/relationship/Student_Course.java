@@ -1,5 +1,7 @@
-package com.example.qsgruppe12.model;
+package com.example.qsgruppe12.model.relationship;
 
+import com.example.qsgruppe12.model.Course;
+import com.example.qsgruppe12.model.Student;
 import com.example.qsgruppe12.model.relationshipkey.StudentCourseKey;
 import lombok.Getter;
 import lombok.Setter;
@@ -11,7 +13,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @ToString
-public class StudentWorkApproved {
+public class Student_Course {
 
     @EmbeddedId
     StudentCourseKey studentCourseKey;
@@ -26,7 +28,6 @@ public class StudentWorkApproved {
     @JoinColumn(name = "course_id")
     Course course;
 
-    int totalWork;
-    int workDone;
+    String semester;
 
 }

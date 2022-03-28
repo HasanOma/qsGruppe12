@@ -1,3 +1,4 @@
+/* eslint-disable */
 <template>
     <div id="wrapper">
         <div class="d-flex flex-column" id="content-wrapper">
@@ -15,9 +16,16 @@
                                                     <p class="m-0">Peformance</p>
                                                     <p class="m-0"><strong>65.2%</strong></p>
                                                 </div>
-                                                <div class="col-auto"><i class="fas fa-rocket fa-2x"></i></div>
+                                                <div class="col-auto">
+                                                  <i class="fas fa-rocket fa-2x">
+                                                  </i>
+                                                </div>
                                             </div>
-                                            <p class="text-white-50 small m-0"><i class="fas fa-arrow-up"></i>&nbsp;5% since last month</p>
+                                            <p class="text-white-50 small m-0">
+                                              <i class="fas fa-arrow-up">
+                                            </i>&nbsp;
+                                              5% since last month
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
@@ -31,7 +39,11 @@
                                                 </div>
                                                 <div class="col-auto"><i class="fas fa-rocket fa-2x"></i></div>
                                             </div>
-                                            <p class="text-white-50 small m-0"><i class="fas fa-arrow-up"></i>&nbsp;5% since last month</p>
+                                            <p class="text-white-50 small m-0">
+                                              <i class="fas fa-arrow-up">
+                                            </i>&nbsp;
+                                              5% since last month
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
@@ -46,28 +58,138 @@
                                             <form>
                                                 <div class="row">
                                                     <div class="col">
-                                                        <div class="mb-3"><label class="form-label" for="emnekode"><strong>Emnekode</strong><br></label><input class="form-control" type="text" id="emnekode" placeholder="IDATTxxxx" name="emnekode"></div>
+                                                        <div class="mb-3">
+                                                          <label class="form-label" for="emnekode">
+                                                          <strong>
+                                                            Emnekode
+                                                          </strong>
+                                                            <br>
+                                                          </label>
+                                                          <BaseInputNoLabel
+                                                              class="form-control"
+                                                              type="text"
+                                                              id="emnekode"
+                                                              placeholder="IDATTxxxx"
+                                                              name="emnekode"
+                                                          />
+                                                        </div>
                                                     </div>
                                                     <div class="col">
-                                                        <div class="mb-3"><label class="form-label" for="emnenavn"><strong>Emnenavn</strong></label><input class="form-control" type="text" id="emnenavn" placeholder="Emnenavn" name="emnenavn"></div>
+                                                        <div class="mb-3">
+                                                          <label class="form-label" for="emnenavn">
+                                                            <strong>
+                                                              Emnenavn
+                                                            </strong>
+                                                          </label>
+                                                          <BaseInputNoLabel
+                                                              class="form-control"
+                                                              type="text"
+                                                              id="emnenavn"
+                                                              placeholder="Emnenavn"
+                                                              name="emnenavn"
+                                                          />
+                                                        </div>
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col">
-                                                        <div class="mb-3"><label class="form-label" for="antall"><strong>Antall øvinger</strong></label><input class="form-control" type="number" id="antall" placeholder="0" name="antall"></div>
+                                                        <div class="mb-3">
+                                                          <label class="form-label" for="antall">
+                                                            <strong>
+                                                              Antall øvinger
+                                                            </strong>
+                                                          </label>
+                                                          <BaseInputNoLabel
+                                                              class="form-control"
+                                                              type="number"
+                                                              id="antall"
+                                                              placeholder="0"
+                                                              name="antall"
+                                                          />
+                                                        </div>
                                                     </div>
                                                     <div class="col">
-                                                        <div class="mb-3"><label class="form-label" for="godkjente"><strong>Minste antall godkjente øvinger</strong></label><input class="form-control" type="number" id="godkjente" placeholder="1" name="godkjente"></div>
+                                                        <div class="mb-3">
+                                                          <label class="form-label" for="godkjente">
+                                                            <strong>Minste antall godkjente øvinger
+                                                            </strong>
+                                                          </label>
+                                                          <BaseInputNoLabel
+                                                              class="form-control"
+                                                              type="number"
+                                                              id="antall-3"
+                                                              placeholder="0"
+                                                              name="godkjente"
+                                                          />
+                                                        </div>
                                                     </div>
                                                 </div>
                                                 <div class="mb-3"></div>
                                             </form>
                                             <div></div>
                                             <div class="card shadow" style="width: 100%; padding: 1rem;">
-                                                <div class="mb-3" style="width: 100%;height: 5vh;"><label class="form-label" for="lag_regler">&nbsp;Lag egne grupperingsregler:&nbsp;<br></label></div>
-                                                <div class="mb-3"><input type="number" id="antall-1" placeholder="0" name="antall"><label class="form-label" for="antall"><strong>&nbsp;av øvingene&nbsp;</strong></label><input type="number" id="antall-2" placeholder="0" name="antall"><label class="form-label" for="antall"><strong>&nbsp;til&nbsp;</strong></label><input type="number" id="antall-3" placeholder="0" name="antall"><label class="form-label" for="antall"><strong>&nbsp;må være godkjent</strong></label></div><button class="btn btn-primary btn-sm" id="ruleBtn" type="submit" style="margin: 10px;max-width: 100px;">Lag regel</button><label class="form-label" for="vis_regler">Grupperingsreglene for emnet vil dukke opp her:&nbsp;<br></label>
-                                                <div id="regelDiv" class="regelDiv"></div>
-                                            </div><button class="btn btn-primary btn-sm" type="submit" style="margin: 10px;">Lagre</button>
+                                                <div class="mb-3" style="width: 100%;height: 5vh;">
+                                                  <label class="form-label" for>
+                                                    &nbsp;Lag egne grupperingsregler:&nbsp;
+                                                    <br>
+                                                  </label></div>
+                                                <div class="mb-3">
+                                                  <BaseInputNoLabel
+                                                      type="number"
+                                                      id="antall-1"
+                                                      placeholder="0"
+                                                      name="antall"
+                                                  />
+                                                  <label class="form-label" for="antall">
+                                                    <strong>&nbsp;av øvingene&nbsp;
+                                                    </strong>
+                                                  </label>
+                                                  <BaseInputNoLabel
+                                                      type="number"
+                                                      id="antall-2"
+                                                      placeholder="0"
+                                                      name="antall"
+                                                  />
+                                                  <label class="form-label" for="antall">
+                                                    <strong>&nbsp;
+                                                      til&nbsp;
+                                                    </strong>
+                                                  </label>
+                                                  <BaseInputNoLabel
+                                                      type="number"
+                                                      id="antall-3"
+                                                      placeholder="0"
+                                                      name="antall"
+                                                  />
+                                                  <label class="form-label" for="antall">
+                                                    <strong>&nbsp;
+                                                      må være godkjent
+                                                    </strong>
+                                                  </label>
+                                                </div>
+                                              <BaseButton
+                                                  css-class="btn btn-primary btn-sm"
+                                                  type="submit"
+                                                  style="margin: 10px;max-width: 100px;"
+                                                  id="ruleBtn"
+                                              >
+                                                Lag regel
+                                              </BaseButton>
+                                              <label class="form-label" for="vis_regler">
+                                                Grupperingsreglene for emnet vil dukke opp her:&nbsp;
+                                                <br>
+                                              </label>
+                                                <div id="regelDiv" class="regelDiv">
+
+                                                </div>
+                                            </div>
+                                          <BaseButton
+                                              css-class="btn btn-primary btn-sm"
+                                              type="submit"
+                                              style="margin: 10px;"
+                                          >
+                                            Lagre
+                                          </BaseButton>
                                         </div>
                                     </div>
                                 </div>
@@ -81,12 +203,18 @@
 </template>
 
 <script>
+import BaseButton from "@/components/BaseButton";
+import BaseInputNoLabel from "@/components/BaseInputNoLabel";
 export default {
-    name: "CreateSubject"
+    name: "CreateSubject",
+  components: {
+    BaseButton,
+    BaseInputNoLabel
+  }
 }
 </script>
 
 <style scoped>
-@import "src/assets/fonts/fontawesome-all.min.css";
+/*@import "src/assets/fonts/fontawesome-all.min.css";*/
 
 </style>

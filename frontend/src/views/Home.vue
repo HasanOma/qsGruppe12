@@ -8,16 +8,18 @@
     <router-view />
   </div>
   <CourseBox/>
+  <CreateSubject/>
 </template>
 
 <script>
 // @ is an alias to /src
 import CourseBox from "@/components/CourseBox";
-
+import CreateSubject from "@/components/CreateSubject";
 export default {
   name: "Home",
   components: {
     CourseBox,
+    CreateSubject,
   },
 };
 </script>

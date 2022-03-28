@@ -1,32 +1,39 @@
 <template>
-    <main class="page projets-page">
-        <section class="portfolio-block project-no-images">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-6 col-lg-6">
-                        <div class="project-card-no-image">
-                            <h3 class="course-name">Nettverksprogrammering</h3>
-                            <h4 class="course-id">IDATT2104</h4>
-                            <div class="d-flex flex-row justify-content-between">
-                                <button class="btn btn-outline-primary btn-sm rounded-pill">
-                                    <i class="fa fa-check-circle icon-margin"></i>Øvinger
-                                </button>
-                                <button class="btn btn-outline-primary btn-sm rounded-pill">
-                                    <i class="fa fa-arrow-circle-right icon-margin"></i>Til kø
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+  <main class="page projets-page">
+    <section class="portfolio-block project-no-images">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6 col-lg-6">
+            <div class="project-card-no-image">
+              <h3 class="course-name">Nettverksprogrammering</h3>
+              <h4 class="course-id">IDATT2104</h4>
+              <div class="d-flex flex-row justify-content-between">
+                <BaseButton
+                    css-class="btn btn-outline-primary btn-sm rounded-pill"
+                    icss="fa fa-check-circle icon-margin">
+                  Øvinger
+                </BaseButton>
+                <BaseButton
+                    css-class="btn btn-outline-primary btn-sm rounded-pill"
+                    icss="fa fa-arrow-circle-right icon-margin">
+                  Til kø
+                </BaseButton>
+              </div>
             </div>
-        </section>
-    </main>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
 </template>
-
 <script>
-
+//TODO make component so that we can send in attrs to this comp
+import BaseButton from "@/components/BaseButton";
 export default {
-    name: "CourseBox",
+  name: "CourseBox",
+  components: {
+    BaseButton
+  },
     mounted() {
         const plugin = document.createElement("script");
         plugin.setAttribute(

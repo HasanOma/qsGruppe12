@@ -2,7 +2,11 @@
     <button
         :type="type"
         :class="cssClass"
+        :style="style"
     >
+      <i
+      :class="icss"
+      />
     <slot />
     </button>
 </template>
@@ -10,6 +14,12 @@
 <script>
 export default {
     props: {
+      style:{
+        type: String,
+      },
+      icss:{
+        type: String,
+      },
         cssClass: {
             type: String,
         },

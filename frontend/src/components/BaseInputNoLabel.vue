@@ -4,9 +4,10 @@
           ...$attrs,
           onInput: updateValue,
         }"
+        :class="cssClass"
         :id="uuid"
         :value="modelValue"
-        :placeholder="label"
+        :placeholder="placeholder"
         :aria-describedby="error ? `${uuid}-error` : null"
         :aria-invalid="error ? true : false"
     />
@@ -21,6 +22,12 @@ import UniqueID from "@/feature/UniqueID";
 
 export default {
     props: {
+      cssClass:{
+        type: String
+      },
+      placeholder:{
+        type: String,
+      },
         label: {
             type: String,
             default: "",

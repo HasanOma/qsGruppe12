@@ -2,15 +2,15 @@
     <div class="about">
         <h1>This is an about page</h1>
     </div>
-    <CourseBox></CourseBox>
+    <CreateSubject></CreateSubject>
 </template>
 
 <script>
-import CourseBox from "@/components/CourseBox";
+import CreateSubject from "@/components/CreateSubject";
 
 export default {
     components: {
-        CourseBox
+        CreateSubject
     }
 }
 

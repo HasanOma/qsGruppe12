@@ -17,48 +17,6 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 col-lg-6">
-                        <div class="project-card-no-image">
-                            <h3 class="course-name">Nettverksprogrammering</h3>
-                            <h4 class="course-id">IDATT2104</h4>
-                            <div class="d-flex flex-row justify-content-between">
-                                <button class="btn btn-outline-primary btn-sm rounded-pill">
-                                    <i class="fa fa-check-circle icon-margin"></i>Øvinger
-                                </button>
-                                <button class="btn btn-outline-primary btn-sm rounded-pill">
-                                    <i class="fa fa-arrow-circle-right icon-margin"></i>Til kø
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-6">
-                        <div class="project-card-no-image">
-                            <h3 class="course-name">Nettverksprogrammering</h3>
-                            <h4 class="course-id">IDATT2104</h4>
-                            <div class="d-flex flex-row justify-content-between">
-                                <button class="btn btn-outline-primary btn-sm rounded-pill">
-                                    <i class="fa fa-check-circle icon-margin"></i>Øvinger
-                                </button>
-                                <button class="btn btn-outline-primary btn-sm rounded-pill">
-                                    <i class="fa fa-arrow-circle-right icon-margin"></i>Til kø
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-6">
-                        <div class="project-card-no-image">
-                            <h3 class="course-name">Nettverksprogrammering</h3>
-                            <h4 class="course-id">IDATT2104</h4>
-                            <div class="d-flex flex-row justify-content-between"><a class="btn btn-outline-primary btn-sm" role="button" href="#"><i class="fa fa-check-circle" style="margin-right: 5px;"></i>Øvinger</a><a class="btn btn-outline-primary btn-sm" role="button" href="#"><i class="fa fa-arrow-circle-right" style="margin-right: 5px;"></i>Til kø</a></div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-6">
-                        <div class="project-card-no-image">
-                            <h3 class="course-name">Nettverksprogrammering</h3>
-                            <h4 class="course-id">IDATT2104</h4>
-                            <div class="d-flex flex-row justify-content-between"><a class="btn btn-outline-primary btn-sm" role="button" href="#"><i class="fa fa-check-circle" style="margin-right: 5px;"></i>Øvinger</a><a class="btn btn-outline-primary btn-sm" role="button" href="#"><i class="fa fa-arrow-circle-right" style="margin-right: 5px;"></i>Til kø</a></div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </section>

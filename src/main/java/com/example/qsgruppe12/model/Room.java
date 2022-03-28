@@ -21,6 +21,9 @@ public class Room {
     @NotNull
     private String name;
 
+    @NotNull
+    private String picture;
+
     @ManyToOne
     private Building building;
 

@@ -39,7 +39,6 @@ public class Course {
     @ToString.Exclude
     private List<TA_Course> tas;
 
-
     @OneToMany(mappedBy = "course")
     @ToString.Exclude
     private List<Student_Course> students;

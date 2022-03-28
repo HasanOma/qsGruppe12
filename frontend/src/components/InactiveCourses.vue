@@ -2,7 +2,7 @@
   <div class="home">
     <img alt="Vue logo" src="../assets/logo.png" />
     <div id="navCourse">
-      <router-link to="/">Dine Emner</router-link>  |
+      <router-link to="/">Dine Emner</router-link>  ||
       <router-link to="/inactiveCourses">Arkiverte Emner</router-link>
     </div>
     <router-view />
@@ -11,13 +11,16 @@
 </template>
 
 <script>
-// @ is an alias to /src
 import CourseBox from "@/components/CourseBox";
-
 export default {
-  name: "Home",
-  components: {
-    CourseBox,
-  },
+  name: "InactiveCourses",
+  components: {CourseBox},
+  data(){
+
+  }
 };
 </script>
+
+<style scoped>
+
+</style>

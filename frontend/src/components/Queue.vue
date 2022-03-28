@@ -11,7 +11,7 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
-                                <table class="table my-0" id="dataTable">
+                                <table class="table my-0" id="dataTable2">
                                     <thead>
                                         <tr>
                                             <th>Navn</th>

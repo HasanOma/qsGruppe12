@@ -2,15 +2,15 @@
     <div class="about">
         <h1>This is an about page</h1>
     </div>
-    <Queue></Queue>
+    <CourseBox></CourseBox>
 </template>
 
 <script>
-import Queue from "@/components/Queue";
+import CourseBox from "@/components/CourseBox";
 
 export default {
     components: {
-        Queue
+        CourseBox
     }
 }
 

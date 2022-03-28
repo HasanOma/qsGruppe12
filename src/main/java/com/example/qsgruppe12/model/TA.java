@@ -6,6 +6,7 @@ import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -29,6 +30,6 @@ public class TA extends User{
 
     @OneToMany(mappedBy = "ta")
     @ToString.Exclude
-    private Set<TA_Course> courses;
+    private List<TA_Course> courses;
 
 }

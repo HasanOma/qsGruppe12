@@ -25,6 +25,6 @@ public class UserDto {
     @NotEmpty
     private String email;
 
-    private Long  courseId;
+    private List<Long>  courseId;
     private int workDone;
 }

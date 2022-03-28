@@ -4,7 +4,10 @@ import com.example.qsgruppe12.dto.CourseDto;
 import com.example.qsgruppe12.dto.userdtos.RegistrationDto;
 import com.example.qsgruppe12.dto.userdtos.UserDto;
 import com.example.qsgruppe12.model.Student;
+import com.example.qsgruppe12.model.TA;
+import com.example.qsgruppe12.model.relationship.TA_Course;
 import com.example.qsgruppe12.repository.StudentRepository;
+import com.example.qsgruppe12.repository.TARepository;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,6 +29,11 @@ public class UserServiceImpl implements UserService{
 
     @Autowired
     private StudentRepository studentRepository;
+
+    @Autowired
+    private TARepository taRepository;
+
+
 
     private BCryptPasswordEncoder cryptPasswordEncoder;
 
@@ -49,7 +57,9 @@ public class UserServiceImpl implements UserService{
             Student student = modelMapper.map(dto, Student.class);
             student.setPassword(cryptPasswordEncoder.encode(dto.getPassword()));
             UserDto studentAdded = modelMapper.map(studentRepository.save(student), UserDto.class);
+            studentAdded.getCourseId().add(courseId);
             savedStudents.add(studentAdded);
+            //TODO send email
         }
         return savedStudents;
     }
@@ -57,5 +67,11 @@ public class UserServiceImpl implements UserService{
     @Override
     public void addTAsForCourse(Long courseId, List<RegistrationDto> registrationDto) {
 
+        for(RegistrationDto dto: registrationDto){
+            if(taRepository.findByEmail(dto.getEmail()).isPresent()){
+                TA ta = taRepository.findByEmail(dto.getEmail()).get();
+                TA_Course ta_course;
+            }
+        }
     }
 }

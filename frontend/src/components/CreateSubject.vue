@@ -87,6 +87,6 @@ export default {
 </script>
 
 <style scoped>
-@import "../fonts/fontawesome-all.min.css";
+@import "src/assets/fonts/fontawesome-all.min.css";
 
 </style>

@@ -2,16 +2,20 @@
     <div class="about">
         <h1>This is an about page</h1>
     </div>
-    <CreateSubject/>
+    <StudentCourse></StudentCourse>
 </template>
 
 <script>
-import CreateSubject from "@/components/CreateSubject";
+import StudentCourse from "@/components/StudentCourse";
 
 export default {
     components: {
-        CreateSubject
+        StudentCourse
     }
 }
 
 </script>
+
+<style scoped>
+@import "../assets/css/bootstrap.min.css";
+</style>

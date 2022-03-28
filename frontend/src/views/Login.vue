@@ -26,7 +26,7 @@ export default {
 </script>
 
 <style scoped>
-@import "src/fonts/ionicons.min.css";
+@import "../assets/fonts/ionicons.min.css";
 
 .login-dark {
     height: 1000px;

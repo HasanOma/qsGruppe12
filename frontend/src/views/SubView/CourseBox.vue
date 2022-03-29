@@ -3,10 +3,10 @@
     <section class="portfolio-block project-no-images">
       <div  class="container">
         <div class="row">
-          <div id="aboveContainer" class="col-md-6 col-lg-6">
+          <div id="aboveContainer" class="col-md-6 col-lg-6" v-for="course in courses" :key="course">
             <div id="container" class="project-card-no-image">
-              <h3 class="course-name">Nettverksprogrammering</h3>
-              <h4 class="course-id">IDATT2104</h4>
+              <h3 class="course-name">{{ course.course_name }}</h3>
+              <h4 class="course-id">{{ course.course_id }}</h4>
               <div class="d-flex flex-row justify-content-between">
                 <BaseButton
                   css-class="btn btn-outline-primary btn-sm rounded-pill"
@@ -28,23 +28,29 @@
     </section>
   </main>
 </template>
+
 <script>
 //TODO make component so that we can send in attrs to this comp
 import BaseButton from "@/components/BaseButton";
 export default {
-  name: "CourseBox",
-  components: {
-    BaseButton,
-  },
-  mounted() {
-    const plugin = document.createElement("script");
-    plugin.setAttribute(
-      "src",
-      "https://cdnjs.cloudflare.com/ajax/libs/pikaday/1.6.1/pikaday.min.js"
-    );
-    plugin.async = true;
-    document.head.appendChild(plugin);
-  },
+    name: "CourseBox",
+    components: {
+        BaseButton,
+    },
+    props: {
+        courses: {
+            type: Array,
+        }
+    },
+    mounted() {
+        const plugin = document.createElement("script");
+        plugin.setAttribute(
+          "src",
+          "https://cdnjs.cloudflare.com/ajax/libs/pikaday/1.6.1/pikaday.min.js"
+        );
+        plugin.async = true;
+        document.head.appendChild(plugin);
+    },
 };
 </script>
 

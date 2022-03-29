@@ -1,23 +1,20 @@
 <template>
   <Navbar />
-  <div class="home">
-    <div id="navCourse">
-      <router-link to="/home">Dine Emner</router-link> ||
-      <router-link to="/inactiveCourses">Arkiverte Emner</router-link>
-    </div>
-  </div>
+  <CoursesNav />
   <CourseBox />
 </template>
 
 <script>
 import CourseBox from "@/views/SubView/CourseBox";
 import Navbar from "@/views/SubView/Navbar";
+import CoursesNav from "@/views/SubView/CoursesNav";
 
 export default {
   name: "InactiveCourses",
   components: {
     CourseBox,
     Navbar,
+    CoursesNav
   },
   data() {},
 };

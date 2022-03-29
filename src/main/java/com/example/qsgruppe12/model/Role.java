@@ -1,13 +1,16 @@
 package com.example.qsgruppe12.model;
 
-import com.example.qsgruppe12.model.relationship.Teacher_Course;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
 import java.util.List;
 
+@Getter
+@Setter
 @Entity
 @SuperBuilder
 @NoArgsConstructor

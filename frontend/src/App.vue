@@ -1,6 +1,23 @@
 <template>
+  <Navbar />
   <router-view />
+  <Footer />
 </template>
+
+<script>
+import Navbar from "@/views/SubView/Navbar.vue";
+import Footer from "@/views/SubView/Footer.vue";
+
+
+export default {
+  name: "App",
+  components: {
+    Navbar,
+    Footer
+  }
+}
+
+</script>
 
 <style>
 @import "~bootstrap/dist/css/bootstrap.css";

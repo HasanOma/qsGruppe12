@@ -18,6 +18,9 @@ export default createStore({
     },
     ADD_EMAIL(state, email){
       state.email = email;
+    },
+    SET_LOGGED_IN(state, loggedIn) {
+      state.loggedIn = loggedIn;
     }
   },
   actions: {
@@ -38,6 +41,9 @@ export default createStore({
     },
     addEmail(state,email) {
       state.email = (email)
+    },
+    setLoggedIn({ commit }, loggedIn) {
+      commit("SET_LOGGED_IN", loggedIn)
     }
   },
   modules: {},
@@ -47,6 +53,9 @@ export default createStore({
     },
     isTeacher(state) {
       return state.isTeacher
+    },
+    isLoggedIn(state) {
+      return state.loggedIn
     }
   }
 });

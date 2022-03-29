@@ -1,6 +1,6 @@
 <template>
   <nav
-    class="navbar navbar-dark bg-secondary navbar-expand-md sticky-top navigation-clean-button nav-container"
+    class="navbar navbar-dark bg-secondary navbar-expand-md sticky-top navigation-clean-button nav-container" v-if="isLoggedIn"
   >
     <div class="container-fluid">
       <button
@@ -64,6 +64,7 @@ export default {
   name: "NavbarStudent",
   data() {
     return {
+      isLoggedIn: this.$store.getters.isLoggedIn,
       isTeacher: this.$store.getters.isTeacher,
     };
   },

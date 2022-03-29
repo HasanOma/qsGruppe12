@@ -36,7 +36,9 @@ export default {
   name: "LoginView",
   methods: {
     onSubmit() {
-      this.$router.push({ name: "Home", query: { redirect: "/home" } });
+      this.$store.dispatch("setLoggedIn", true);
+      console.log(this.$store.getters.isLoggedIn)
+      this.$router.push({ name: "Course", query: { redirect: "/course" } });
     },
   },
 };

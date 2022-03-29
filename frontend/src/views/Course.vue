@@ -1,26 +1,20 @@
 <template>
-  <Navbar />
   <div id="main">
     <CoursesNav />
     <CourseBox :courses="courses" />
   </div>
-  <Footer />
 </template>
 
 <script>
-import Navbar from "@/views/SubView/Navbar";
 import CourseBox from "@/views/SubView/CourseBox";
 import CoursesNav from "@/views/SubView/CoursesNav";
-import Footer from "@/views/SubView/Footer";
 import axios from "axios";
 
 export default {
-  name: "Home",
+  name: "Course",
   components: {
     CourseBox,
-    Navbar,
     CoursesNav,
-    Footer
   },
   data() {
     return {

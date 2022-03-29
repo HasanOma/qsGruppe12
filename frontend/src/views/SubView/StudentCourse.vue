@@ -34,7 +34,7 @@
                               <label class="form-label" for="email"
                                 ><strong>Email Address</strong></label
                               >
-                              <input
+                              <BaseInputNoLabel
                                 class="form-control"
                                 type="email"
                                 id="email"
@@ -50,8 +50,8 @@
                               <label class="form-label" for="first_name"
                                 ><strong>First Name</strong></label
                               >
-                              <input
-                                class="form-control"
+                              <BaseInputNoLabel
+                                  cssClass="form-control"
                                 type="text"
                                 id="first_name"
                                 placeholder="John"
@@ -64,8 +64,8 @@
                               <label class="form-label" for="last_name"
                                 ><strong>Last Name</strong></label
                               >
-                              <input
-                                class="form-control"
+                              <BaseInputNoLabel
+                                cssClass="form-control"
                                 type="text"
                                 id="last_name"
                                 placeholder="Doe"
@@ -100,27 +100,32 @@
                               multiple
                             />
                             <label for="file"
-                              ><strong>Velg fil</strong
-                              ><span class="box__dragndrop">
-                                eller dra og slipp den her</span
-                              >.</label
-                            >
-                            <button class="box__button" type="submit">
+                              >
+                              <strong>
+                                Velg fil
+                              </strong>
+                              <span class="box__dragndrop">
+                                eller dra og slipp den her
+                              </span
+                              >
+                              .
+                            </label>
+                            <BaseButton cssClass="box__button" type="submit">
                               Upload
-                            </button>
+                            </BaseButton>
                           </div>
                           <div class="box__uploading">Uploading…</div>
                           <div class="box__success">Done!</div>
                           <div class="box__error">Error! <span></span>.</div>
                         </div>
                       </form>
-                      <button
-                        class="btn btn-primary btn-sm"
+                      <BaseButton
+                        css-class="btn btn-primary btn-sm"
                         type="submit"
                         style="margin: 10px"
                       >
                         Save Settings
-                      </button>
+                      </BaseButton>
                     </div>
                   </div>
                 </div>
@@ -136,9 +141,14 @@
 
 <script>
 import $ from "jquery";
-
+import BaseButton from "@/components/BaseButton";
+import BaseInputNoLabel from "@/components/BaseInputNoLabel";
 export default {
   name: "StudentCourse",
+  components: {
+    BaseButton,
+    BaseInputNoLabel
+  },
   data() {
     return {
       advancedUploadPossible: false,

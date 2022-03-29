@@ -13,8 +13,8 @@
 
 <script>
 // @ is an alias to /src
-import CourseBox from "@/components/CourseBox";
-import CreateSubject from "@/components/CreateSubject";
+import CourseBox from "@/views/SubView/CourseBox";
+import CreateSubject from "@/views/SubView/CreateSubject";
 export default {
   name: "Home",
   components: {

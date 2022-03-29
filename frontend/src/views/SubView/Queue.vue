@@ -32,23 +32,7 @@
                       </th>
                     </tr>
                   </thead>
-                  <tbody>
-                    <tr>
-                      <td>Angelica Ramos</td>
-                      <td>A4-124/1</td>
-                      <td>1/Godkjenning</td>
-                      <td>1:00</td>
-                      <td><br /></td>
-                      <td><br /></td>
-                      <td>
-                        <i
-                          class="fa fa-edit"
-                          style="width: 23px; height: 16px"
-                        ></i
-                        ><br />
-                      </td>
-                    </tr>
-                  </tbody>
+<!--                  TODO HER KOMMER QUEue componenten-->
                   <tfoot>
                     <tr></tr>
                   </tfoot>
@@ -73,4 +57,8 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+table {
+  overflow: hidden; /* Hide scrollbars */
+}
+</style>

@@ -4,12 +4,15 @@
       ...$attrs,
       onInput: updateValue,
     }"
+    :name="name"
+    :type="input"
     :class="cssClass"
     :id="uuid"
     :value="modelValue"
     :placeholder="placeholder"
     :aria-describedby="error ? `${uuid}-error` : null"
     :aria-invalid="error ? true : false"
+    :data-multiple-caption="multiples"
   />
   <BaseErrorMessage v-if="error" :id="`${uuid}-error`">
     {{ error }}
@@ -22,6 +25,15 @@ import UniqueID from "@/feature/UniqueID";
 
 export default {
   props: {
+    multiples: {
+      type: String,
+    },
+    name: {
+      type: String,
+    },
+    input: {
+      type: String
+    },
     cssClass: {
       type: String,
     },

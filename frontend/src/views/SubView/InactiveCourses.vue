@@ -1,20 +1,24 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="src/assets/logo.png" />
-    <div id="navCourse">
-      <router-link to="/">Dine Emner</router-link> ||
-      <router-link to="/inactiveCourses">Arkiverte Emner</router-link>
+    <NavbarStudent />
+    <div class="home">
+        <div id="navCourse">
+            <router-link to="/home">Dine Emner</router-link> ||
+            <router-link to="/inactiveCourses">Arkiverte Emner</router-link>
+        </div>
     </div>
-    <router-view />
-  </div>
-  <CourseBox />
+    <CourseBox />
 </template>
 
 <script>
 import CourseBox from "@/views/SubView/CourseBox";
+import NavbarStudent from "@/views/SubView/NavbarStudent";
+
 export default {
   name: "InactiveCourses",
-  components: { CourseBox },
+  components: {
+      CourseBox,
+      NavbarStudent
+  },
   data() {},
 };
 </script>

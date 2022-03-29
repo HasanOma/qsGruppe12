@@ -7,17 +7,22 @@ import InactiveCourses from "../views/SubView/InactiveCourses";
 const routes = [
   {
     path: "/",
-    name: "Home",
-    component: Home,
-  },
-  {
-    path: "/login",
     name: "Login",
     component: Login,
   },
   {
+    path: "/home",
+    name: "Home",
+    component: Home,
+  },
+  {
     path: "/inactiveCourses",
     name: "InactiveCourses",
+    component: InactiveCourses,
+  },
+  {
+    path: "/settings",
+    name: "Settings",
     component: InactiveCourses,
   },
   {

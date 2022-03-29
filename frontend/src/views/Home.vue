@@ -1,25 +1,26 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <div id="navCourse">
-      <router-link to="/">Dine Emner</router-link> |
-      <router-link to="/inactiveCourses">Arkiverte Emner</router-link>
+    <NavbarStudent></NavbarStudent>
+    <div class="home">
+        <div id="navCourse">
+          <router-link to="/home">Dine Emner</router-link> |
+          <router-link to="/inactiveCourses">Arkiverte Emner</router-link>
+        </div>
+        <router-view />
     </div>
-    <router-view />
-  </div>
-  <CourseBox />
-  <CreateSubject />
 </template>
 
 <script>
 // @ is an alias to /src
-import CourseBox from "@/views/SubView/CourseBox";
-import CreateSubject from "@/views/SubView/CreateSubject";
+//import CourseBox from "@/views/SubView/CourseBox";
+//import CreateSubject from "@/views/SubView/CreateSubject";
+import NavbarStudent from "@/views/SubView/NavbarStudent";
+
 export default {
   name: "Home",
   components: {
-    CourseBox,
-    CreateSubject,
+    //CourseBox,
+    //CreateSubject,
+    NavbarStudent,
   },
 };
 </script>

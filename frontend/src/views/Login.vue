@@ -1,6 +1,6 @@
 <template>
   <section class="login-dark">
-    <form method="post">
+    <form method="post" @submit="onSubmit">
       <h2 class="visually-hidden">Login Form</h2>
       <div class="illustration">
         <i class="icon ion-ios-locked-outline"></i>
@@ -34,6 +34,11 @@
 <script>
 export default {
   name: "LoginView",
+    methods: {
+      onSubmit() {
+          this.$router.push({ name: 'Home', query: { redirect: '/home' } });
+      }
+    }
 };
 </script>
 

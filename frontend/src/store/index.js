@@ -6,6 +6,7 @@ export default createStore({
     name: 'admin',
     email: '',
     loggedIn: false,
+    isTeacher: true,
   },
   mutations: {
     SET_INFO(state, contactInfo) {
@@ -41,8 +42,11 @@ export default createStore({
   },
   modules: {},
   getters: {
-    name: function (state) {
+    name(state) {
       return `${state.name}`
+    },
+    isTeacher(state) {
+      return state.isTeacher
     }
   }
 });

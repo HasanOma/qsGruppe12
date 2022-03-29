@@ -32,6 +32,7 @@
 <script>
 //TODO make component so that we can send in attrs to this comp
 import BaseButton from "@/components/BaseButton";
+
 export default {
     name: "CourseBox",
     components: {

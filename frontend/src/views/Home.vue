@@ -1,5 +1,5 @@
 <template>
-    <NavbarStudent></NavbarStudent>
+    <Navbar />
     <div class="home">
         <div id="navCourse">
           <router-link to="/home">Dine Emner</router-link> |
@@ -11,10 +11,7 @@
 </template>
 
 <script>
-// @ is an alias to /src
-//import CourseBox from "@/views/SubView/CourseBox";
-//import CreateSubject from "@/views/SubView/CreateSubject";
-import NavbarStudent from "@/views/SubView/NavbarStudent";
+import Navbar from "@/views/SubView/Navbar";
 import CourseBox from "@/views/SubView/CourseBox"
 import axios from "axios";
 
@@ -22,8 +19,7 @@ export default {
     name: "Home",
     components: {
         CourseBox,
-        //CreateSubject,
-        NavbarStudent,
+        Navbar,
     },
     data() {
         return {

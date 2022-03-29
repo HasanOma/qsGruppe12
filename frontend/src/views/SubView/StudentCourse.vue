@@ -19,9 +19,7 @@
                         <div class="row">
                           <div class="col">
                             <div class="mb-3 label-align-left">
-                              <label class="form-label"
-                                >Choose Course<br
-                              /></label>
+                              <label class="form-label">Choose Course<br/></label>
                               <select class="form-select">
                                 <option value="12" selected="">Emne 1</option>
                                 <option value="13">Emne 2</option>
@@ -31,9 +29,9 @@
                           </div>
                           <div class="col">
                             <div class="mb-3 label-align-left">
-                              <label class="form-label" for="email"
-                                ><strong>Email Address</strong></label
-                              >
+                              <label class="form-label">
+                                  <strong>Email Address</strong>
+                              </label>
                               <BaseInputNoLabel
                                 class="form-control"
                                 type="email"
@@ -47,9 +45,9 @@
                         <div class="row">
                           <div class="col">
                             <div class="mb-3 label-align-left">
-                              <label class="form-label" for="first_name"
-                                ><strong>First Name</strong></label
-                              >
+                              <label class="form-label">
+                                  <strong>First Name</strong>
+                              </label>
                               <BaseInputNoLabel
                                   cssClass="form-control"
                                 type="text"
@@ -61,9 +59,9 @@
                           </div>
                           <div class="col">
                             <div class="mb-3 label-align-left">
-                              <label class="form-label" for="last_name"
-                                ><strong>Last Name</strong></label
-                              >
+                              <label class="form-label">
+                                  <strong>Last Name</strong>
+                              </label>
                               <BaseInputNoLabel
                                 cssClass="form-control"
                                 type="text"

@@ -1,5 +1,5 @@
 <template>
-    <NavbarStudent />
+    <Navbar />
     <div class="home">
         <div id="navCourse">
             <router-link to="/home">Dine Emner</router-link> ||
@@ -11,13 +11,13 @@
 
 <script>
 import CourseBox from "@/views/SubView/CourseBox";
-import NavbarStudent from "@/views/SubView/NavbarStudent";
+import Navbar from "@/views/SubView/Navbar";
 
 export default {
   name: "InactiveCourses",
   components: {
       CourseBox,
-      NavbarStudent
+      Navbar
   },
   data() {},
 };

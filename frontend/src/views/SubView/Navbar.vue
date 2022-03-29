@@ -15,8 +15,13 @@
                             <i class="material-icons icon-size">school</i>&nbsp;Emner
                         </router-link>
                     </li>
+                    <li class="nav-item" v-if="isTeacher">
+                        <router-link to="/admin" class="nav-link active d-flex align-items-center" style="color: #000000;">
+                            <i class="material-icons icon-size">home</i>&nbsp;Admin
+                        </router-link>
+                    </li>
                     <li class="nav-item">
-                        <router-link to="/" class="nav-link d-flex align-items-center active" style="color: #000000;height: 41px;">
+                        <router-link to="/settings" class="nav-link d-flex align-items-center active" style="color: #000000;height: 41px;">
                             <i class="icon ion-android-settings icon-size"></i>&nbsp;Instillinger
                         </router-link>
                     </li>
@@ -34,6 +39,11 @@
 <script>
 export default {
     name: "NavbarStudent",
+    data() {
+        return {
+            isTeacher: this.$store.getters.isTeacher,
+        }
+    }
 }
 </script>
 

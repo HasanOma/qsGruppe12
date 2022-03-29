@@ -8,19 +8,19 @@ import java.util.List;
 public class Table {
 
     @Id
-    @SequenceGenerator(
-            name = "table_sequence",
-            sequenceName = "table_sequence",
-            allocationSize = 1
-    )
-    @GeneratedValue(
-            generator = "table_sequence",
-            strategy = GenerationType.SEQUENCE)
+    @GeneratedValue()
     private Long id;
 
     @NotNull
     private String name;
 
     @ManyToOne
-    private Table table;
+    private Room room;
+
+    @PreRemove
+    public void preRemove(){
+        if(room != null){
+            room = null;
+        }
+    }
 }

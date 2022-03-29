@@ -2,6 +2,7 @@ package com.example.qsgruppe12.controller;
 
 import com.example.qsgruppe12.dto.userdtos.UserDto;
 import com.example.qsgruppe12.service.UserService;
+import com.sun.mail.iap.Response;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,4 +21,6 @@ public class UserController {
     public UserDto updateUser(@PathVariable Long userId, @RequestBody UserDto user){
         return this.userService.updateUser(userId, user);
     }
+
+
 }

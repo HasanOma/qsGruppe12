@@ -24,10 +24,13 @@ public class Room {
     @NotNull
     private String picture;
 
-    @ManyToOne
-    private Building building;
-
-    @NotNull
     @OneToMany
     private List<Table> rooms;
+
+    @PreRemove
+    public void removeRelationships(){
+        if (rooms!=null){
+            rooms.clear();
+        }
+    }
 }

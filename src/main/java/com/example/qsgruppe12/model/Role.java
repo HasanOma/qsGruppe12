@@ -3,33 +3,39 @@ package com.example.qsgruppe12.model;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
-import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
-import java.util.List;
+import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
 @Entity
-@SuperBuilder
 @NoArgsConstructor
-public class Teacher extends User{
+public class Role {
 
     @Id
     @SequenceGenerator(
-            name = "teacher_sequence",
-            sequenceName = "user_sequence",
+            name = "role_sequence",
+            sequenceName = "role_sequence",
             allocationSize = 1
     )
     @GeneratedValue(
-            generator = "teacher_sequence",
+            generator = "role_sequence",
             strategy = GenerationType.SEQUENCE)
-    @Column(name = "teacher_id")
+    @Column(name = "role_id")
     private Long id;
 
-    @OneToMany(mappedBy = "teacher")
-    @ToString.Exclude
-    private List<Teacher_Course> courses;
+    @NotNull
+    @Column(nullable = false)
+    private String name;
 
+    @OneToOne
+    private User user;
+
+    @PreRemove
+    public void removeRelationships(){
+        if(user!=null){
+            user = null;
+        }
+    }
 }

@@ -1,8 +1,8 @@
 package com.example.qsgruppe12.model.relationship;
 
 import com.example.qsgruppe12.model.Course;
-import com.example.qsgruppe12.model.Student;
-import com.example.qsgruppe12.model.relationshipkey.StudentCourseKey;
+import com.example.qsgruppe12.model.User;
+import com.example.qsgruppe12.model.relationshipkey.UserCourseKey;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -13,21 +13,21 @@ import javax.persistence.*;
 @Getter
 @Setter
 @ToString
-public class Student_Course {
+public class User_Course {
 
     @EmbeddedId
-    StudentCourseKey studentCourseKey;
+    UserCourseKey userCourseKey;
 
     @ManyToOne
-    @MapsId("studentId")
-    @JoinColumn(name = "student_id")
-    Student student;
+    @MapsId("userId")
+    @JoinColumn(name = "user_id")
+    User user;
 
     @ManyToOne
     @MapsId("courseId")
     @JoinColumn(name = "course_id")
     Course course;
 
-    String semester;
+    String workApproved;
 
 }

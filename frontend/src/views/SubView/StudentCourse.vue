@@ -19,7 +19,9 @@
                         <div class="row">
                           <div class="col">
                             <div class="mb-3 label-align-left">
-                              <label class="form-label">Choose Course<br/></label>
+                              <label class="form-label"
+                                >Choose Course<br
+                              /></label>
                               <select class="form-select">
                                 <option value="12" selected="">Emne 1</option>
                                 <option value="13">Emne 2</option>
@@ -30,7 +32,7 @@
                           <div class="col">
                             <div class="mb-3 label-align-left">
                               <label class="form-label">
-                                  <strong>Email Address</strong>
+                                <strong>Email Address</strong>
                               </label>
                               <BaseInputNoLabel
                                 class="form-control"
@@ -46,10 +48,10 @@
                           <div class="col">
                             <div class="mb-3 label-align-left">
                               <label class="form-label">
-                                  <strong>First Name</strong>
+                                <strong>First Name</strong>
                               </label>
                               <BaseInputNoLabel
-                                  cssClass="form-control"
+                                cssClass="form-control"
                                 type="text"
                                 id="first_name"
                                 placeholder="John"
@@ -60,7 +62,7 @@
                           <div class="col">
                             <div class="mb-3 label-align-left">
                               <label class="form-label">
-                                  <strong>Last Name</strong>
+                                <strong>Last Name</strong>
                               </label>
                               <BaseInputNoLabel
                                 cssClass="form-control"
@@ -78,7 +80,7 @@
                         </h5>
                         <div class="box">
                           <div class="box__input">
-                            <BaseDragNDrop/>
+                            <BaseDragNDrop />
                             <BaseButton cssClass="box__button" type="submit">
                               Upload
                             </BaseButton>
@@ -118,7 +120,7 @@ export default {
   components: {
     BaseButton,
     BaseInputNoLabel,
-    BaseDragNDrop
+    BaseDragNDrop,
   },
   data() {
     return {

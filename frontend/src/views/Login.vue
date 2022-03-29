@@ -34,11 +34,11 @@
 <script>
 export default {
   name: "LoginView",
-    methods: {
-      onSubmit() {
-          this.$router.push({ name: 'Home', query: { redirect: '/home' } });
-      }
-    }
+  methods: {
+    onSubmit() {
+      this.$router.push({ name: "Home", query: { redirect: "/home" } });
+    },
+  },
 };
 </script>
 

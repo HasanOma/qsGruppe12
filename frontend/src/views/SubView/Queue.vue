@@ -32,7 +32,7 @@
                       </th>
                     </tr>
                   </thead>
-<!--                  TODO HER KOMMER QUEue componenten-->
+                  <!--                  TODO HER KOMMER QUEue componenten-->
                   <tfoot>
                     <tr></tr>
                   </tfoot>

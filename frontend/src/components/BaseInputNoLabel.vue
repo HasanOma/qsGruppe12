@@ -32,7 +32,7 @@ export default {
       type: String,
     },
     input: {
-      type: String
+      type: String,
     },
     cssClass: {
       type: String,

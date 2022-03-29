@@ -1,6 +1,6 @@
 <template>
-    <NavbarStudent />
-    <StudentSettings />
+  <NavbarStudent />
+  <StudentSettings />
 </template>
 
 <script>
@@ -8,10 +8,10 @@ import StudentSettings from "@/views/SubView/UserSettings";
 import NavbarStudent from "@/views/SubView/Navbar";
 
 export default {
-    components: {
-        StudentSettings,
-        NavbarStudent
-    },
+  components: {
+    StudentSettings,
+    NavbarStudent,
+  },
 };
 </script>
 

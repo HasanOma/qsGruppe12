@@ -1,9 +1,14 @@
 <template>
-  <main  class="page projets-page">
+  <main class="page projets-page">
     <section class="portfolio-block project-no-images">
-      <div  class="container">
+      <div class="container">
         <div class="row">
-          <div id="aboveContainer" class="col-md-6 col-lg-6" v-for="course in courses" :key="course">
+          <div
+            id="aboveContainer"
+            class="col-md-6 col-lg-6"
+            v-for="course in courses"
+            :key="course"
+          >
             <div id="container" class="project-card-no-image">
               <h3 class="course-name">{{ course.course_name }}</h3>
               <h4 class="course-id">{{ course.course_id }}</h4>
@@ -34,24 +39,24 @@
 import BaseButton from "@/components/BaseButton";
 
 export default {
-    name: "CourseBox",
-    components: {
-        BaseButton,
+  name: "CourseBox",
+  components: {
+    BaseButton,
+  },
+  props: {
+    courses: {
+      type: Array,
     },
-    props: {
-        courses: {
-            type: Array,
-        }
-    },
-    mounted() {
-        const plugin = document.createElement("script");
-        plugin.setAttribute(
-          "src",
-          "https://cdnjs.cloudflare.com/ajax/libs/pikaday/1.6.1/pikaday.min.js"
-        );
-        plugin.async = true;
-        document.head.appendChild(plugin);
-    },
+  },
+  mounted() {
+    const plugin = document.createElement("script");
+    plugin.setAttribute(
+      "src",
+      "https://cdnjs.cloudflare.com/ajax/libs/pikaday/1.6.1/pikaday.min.js"
+    );
+    plugin.async = true;
+    document.head.appendChild(plugin);
+  },
 };
 </script>
 
@@ -60,22 +65,30 @@ export default {
 @import url("https://cdnjs.cloudflare.com/ajax/libs/pikaday/1.6.1/css/pikaday.min.css");
 @import "../../assets/fonts/font-awesome.min.css";
 
-#container{
-
-
-
-outline: none;
-cursor: pointer;
-position: relative;
-border-radius: 10px;
+#container {
+  outline: none;
+  cursor: pointer;
+  position: relative;
+  border-radius: 10px;
 }
 
 #container:before {
-  content: '';
-  background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
+  content: "";
+  background: linear-gradient(
+    45deg,
+    #ff0000,
+    #ff7300,
+    #fffb00,
+    #48ff00,
+    #00ffd5,
+    #002bff,
+    #7a00ff,
+    #ff00c8,
+    #ff0000
+  );
   position: absolute;
   top: -2px;
-  left:-2px;
+  left: -2px;
   background-size: 400%;
   z-index: -1;
   filter: blur(5px);
@@ -83,12 +96,12 @@ border-radius: 10px;
   height: calc(100% + 4px);
   animation: glowing 20s linear infinite;
   opacity: 0;
-  transition: opacity .3s ease-in-out;
+  transition: opacity 0.3s ease-in-out;
   border-radius: 10px;
 }
 
 #container:active {
-  color: #FFFFFF
+  color: #ffffff;
 }
 
 #container:active:after {
@@ -101,11 +114,11 @@ border-radius: 10px;
 
 #container:after {
   z-index: -1;
-  content: '';
+  content: "";
   position: absolute;
   width: 100%;
   height: 100%;
-  background: #FFFFFF;
+  background: #ffffff;
   left: 0;
   top: 0;
   border-radius: 10px;

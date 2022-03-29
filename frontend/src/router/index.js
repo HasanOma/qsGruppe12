@@ -4,7 +4,6 @@ import Login from "../views/Login.vue";
 import Settings from "../views/Settings.vue";
 import InactiveCourses from "../views/SubView/InactiveCourses";
 
-
 const routes = [
   {
     path: "/",

@@ -1,13 +1,13 @@
 <template>
   <svg
-      class="box__icon"
-      xmlns="http://www.w3.org/2000/svg"
-      width="50"
-      height="43"
-      viewBox="0 0 50 43"
+    class="box__icon"
+    xmlns="http://www.w3.org/2000/svg"
+    width="50"
+    height="43"
+    viewBox="0 0 50 43"
   >
     <path
-        d="M48.4 26.5c-.9 0-1.7.7-1.7
+      d="M48.4 26.5c-.9 0-1.7.7-1.7
         1.7v11.6h-43.3v-11.6c0-.9-.7-1.7-1.7-1.7s-1.7.7-1.7
         1.7v13.2c0 .9.7 1.7 1.7 1.7h46.7c.9 0
         1.7-.7 1.7-1.7v-13.2c0-1-.7-1.7-1.7-1.7zm-24.5
@@ -17,25 +17,19 @@
     ></path>
   </svg>
   <input
-      class="box__file"
-      type="file"
-      name="files[]"
-      id="file"
-      data-multiple-caption="{count} files selected"
-      multiple
+    class="box__file"
+    type="file"
+    name="files[]"
+    id="file"
+    data-multiple-caption="{count} files selected"
+    multiple
   />
-  <label for="file"
-  >
-    <strong>
-      Velg fil
-    </strong>
-    <span
-        class="box__dragndrop">
-      eller dra og slipp den her
-    </span
-    >
+  <label for="file">
+    <strong> Velg fil </strong>
+    <span class="box__dragndrop"> eller dra og slipp den her </span>
     .
-  </label></template>
+  </label>
+</template>
 
 <script>
 import $ from "jquery";
@@ -43,39 +37,38 @@ import $ from "jquery";
 export default {
   name: "BaseDragNDrop",
 
-mounted() {
+  mounted() {
+    const boxDragndrop = $(".box__dragndrop");
+    const boxUploading = $(".box__uploading");
+    const boxSuccess = $(".box__success");
+    const boxError = $(".box__error");
 
-  const boxDragndrop = $(".box__dragndrop");
-  const boxUploading = $(".box__uploading");
-  const boxSuccess = $(".box__success");
-  const boxError = $(".box__error");
+    boxDragndrop.css("display", "none");
+    boxUploading.css("display", "none");
+    boxSuccess.css("display", "none");
+    boxError.css("display", "none");
 
-  boxDragndrop.css("display", "none");
-  boxUploading.css("display", "none");
-  boxSuccess.css("display", "none");
-  boxError.css("display", "none");
-
-  const form = $(".box");
-  const div = document.createElement("div");
-  let isAdvancedUpload =
+    const form = $(".box");
+    const div = document.createElement("div");
+    let isAdvancedUpload =
       ("draggable" in div || ("ondragstart" in div && "ondrop" in div)) &&
       "FormData" in window &&
       "FileReader" in window;
-  // console.log(isAdvancedUpload);
-  // console.log(form);
+    // console.log(isAdvancedUpload);
+    // console.log(form);
 
-  if (isAdvancedUpload) {
-    form.addClass("has-advanced-upload");
+    if (isAdvancedUpload) {
+      form.addClass("has-advanced-upload");
 
-    //var droppedFiles = false;
+      //var droppedFiles = false;
 
-    form
+      form
         .on(
-            "drag dragstart dragend dragover dragenter dragleave drop",
-            function (e) {
-              e.preventDefault();
-              e.stopPropagation();
-            }
+          "drag dragstart dragend dragover dragenter dragleave drop",
+          function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+          }
         )
         .on("dragover dragenter", function () {
           form.addClass("is-dragover");
@@ -86,9 +79,9 @@ mounted() {
         .on("drop", function (e) {
           console.log(e); //droppedFiles = e.originalEvent.dataTransfer.files;
         });
-  }
-}
-}
+    }
+  },
+};
 </script>
 
 <style scoped>

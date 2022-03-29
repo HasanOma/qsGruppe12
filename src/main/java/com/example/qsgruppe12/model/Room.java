@@ -25,7 +25,7 @@ public class Room {
     private String picture;
 
     @OneToMany
-    private List<Table> rooms;
+    private List<Spot> rooms;
 
     @PreRemove
     public void removeRelationships(){

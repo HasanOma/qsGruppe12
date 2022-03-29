@@ -1,10 +1,10 @@
 <template>
-  <main class="page projets-page">
+  <main  class="page projets-page">
     <section class="portfolio-block project-no-images">
-      <div class="container">
+      <div  class="container">
         <div class="row">
-          <div class="col-md-6 col-lg-6">
-            <div class="project-card-no-image">
+          <div id="aboveContainer" class="col-md-6 col-lg-6">
+            <div id="container" class="project-card-no-image">
               <h3 class="course-name">Nettverksprogrammering</h3>
               <h4 class="course-id">IDATT2104</h4>
               <div class="d-flex flex-row justify-content-between">
@@ -52,6 +52,57 @@ export default {
 @import url("https://fonts.googleapis.com/css?family=Lato:300,400,700");
 @import url("https://cdnjs.cloudflare.com/ajax/libs/pikaday/1.6.1/css/pikaday.min.css");
 @import "../../assets/fonts/font-awesome.min.css";
+
+#container{
+
+
+
+outline: none;
+cursor: pointer;
+position: relative;
+border-radius: 10px;
+}
+
+#container:before {
+  content: '';
+  background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
+  position: absolute;
+  top: -2px;
+  left:-2px;
+  background-size: 400%;
+  z-index: -1;
+  filter: blur(5px);
+  width: calc(100% + 4px);
+  height: calc(100% + 4px);
+  animation: glowing 20s linear infinite;
+  opacity: 0;
+  transition: opacity .3s ease-in-out;
+  border-radius: 10px;
+}
+
+#container:active {
+  color: #FFFFFF
+}
+
+#container:active:after {
+  background: transparent;
+}
+
+#container:hover:before {
+  opacity: 1;
+}
+
+#container:after {
+  z-index: -1;
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: #FFFFFF;
+  left: 0;
+  top: 0;
+  border-radius: 10px;
+}
 
 .project-card-no-image {
   box-shadow: 0px 2px 10px rgb(0 0 0 / 8%);

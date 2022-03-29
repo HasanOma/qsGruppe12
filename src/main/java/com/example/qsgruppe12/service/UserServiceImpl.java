@@ -3,6 +3,8 @@ package com.example.qsgruppe12.service;
 import com.example.qsgruppe12.dto.CourseDto;
 import com.example.qsgruppe12.dto.userdtos.RegistrationDto;
 import com.example.qsgruppe12.dto.userdtos.UserDto;
+import com.example.qsgruppe12.dto.userdtos.UserLoginDto;
+import com.example.qsgruppe12.model.User;
 import com.example.qsgruppe12.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -10,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -24,17 +27,15 @@ public class UserServiceImpl implements UserService{
     //TODO email sent to users created
 
     @Autowired
-    private UserRepository studentRepository;
+    private UserRepository userRepository;
 
-//    @Autowired
-//    private TARepository taRepository;
-//
-//    @Autowired
-//    private TeacherRepository teacherRepository;
-
-//    private BCryptPasswordEncoder cryptPasswordEncoder;
+    private BCryptPasswordEncoder cryptPasswordEncoder;
 
     private ModelMapper modelMapper;
+
+    private boolean userExistsByEmail(String email){
+        return userRepository.findByEmail(email).isPresent();
+    }
 
     @Override
     public UserDto updateUser(Long id, UserDto user) {
@@ -52,11 +53,10 @@ public class UserServiceImpl implements UserService{
         //TODO if course does not exist or if user exists throw exception
         List<UserDto> savedStudents = new ArrayList<>();
         for (RegistrationDto dto : registrationDto) {
-//            Student student = modelMapper.map(dto, Student.class);
-//            student.setPassword(cryptPasswordEncoder.encode(dto.getPassword()));
-//            UserDto studentAdded = modelMapper.map(studentRepository.save(student), UserDto.class);
-//            studentAdded.getCourseId().add(courseId);
-//            savedStudents.add(studentAdded);
+            User student = modelMapper.map(dto, User.class);
+            student.setPassword(cryptPasswordEncoder.encode(dto.getPassword()));
+            UserDto studentAdded = modelMapper.map(userRepository.save(student), UserDto.class);
+            savedStudents.add(studentAdded);
             //TODO send email
         }
         return savedStudents;
@@ -71,5 +71,14 @@ public class UserServiceImpl implements UserService{
 //                TA_Course ta_course;
 //            }
         }
+    }
+
+    @Override
+    public UserLoginDto getUserLoggingIn(String email) {
+        if (userExistsByEmail(email)) {
+            User userFromDB = userRepository.findByEmail(email).get();
+            UserLoginDto user = modelMapper.map(userFromDB, UserLoginDto.class);
+        }
+        return null;
     }
 }

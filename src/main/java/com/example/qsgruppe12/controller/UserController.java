@@ -1,11 +1,13 @@
 package com.example.qsgruppe12.controller;
 
 import com.example.qsgruppe12.dto.userdtos.UserDto;
+import com.example.qsgruppe12.dto.userdtos.UserLoginDto;
 import com.example.qsgruppe12.service.UserService;
-import com.sun.mail.iap.Response;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 @Slf4j
@@ -22,5 +24,11 @@ public class UserController {
         return this.userService.updateUser(userId, user);
     }
 
+    @GetMapping("myInfo/")
+    @ResponseStatus(HttpStatus.OK)
+    public UserLoginDto getUser(Authentication authentication){
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        return userService.getUserLoggingIn(userDetails.getUsername());
+    }
 
 }

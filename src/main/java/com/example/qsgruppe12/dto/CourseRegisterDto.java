@@ -2,8 +2,6 @@ package com.example.qsgruppe12.dto;
 
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
@@ -12,10 +10,8 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class CourseDto {
+public class CourseRegisterDto {
 
-    @NotNull
-    private Long id;
     @NotNull
     @NotEmpty
     private String name;
@@ -24,9 +20,7 @@ public class CourseDto {
 
     private int totalWork;
 
-    private String workApproved;
+    private String rules;
 
     private boolean archived;
-
-    private String rules;
 }

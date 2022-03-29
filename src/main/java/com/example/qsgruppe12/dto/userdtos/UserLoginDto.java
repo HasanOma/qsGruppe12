@@ -1,7 +1,6 @@
 package com.example.qsgruppe12.dto.userdtos;
 
 import com.example.qsgruppe12.dto.CourseDto;
-import com.example.qsgruppe12.model.Course;
 import lombok.*;
 
 import javax.validation.constraints.NotEmpty;
@@ -13,7 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class UserDto {
+public class UserLoginDto {
 
     @NotNull
     private Long id;

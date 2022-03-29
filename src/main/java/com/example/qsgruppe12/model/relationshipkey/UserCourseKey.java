@@ -8,10 +8,10 @@ import java.io.Serializable;
 import java.util.Objects;
 
 @Embeddable
-public class TeacherCourseKey implements Serializable {
+public class UserCourseKey implements Serializable {
 
-    @Column(name = "teacher_id")
-    Long teacherId;
+    @Column(name = "user_id")
+    Long userId;
 
     @Column(name = "course_id")
     Long courseId;
@@ -20,13 +20,13 @@ public class TeacherCourseKey implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        TeacherCourseKey that = (TeacherCourseKey) o;
-        return teacherId != null && Objects.equals(teacherId, that.teacherId)
+        UserCourseKey that = (UserCourseKey) o;
+        return userId != null && Objects.equals(userId, that.userId)
                 && courseId != null && Objects.equals(courseId, that.courseId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(teacherId, courseId);
+        return Objects.hash(userId, courseId);
     }
 }

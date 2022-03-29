@@ -1,5 +1,7 @@
 package com.example.qsgruppe12.model;
 
+import com.example.qsgruppe12.model.relationship.User_Course;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import javax.persistence.Column;
@@ -20,28 +22,21 @@ public class Course {
     @Id
     @Column(name = "course_id")
     private Long id;
+    @NotNull
     @Column(unique=true)
     private String name;
-    private int totalWork;
-    private int requiredWork;
+    @NotNull
+    @Column(unique=true)
     private String semester;
-    private boolean archived;
+    @NotNull
+    private int totalWork;
+    @NotNull
+    private String rules;
+    @Builder.Default
+    private boolean archived = false;
 
     @OneToMany(mappedBy = "course")
     @ToString.Exclude
-    private List<Teacher_Course> teachers;
-
-    @OneToMany(mappedBy = "course")
-    @ToString.Exclude
-    private List<TA_Course> tas;
-
-
-    @OneToMany(mappedBy = "course")
-    @ToString.Exclude
-    private List<Student_Course> students;
-
-    @OneToMany(mappedBy = "course")
-    @ToString.Exclude
-    private List<StudentWorkApproved> studentWork;
+    private List<User_Course> users;
 
 }

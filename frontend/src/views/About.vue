@@ -1,19 +1,18 @@
 <template>
-    <div class="about">
-        <h1>This is an about page</h1>
-    </div>
-    <StudentCourse></StudentCourse>
+  <div class="about">
+    <h1>This is an about page</h1>
+  </div>
+  <StudentCourse></StudentCourse>
 </template>
 
 <script>
 import StudentCourse from "@/components/StudentCourse";
 
 export default {
-    components: {
-        StudentCourse
-    }
-}
-
+  components: {
+    StudentCourse,
+  },
+};
 </script>
 
 <style scoped>

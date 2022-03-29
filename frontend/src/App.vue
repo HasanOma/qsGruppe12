@@ -8,7 +8,7 @@
 </template>
 
 <style>
-@import '~bootstrap/dist/css/bootstrap.css';
+@import "~bootstrap/dist/css/bootstrap.css";
 
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -30,5 +30,4 @@
 #nav a.router-link-exact-active {
   color: #42b983;
 }
-
 </style>

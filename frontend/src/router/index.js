@@ -3,7 +3,6 @@ import Home from "../views/Home.vue";
 import Login from "../views/Login.vue";
 import InactiveCourses from "../views/SubView/InactiveCourses";
 
-
 const routes = [
   {
     path: "/",
@@ -11,14 +10,14 @@ const routes = [
     component: Home,
   },
   {
-    path: "/login",
-    name: "Login",
-    component: Login,
-  },
-  {
     path: "/inactiveCourses",
     name: "InactiveCourses",
     component: InactiveCourses,
+  },
+  {
+    path: "/login",
+    name: "Login",
+    component: Login,
   },
   {
     path: "/about",

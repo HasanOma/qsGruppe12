@@ -12,7 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class UserLoginDto {
+public class UserLoginReturnDto {
 
     @NotNull
     private Long id;

@@ -1,9 +1,10 @@
 package com.example.qsgruppe12.service.user;
 
 import com.example.qsgruppe12.dto.CourseDto;
+import com.example.qsgruppe12.dto.userdtos.LoginDto;
 import com.example.qsgruppe12.dto.userdtos.RegistrationDto;
 import com.example.qsgruppe12.dto.userdtos.UserDto;
-import com.example.qsgruppe12.dto.userdtos.UserLoginDto;
+import com.example.qsgruppe12.dto.userdtos.UserLoginReturnDto;
 import com.example.qsgruppe12.model.Course;
 import com.example.qsgruppe12.model.Queue;
 import com.example.qsgruppe12.model.User;
@@ -18,6 +19,7 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -101,27 +103,25 @@ public class UserServiceImpl implements UserService {
         List<UserDto> savedStudents = new ArrayList<>();
         Course course = courseRepository.getById(courseId);
         for (RegistrationDto dto : registrations) {
-
             User student = modelMapper.map(dto, User.class);
 
-            String password = dto.getPassword();
+            if (userRepository.findByEmail(student.getEmail()).isPresent()){
+            }
 
+            String password = dto.getPassword();
             if(password.isBlank()){
                 password = randomStringGenerator();
             }
-
             student.setPassword(password);
-
             student.setPassword(cryptPasswordEncoder.encode(password));
 
             student.setRole(roleRepository.getById((long) 3));
-
             User_Course userCourse = User_Course.builder().course(course).user(student).build();
             userCourseRepository.save(userCourse);
-            student.getCourses().add(userCourse);
 
             UserDto studentAdded = modelMapper.map(userRepository.save(student), UserDto.class);
             savedStudents.add(studentAdded);
+            student.getCourses().add(userCourse);
 
 
             //TODO send email plus password with it
@@ -150,7 +150,7 @@ public class UserServiceImpl implements UserService {
             ta.setPassword(cryptPasswordEncoder.encode(password));
 
             ta.setRole(roleRepository.getById((long) 2));
-
+            //TODO add course as well
             User_Course userCourse = User_Course.builder().course(course).user(ta).workApproved(null).build();
             userCourseRepository.save(userCourse);
             ta.getCourses().add(userCourse);
@@ -165,28 +165,24 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserLoginDto getUserLoggingIn(String username) {
-        return null;
-    }
-
-    //    @Override
-    public UserLoginDto getUserLoggingIn(String email, String password) {
-        if (!userExistsByEmail(email)) {
+    public UserLoginReturnDto getUserLoggingIn(LoginDto login) {
+        if (!userExistsByEmail(login.getEmail())) {
             //throw exception
             return null;
         }
-        if (cryptPasswordEncoder.matches(password, userRepository.findByEmail(email).get().getPassword())){
+        if (cryptPasswordEncoder.matches(login.getPassword(), userRepository.findByEmail(login.getEmail()).get().getPassword())){
             //throw exception
             return null;
         }
-        User userFromDB = userRepository.findByEmail(email).get();
-        UserLoginDto user = modelMapper.map(userFromDB, UserLoginDto.class);
-        return null;
+        User userFromDB = userRepository.findByEmail(login.getEmail()).get();
+        //        int nrOfCourses = userCourseRepository.findAll(Sort.by(userFromDB));
+//
+//        user.getCourses().addAll(courseRepository.getById(userCourseRepository.getCourseIdByUserId()));
+        return modelMapper.map(userFromDB, UserLoginReturnDto.class);
     }
 
     @Override
     public UserDto getInQueue(Long courseId, String username) {
-
 
         return null;
     }

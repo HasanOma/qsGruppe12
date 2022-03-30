@@ -1,9 +1,10 @@
 package com.example.qsgruppe12.service.user;
 
 import com.example.qsgruppe12.dto.CourseDto;
+import com.example.qsgruppe12.dto.userdtos.LoginDto;
 import com.example.qsgruppe12.dto.userdtos.RegistrationDto;
 import com.example.qsgruppe12.dto.userdtos.UserDto;
-import com.example.qsgruppe12.dto.userdtos.UserLoginDto;
+import com.example.qsgruppe12.dto.userdtos.UserLoginReturnDto;
 import com.example.qsgruppe12.util.RequestResponse;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +23,7 @@ public interface UserService {
 
     List<UserDto> addTAsForCourse(Long courseId, List<RegistrationDto> registrationDto);
 
-    UserLoginDto getUserLoggingIn(String username);
+    UserLoginReturnDto getUserLoggingIn(LoginDto login);
 
     UserDto getInQueue(Long courseId, String username);
 

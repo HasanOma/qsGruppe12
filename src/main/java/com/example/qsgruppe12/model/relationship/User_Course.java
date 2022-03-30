@@ -30,4 +30,6 @@ public class User_Course {
 
     String workApproved;
 
+    boolean canDoExam = false;
+
 }

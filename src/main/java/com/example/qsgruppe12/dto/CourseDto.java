@@ -15,17 +15,22 @@ import javax.validation.constraints.NotNull;
 public class CourseDto {
 
     @NotNull
-    private Long id;
-    @NotNull
     @NotEmpty
     private String name;
-
+    @NotNull
+    @NotEmpty
+    private String code;
+    @NotNull
+    @NotEmpty
     private String semester;
-
+    @NotNull
+    @NotEmpty
     private int totalWork;
-
+    @NotNull
+    @NotEmpty
     private String workApproved;
-
+    @NotNull
+    @NotEmpty
     private boolean archived;
 
     private String rules;

@@ -8,7 +8,14 @@ import java.util.List;
 public class Spot {
 
     @Id
-    @GeneratedValue()
+    @SequenceGenerator(
+            name = "room_sequence",
+            sequenceName = "room_sequence",
+            allocationSize = 1
+    )
+    @GeneratedValue(
+            generator = "room_sequence",
+            strategy = GenerationType.SEQUENCE)
     private Long id;
 
     @NotNull

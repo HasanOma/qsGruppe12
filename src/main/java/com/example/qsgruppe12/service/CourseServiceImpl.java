@@ -2,7 +2,6 @@ package com.example.qsgruppe12.service;
 
 
 import com.example.qsgruppe12.dto.CourseDto;
-import com.example.qsgruppe12.dto.CourseRegisterDto;
 import com.example.qsgruppe12.model.Course;
 import com.example.qsgruppe12.repository.CourseRepository;
 import lombok.AllArgsConstructor;
@@ -24,14 +23,7 @@ public class CourseServiceImpl implements CourseService{
     private ModelMapper modelmapper = new ModelMapper();
 
     private boolean courseExists(CourseDto courseRegisterDto){
-        boolean exists = false;
-        if (courseRepository.findByName(courseRegisterDto.getName()).isPresent()){
-            if (courseRepository.findByName(courseRegisterDto.getName())
-                    .get().getSemester().equalsIgnoreCase(courseRegisterDto.getSemester())){
-                exists = true;
-            }
-        }
-        return exists;
+        return courseRepository.findByCodeAndSemester(courseRegisterDto.getCode(), courseRegisterDto.getSemester()).isPresent();
     }
 
     @Override
@@ -44,5 +36,13 @@ public class CourseServiceImpl implements CourseService{
         Course course = modelmapper.map(courseRegisterDto, Course.class);
         System.out.println("after mapper");
         return modelmapper.map(courseRepository.save(course), CourseDto.class);
+    }
+
+    @Override
+    public void deleteCourse(String code, String semester) {
+        if (courseRepository.findByCodeAndSemester(code, semester).isEmpty()){
+//            throw new CourseException();
+        }
+        courseRepository.deleteByCodeAndSemester(code, semester);
     }
 }

@@ -20,7 +20,7 @@ public class CourseController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public CourseDto createCourse(Authentication authentication , @RequestBody CourseRegisterDto courseDto){
+    public CourseDto createCourse(Authentication authentication, @RequestBody CourseRegisterDto courseDto){
 //        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         System.out.println("here");
         return courseService.createCourse(courseDto, "min email");

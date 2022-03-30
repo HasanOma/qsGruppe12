@@ -83,7 +83,7 @@ public class UserServiceImpl implements UserService{
             }
 
             student.setPassword(password);
-            student.setPassword(cryptPasswordEncoder.encode(dto.getPassword()));
+            student.setPassword(cryptPasswordEncoder.encode(password));
             student.setRole(roleRepository.getById((long) 3));
             userRepository.save(student);
 
@@ -111,12 +111,13 @@ public class UserServiceImpl implements UserService{
 
             student.setPassword(password);
 
-            student.setPassword(cryptPasswordEncoder.encode(dto.getPassword()));
+            student.setPassword(cryptPasswordEncoder.encode(password));
 
             student.setRole(roleRepository.getById((long) 3));
 
             User_Course userCourse = User_Course.builder().course(course).user(student).build();
             userCourseRepository.save(userCourse);
+            student.getCourses().add(userCourse);
 
             UserDto studentAdded = modelMapper.map(userRepository.save(student), UserDto.class);
             savedStudents.add(studentAdded);
@@ -145,12 +146,13 @@ public class UserServiceImpl implements UserService{
 
             ta.setPassword(password);
 
-            ta.setPassword(cryptPasswordEncoder.encode(dto.getPassword()));
+            ta.setPassword(cryptPasswordEncoder.encode(password));
 
             ta.setRole(roleRepository.getById((long) 2));
 
             User_Course userCourse = User_Course.builder().course(course).user(ta).workApproved(null).build();
             userCourseRepository.save(userCourse);
+            ta.getCourses().add(userCourse);
 
             UserDto studentAdded = modelMapper.map(userRepository.save(ta), UserDto.class);
             tas.add(studentAdded);
@@ -162,11 +164,17 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public UserLoginDto getUserLoggingIn(String email) {
-        if (userExistsByEmail(email)) {
-            User userFromDB = userRepository.findByEmail(email).get();
-            UserLoginDto user = modelMapper.map(userFromDB, UserLoginDto.class);
+    public UserLoginDto getUserLoggingIn(String email, String password) {
+        if (!userExistsByEmail(email)) {
+            //throw exception
+            return null;
         }
+        if (cryptPasswordEncoder.matches(password, userRepository.findByEmail(email).get().getPassword())){
+            //throw exception
+            return null;
+        }
+        User userFromDB = userRepository.findByEmail(email).get();
+        UserLoginDto user = modelMapper.map(userFromDB, UserLoginDto.class);
         return null;
     }
 

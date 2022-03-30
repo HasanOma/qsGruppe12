@@ -4,7 +4,9 @@
       <div class="row">
         <div class="col-md-6 col-lg-8 mx-auto">
           <p class="copyright text-muted text-center">Kontakt oss:</p>
-          <p class="copyright text-muted text-center">Copyright © Gruppe 12 2022</p>
+          <p class="copyright text-muted text-center">
+            Copyright © Gruppe 12 2022
+          </p>
         </div>
       </div>
     </div>
@@ -16,10 +18,10 @@ export default {
   name: "Footer",
   data() {
     return {
-      isLoggedIn: this.$store.getters.isLoggedIn
-    }
-  }
-}
+      isLoggedIn: this.$store.getters.isLoggedIn,
+    };
+  },
+};
 </script>
 
 <style scoped>

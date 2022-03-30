@@ -1,11 +1,9 @@
-<template>
-
-</template>
+<template></template>
 
 <script>
 export default {
-  name: "CoursesNav"
-}
+  name: "CoursesNav",
+};
 </script>
 
 <style scoped>
@@ -15,15 +13,15 @@ export default {
 
 .nav-style {
   max-width: max-content;
-  background: rgb(14,160,255);
+  background: rgb(14, 160, 255);
 }
 
 .link-style {
-  color: rgb(255,255,255);
+  color: rgb(255, 255, 255);
 }
 
 .right-link-style {
   border-left-width: 2px;
-  border-left-color: rgb(101,101,101);
+  border-left-color: rgb(101, 101, 101);
 }
 </style>

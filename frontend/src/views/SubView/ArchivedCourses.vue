@@ -1,5 +1,5 @@
 <template>
-  <CourseBox :courses="courses"/>
+  <CourseBox :courses="courses" />
 </template>
 
 <script>
@@ -9,20 +9,18 @@ import axios from "axios";
 export default {
   name: "ActiveCourses",
   components: {
-    CourseBox
+    CourseBox,
   },
   data() {
     return {
       //courses: this.$store.getters.archived,
-      courses: []
-    }
+      courses: [],
+    };
   },
   async created() {
     this.courses = (await axios.get("http://localhost:3000/archived")).data;
-  }
-}
+  },
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

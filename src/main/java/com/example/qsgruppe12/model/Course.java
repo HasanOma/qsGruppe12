@@ -43,7 +43,7 @@ public class Course {
     @Builder.Default
     private boolean archived = false;
 
-    @OneToMany(mappedBy = "course")
+    @OneToMany(mappedBy = "course", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @ToString.Exclude
     private List<User_Course> users;
 

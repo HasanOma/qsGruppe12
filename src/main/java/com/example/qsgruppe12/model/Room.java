@@ -24,7 +24,7 @@ public class Room {
     @NotNull
     private String picture;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Spot> rooms;
 
     @PreRemove

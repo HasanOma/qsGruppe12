@@ -51,7 +51,7 @@ public class Course {
     @ToString.Exclude
     private List<User_Course> users;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "queue_id", referencedColumnName = "queue_id")
     private Queue queue;
 

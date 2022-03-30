@@ -12,6 +12,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
+@SuperBuilder
 @NoArgsConstructor
 public class User {
 
@@ -41,7 +42,7 @@ public class User {
     public String password;
 
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "role_id", referencedColumnName = "role_id")
     private Role role;
 

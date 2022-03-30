@@ -2,10 +2,13 @@ package com.example.qsgruppe12.service;
 
 
 import com.example.qsgruppe12.dto.CourseDto;
+import com.example.qsgruppe12.dto.CourseRegisterDto;
 import com.example.qsgruppe12.model.Course;
+import com.example.qsgruppe12.model.Queue;
 import com.example.qsgruppe12.model.User;
 import com.example.qsgruppe12.model.relationship.User_Course;
 import com.example.qsgruppe12.repository.CourseRepository;
+import com.example.qsgruppe12.repository.QueueRepository;
 import com.example.qsgruppe12.repository.User_CourseRepository;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -28,6 +31,9 @@ public class CourseServiceImpl implements CourseService{
     @Autowired
     private User_CourseRepository userCourseRepository;
 
+    @Autowired
+    private QueueRepository queueRepository;
+
     private ModelMapper modelmapper = new ModelMapper();
 
     private boolean courseExists(CourseDto courseRegisterDto){
@@ -35,8 +41,9 @@ public class CourseServiceImpl implements CourseService{
     }
 
     @Override
-    public CourseDto createCourse(CourseDto courseRegisterDto) {
-        if (courseExists(courseRegisterDto)) {
+    public CourseDto createCourse(CourseRegisterDto courseRegisterDto, String email) {
+        CourseDto courseDto = modelmapper.map(courseRegisterDto, CourseDto.class);
+        if (courseExists(courseDto)) {
 //            throw new CourseExistsException();
             return null;
         }
@@ -45,6 +52,9 @@ public class CourseServiceImpl implements CourseService{
         course.setSemester((LocalDate.now().getMonthValue()>=6 ?  "H" : "V") + LocalDate.now().getYear());
         course.setArchived(false);
         course.setQueueActive(false);
+        Queue queue = Queue.builder().course(course).build();
+        queueRepository.save(queue);
+        course.setQueue(queue);
         System.out.println("after mapper");
         return modelmapper.map(courseRepository.save(course), CourseDto.class);
     }

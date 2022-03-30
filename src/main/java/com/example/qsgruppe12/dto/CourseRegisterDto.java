@@ -21,7 +21,6 @@ public class CourseRegisterDto {
     @NotEmpty
     private String semester;
     @NotNull
-    @NotEmpty
     private int totalWork;
 
     private String rules;

@@ -25,12 +25,6 @@ public class Room {
     private String picture;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Spot> rooms;
+    private List<Spot> spot;
 
-    @PreRemove
-    public void removeRelationships(){
-        if (rooms!=null){
-            rooms.clear();
-        }
-    }
 }

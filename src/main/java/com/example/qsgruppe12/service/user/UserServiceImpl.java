@@ -1,4 +1,4 @@
-package com.example.qsgruppe12.service;
+package com.example.qsgruppe12.service.user;
 
 import com.example.qsgruppe12.dto.CourseDto;
 import com.example.qsgruppe12.dto.userdtos.RegistrationDto;
@@ -9,6 +9,7 @@ import com.example.qsgruppe12.model.Queue;
 import com.example.qsgruppe12.model.User;
 import com.example.qsgruppe12.model.relationship.User_Course;
 import com.example.qsgruppe12.repository.*;
+import com.example.qsgruppe12.service.user.UserService;
 import com.example.qsgruppe12.util.RequestResponse;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -27,7 +28,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Service
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
 
     //TODO email sent to users created
 

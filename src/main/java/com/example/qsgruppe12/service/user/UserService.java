@@ -1,4 +1,4 @@
-package com.example.qsgruppe12.service;
+package com.example.qsgruppe12.service.user;
 
 import com.example.qsgruppe12.dto.CourseDto;
 import com.example.qsgruppe12.dto.userdtos.RegistrationDto;

@@ -3,7 +3,7 @@ package com.example.qsgruppe12.controller;
 import com.example.qsgruppe12.dto.CourseDto;
 import com.example.qsgruppe12.dto.userdtos.UserDto;
 import com.example.qsgruppe12.dto.userdtos.UserLoginDto;
-import com.example.qsgruppe12.service.UserService;
+import com.example.qsgruppe12.service.user.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

@@ -54,8 +54,9 @@
     <!-- Container wrapper -->
   </nav>
   <!-- Navbar -->
-
-  <router-view />
+  <div id="main">
+    <router-view />
+  </div>
   <Footer />
 </template>
 
@@ -95,19 +96,6 @@ export default {
   color: #2c3e50;
 }
 
-/*#nav {
-  padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
-}*/
-
 .nav-container {
   height: 80px;
   color: #ffffff;
@@ -125,5 +113,9 @@ export default {
 
 .show {
   display: block;
+}
+
+#main {
+  min-height: 80vh;
 }
 </style>

@@ -1,14 +1,48 @@
 <template>
-  <div class="container d-flex justify-content-center justify-content-xxl-center">
-    <div>
-      <ul class="list-unstyled">
-        <li class="list-item-style" v-for="task in work" :key="task">
-          <div class="d-flex justify-content-between align-items-center list-item-div">
-            <h1 class="list-header" style="">Øving {{ task.nr }}</h1>
-            <i class="fa fa-check-circle list-icon"></i>
+  <div id="wrapper" style="padding-top: 50px;padding-bottom: 50px;">
+    <div class="d-flex flex-column w-100">
+      <div id="content">
+        <div class="container-fluid">
+          <div class="row mb-3">
+            <div class="col-lg-8 mx-auto">
+              <div class="card shadow mb-3">
+                <div class="card-header text-center py-3">
+                  <p class="text-primary m-0 fw-bold">Øvinger</p>
+                </div>
+                <div class="card-body" style="height: auto;">
+                  <form>
+                    <div class="row">
+                      <div class="col text-center">
+                        <div class="mb-3">
+                          <h3>{{ courseName }}</h3>
+                          <h5 style="opacity: 0.60;">{{ courseID }}</h5>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row row-padding" v-for="w in work" :key="w">
+                      <div class="col">
+                        <div class="d-flex flex-row justify-content-evenly align-items-center">
+                          <h3>Øving {{ w.nr }}</h3>
+                          <i v-if="w.approved" class="fa fa-check-circle list-icon approved"></i>
+                          <i v-else class="fa fa-times-circle list-icon disapproved"></i>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="d-flex flex-column align-items-center">
+                      <h4>Regler:</h4>
+                      <ul class="list-unstyled">
+                        <li>2 av øvingene 1 til 4</li>
+                        <li>3 av øvingene 5 til 8</li>
+                        <li>2 av øvingene 9 til 10</li>
+                      </ul>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
           </div>
-        </li>
-      </ul>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -17,7 +51,10 @@
 export default {
   name: "Ovinger",
   props: {
-    work: []
+    work: [],
+    rules: [],
+    courseName: String,
+    courseID: String
   }
 }
 </script>
@@ -48,5 +85,18 @@ export default {
 
 .list-icon {
   font-size: 30px;
+}
+
+.row-padding {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.approved {
+  color: green;
+}
+
+.disapproved {
+  color: red;
 }
 </style>

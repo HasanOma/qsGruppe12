@@ -1,5 +1,4 @@
 <template>
-  <div id="main">
     <div
       class="container d-flex flex-row justify-content-center container-margin"
     >
@@ -20,7 +19,6 @@
       </ul>
     </div>
     <router-view></router-view>
-  </div>
 </template>
 
 <script>
@@ -35,10 +33,6 @@ export default {
 </script>
 
 <style scoped>
-#main {
-  min-height: 80vh;
-}
-
 .container-margin {
   margin: 50px auto;
 }

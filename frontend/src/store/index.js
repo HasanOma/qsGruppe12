@@ -5,7 +5,7 @@ export default createStore({
   state: {
     name: 'admin',
     email: '',
-    loggedIn: false,
+    loggedIn: true,
     isTeacher: true,
     courses: [],
     archived: []

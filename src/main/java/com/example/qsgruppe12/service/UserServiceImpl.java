@@ -164,6 +164,11 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    public UserLoginDto getUserLoggingIn(String username) {
+        return null;
+    }
+
+    //    @Override
     public UserLoginDto getUserLoggingIn(String email, String password) {
         if (!userExistsByEmail(email)) {
             //throw exception

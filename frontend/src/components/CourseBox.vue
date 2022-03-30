@@ -63,7 +63,7 @@ export default {
 <style scoped>
 @import url("https://fonts.googleapis.com/css?family=Lato:300,400,700");
 @import url("https://cdnjs.cloudflare.com/ajax/libs/pikaday/1.6.1/css/pikaday.min.css");
-@import "../../assets/fonts/font-awesome.min.css";
+@import "../assets/fonts/font-awesome.min.css";
 
 #container {
   outline: none;

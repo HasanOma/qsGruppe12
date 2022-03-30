@@ -51,7 +51,7 @@
 </template>
 
 <script>
-import Footer from "@/views/SubView/Footer.vue";
+import Footer from "@/components/Footer.vue";
 import $ from "jquery";
 
 export default {

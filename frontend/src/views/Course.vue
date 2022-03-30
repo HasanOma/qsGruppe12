@@ -6,8 +6,8 @@
 </template>
 
 <script>
-import CourseBox from "@/views/SubView/CourseBox";
-import CoursesNav from "@/views/SubView/CoursesNav";
+import CourseBox from "@/components/CourseBox";
+import CoursesNav from "@/components/CoursesNav";
 import axios from "axios";
 
 export default {

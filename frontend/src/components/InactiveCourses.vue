@@ -8,10 +8,10 @@
 </template>
 
 <script>
-import CourseBox from "@/views/SubView/CourseBox";
-import Navbar from "@/views/SubView/Navbar";
-import CoursesNav from "@/views/SubView/CoursesNav";
-import Footer from "@/views/SubView/Footer";
+import CourseBox from "@/components/CourseBox";
+import Navbar from "@/components/Navbar";
+import CoursesNav from "@/components/CoursesNav";
+import Footer from "@/components/Footer";
 import axios from "axios";
 
 

@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import Course from "../views/Course.vue";
 import Login from "../views/Login.vue";
 import Settings from "../views/Settings.vue";
-import InactiveCourses from "../views/SubView/InactiveCourses";
+import InactiveCourses from "../components/InactiveCourses";
 
 const routes = [
   {

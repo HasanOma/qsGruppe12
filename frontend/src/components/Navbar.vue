@@ -12,7 +12,7 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <router-link to="/home" class="navbar-brand">
-        <img src="../../assets/qS-logos.jpeg" class="nav-logo" />
+        <img src="src/assets/qS-logos.jpeg" class="nav-logo" />
       </router-link>
       <div class="collapse navbar-collapse" id="navcol-1">
         <ul class="navbar-nav ms-auto">
@@ -72,7 +72,7 @@ export default {
 </script>
 
 <style scoped>
-@import "../../assets/fonts/material-icons.min.css";
+@import "../assets/fonts/material-icons.min.css";
 
 .nav-container {
   height: 80px;

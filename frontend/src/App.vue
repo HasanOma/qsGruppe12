@@ -10,30 +10,39 @@
 
       <!-- Toggle button -->
       <button
-          @click="toggle"
-          class="navbar-toggler"
-          type="button"
-          data-mdb-toggle="collapse"
-          data-mdb-target="#navbarButtonsExample"
-          aria-controls="navbarButtonsExample"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
+        @click="toggle"
+        class="navbar-toggler"
+        type="button"
+        data-mdb-toggle="collapse"
+        data-mdb-target="#navbarButtonsExample"
+        aria-controls="navbarButtonsExample"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
       >
         <i class="fas fa-bars"></i>
       </button>
 
       <!-- Collapsible wrapper -->
-      <div class="collapse navbar-collapse justify-content-end" id="navbarButtonsExample">
-
+      <div
+        class="collapse navbar-collapse justify-content-end"
+        id="navbarButtonsExample"
+      >
         <div class="d-flex flex-sm-column flex-lg-row align-items-center">
-          <router-link to="/course/active" class="nav-item nav-link d-flex align-items-center">
+          <router-link
+            to="/course/active"
+            class="nav-item nav-link d-flex align-items-center"
+          >
             <i class="material-icons icon-size">school</i>&nbsp;Emner
           </router-link>
           <router-link to="/admin" class="nav-link d-flex align-items-center">
             <i class="material-icons icon-size">home</i>&nbsp;Admin
           </router-link>
-          <router-link to="/settings" class="nav-link d-flex align-items-center">
-            <i class="icon ion-android-settings icon-size"></i>&nbsp;Instillinger
+          <router-link
+            to="/settings"
+            class="nav-link d-flex align-items-center"
+          >
+            <i class="icon ion-android-settings icon-size"></i
+            >&nbsp;Instillinger
           </router-link>
           <router-link to="/" class="nav-link d-flex align-items-center">
             <i class="fa fa-sign-in icon-size"></i>&nbsp;Logg ut
@@ -58,7 +67,7 @@ export default {
   name: "App",
   components: {
     //Navbar,
-    Footer
+    Footer,
   },
   data() {
     return {
@@ -68,11 +77,10 @@ export default {
   },
   methods: {
     toggle() {
-      $('#navbarButtonsExample').toggleClass('show');
-    }
-  }
-}
-
+      $("#navbarButtonsExample").toggleClass("show");
+    },
+  },
+};
 </script>
 
 <style>

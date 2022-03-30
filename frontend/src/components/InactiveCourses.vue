@@ -14,14 +14,13 @@ import CoursesNav from "@/components/CoursesNav";
 import Footer from "@/components/Footer";
 import axios from "axios";
 
-
 export default {
   name: "InactiveCourses",
   components: {
     CourseBox,
     Navbar,
     CoursesNav,
-    Footer
+    Footer,
   },
   data() {
     return {

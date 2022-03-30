@@ -1,6 +1,7 @@
 <template>
   <nav
-    class="navbar navbar-dark bg-secondary navbar-expand-md sticky-top navigation-clean-button nav-container" v-if="isLoggedIn"
+    class="navbar navbar-dark bg-secondary navbar-expand-md sticky-top navigation-clean-button nav-container"
+    v-if="isLoggedIn"
   >
     <div class="container-fluid">
       <button

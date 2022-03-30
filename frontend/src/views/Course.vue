@@ -1,6 +1,8 @@
 <template>
   <div id="main">
-    <div class="container d-flex flex-row justify-content-center container-margin">
+    <div
+      class="container d-flex flex-row justify-content-center container-margin"
+    >
       <ul class="nav nav-style">
         <li class="nav-item">
           <router-link to="/course/active" class="nav-link active link-style">
@@ -8,7 +10,10 @@
           </router-link>
         </li>
         <li class="nav-item">
-          <router-link to="/course/archived" class="nav-link right-link-style link-style">
+          <router-link
+            to="/course/archived"
+            class="nav-link right-link-style link-style"
+          >
             Arkiverte emner
           </router-link>
         </li>
@@ -25,7 +30,7 @@ export default {
   name: "Course",
   components: {
     //CoursesNav,
-  }
+  },
 };
 </script>
 
@@ -40,15 +45,15 @@ export default {
 
 .nav-style {
   max-width: max-content;
-  background: rgb(14,160,255);
+  background: rgb(14, 160, 255);
 }
 
 .link-style {
-  color: rgb(255,255,255);
+  color: rgb(255, 255, 255);
 }
 
 .right-link-style {
   border-left-width: 2px;
-  border-left-color: rgb(101,101,101);
+  border-left-color: rgb(101, 101, 101);
 }
 </style>

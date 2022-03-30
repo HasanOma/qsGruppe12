@@ -18,14 +18,14 @@ const routes = [
       {
         path: "active",
         name: "Active",
-        component: ActiveCourses
+        component: ActiveCourses,
       },
       {
         path: "archived",
         name: "Archived",
-        component: ArchivedCourses
-      }
-    ]
+        component: ArchivedCourses,
+      },
+    ],
   },
   {
     path: "/settings",

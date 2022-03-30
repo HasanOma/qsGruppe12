@@ -3,7 +3,10 @@ package com.example.qsgruppe12.service;
 
 import com.example.qsgruppe12.dto.CourseDto;
 import com.example.qsgruppe12.model.Course;
+import com.example.qsgruppe12.model.User;
+import com.example.qsgruppe12.model.relationship.User_Course;
 import com.example.qsgruppe12.repository.CourseRepository;
+import com.example.qsgruppe12.repository.User_CourseRepository;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +24,9 @@ public class CourseServiceImpl implements CourseService{
 
     @Autowired
     private CourseRepository courseRepository;
+
+    @Autowired
+    private User_CourseRepository userCourseRepository;
 
     private ModelMapper modelmapper = new ModelMapper();
 

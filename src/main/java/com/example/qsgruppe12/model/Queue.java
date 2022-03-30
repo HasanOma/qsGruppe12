@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -18,7 +19,7 @@ public class Queue {
     @Id
     @SequenceGenerator(
             name = "queue_sequence",
-            sequenceName = "queue_sequence",
+            sequenceName = "course_sequence",
             allocationSize = 1
     )
     @GeneratedValue(
@@ -31,6 +32,6 @@ public class Queue {
     @JoinColumn(name = "course_id", referencedColumnName = "course_id")
     private Course course;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany
     private List<User> usersInQueue;
 }

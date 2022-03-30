@@ -1,5 +1,5 @@
 <template>
-  <Queue :in-queue="queue" :course-i-d="courseID"/>
+  <Queue :in-queue="queue" :course-i-d="courseID" :course-name="courseName"/>
 </template>
 
 <script>
@@ -14,11 +14,13 @@ export default {
   data() {
     return {
       queue: [],
-      courseID: String
+      courseID: String,
+      courseName: String
     }
   },
   async created() {
-    this.courseID = this.$router.currentRoute.value.params.id
+    this.courseID = this.$route.query.courseID
+    this.courseName = this.$route.query.courseName
 
     let response = (await axios.get("http://localhost:3000/queues")).data[0]
     this.queue = response.queue

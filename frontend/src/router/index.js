@@ -6,6 +6,7 @@ import ActiveCourses from "@/views/SubView/ActiveCourses";
 import ArchivedCourses from "@/views/SubView/ArchivedCourses";
 import CourseQueue from "@/views/CourseQueue";
 import WorkStatus from "@/views/WorkStatus";
+import AddToQueue from "@/components/AddToQueue";
 
 const routes = [
   {
@@ -32,7 +33,12 @@ const routes = [
   {
     path: "/course/:id",
     name: "Queue",
-    component: CourseQueue
+    component: CourseQueue,
+  },
+  {
+    path: "/course/:id/add_to_queue",
+    name: "Add to queue",
+    component: AddToQueue,
   },
   {
     path: "/course/:id/work",

@@ -30,6 +30,8 @@
                     </div>
                     <div class="d-flex flex-column align-items-center">
                       <h4>Regler:</h4>
+
+                      <!-- TODO: make rules be dynamic -->
                       <ul class="list-unstyled">
                         <li>2 av øvingene 1 til 4</li>
                         <li>3 av øvingene 5 til 8</li>

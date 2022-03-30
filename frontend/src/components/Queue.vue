@@ -1,15 +1,23 @@
 <template>
-  <div id="wrapper">
-    <div class="d-flex flex-column" id="content-wrapper">
+  <div id="wrapper" class="mt-5">
+    <div class="d-flex flex-column w-100">
       <div id="content">
         <div class="container-fluid">
-          <h3 class="text-dark mb-4">{{ courseID }}</h3>
+          <h3 class="text-dark mb-4">{{ courseID }} {{ courseName }}</h3>
           <div class="card shadow">
             <div class="card-header py-3">
               <p class="text-primary m-0 fw-bold text-left">KØ</p>
               <p class="text-primary m-0 fw-bold text-left">
                 Melding fra LA:&nbsp;
               </p>
+              <div class="d-flex align-items-start">
+                <BaseButton
+                    css-class="btn btn-outline-primary btn-sm rounded-pill"
+                    @clicked="toAddToQueue(courseID, courseName)"
+                >
+                  Still i kø
+                </BaseButton>
+              </div>
             </div>
             <div class="card-body">
               <div
@@ -25,23 +33,21 @@
                       <th>Rom/Bord</th>
                       <th>Øving/Type</th>
                       <th>Tid i kø</th>
-                      <th style="width: 137.125px">Melding</th>
-                      <th style="width: 116.7344px"></th>
-                      <th style="width: 116.7344px">
+                      <th>Melding</th>
+                      <th>
                         <strong>Rediger</strong><br />
                       </th>
                     </tr>
                   </thead>
-                  <!--                  TODO HER KOMMER QUEue componenten-->
+
                   <tbody>
                     <tr v-for="person in inQueue" :key="person">
                       <th>{{ person.name }}</th>
                       <th>{{ person.room_table }}</th>
                       <th>{{ person.work_type }}</th>
                       <th>{{ person.time }}</th>
-                      <th style="width: 137.125px">{{ person.message }}</th>
-                      <th style="width: 116.7344px"></th>
-                      <th style="width: 116.7344px">
+                      <th>{{ person.message }}</th>
+                      <th>
                         <strong>Rediger</strong><br />
                       </th>
                     </tr>
@@ -60,16 +66,23 @@
 </template>
 
 <script>
+import BaseButton from "@/components/BaseComponents/BaseButton.vue";
+
 export default {
   name: "Queue",
-  props: {
-    courseID: {
-      type: String,
-    },
-    inQueue: {
-      type: Array,
-    },
+  components: {
+    BaseButton
   },
+  props: {
+    courseID: String,
+    courseName: String,
+    inQueue: []
+  },
+  methods: {
+    toAddToQueue(courseID, courseName) {
+      this.$router.push({ name: "Add to queue", query: { redirect: "/course/:id/addToQueue", courseName: courseName, courseID: courseID }, params: { id: courseID } });
+    }
+  }
 };
 </script>
 

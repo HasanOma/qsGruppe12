@@ -14,6 +14,7 @@ import javax.validation.constraints.NotNull;
 @Builder
 public class CourseDto {
 
+    private Long id;
     @NotNull
     @NotEmpty
     private String name;

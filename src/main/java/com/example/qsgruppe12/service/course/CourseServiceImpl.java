@@ -1,15 +1,15 @@
-package com.example.qsgruppe12.service;
+package com.example.qsgruppe12.service.course;
 
 
 import com.example.qsgruppe12.dto.CourseDto;
 import com.example.qsgruppe12.dto.CourseRegisterDto;
 import com.example.qsgruppe12.model.Course;
 import com.example.qsgruppe12.model.Queue;
-import com.example.qsgruppe12.model.User;
 import com.example.qsgruppe12.model.relationship.User_Course;
 import com.example.qsgruppe12.repository.CourseRepository;
 import com.example.qsgruppe12.repository.QueueRepository;
 import com.example.qsgruppe12.repository.User_CourseRepository;
+import com.example.qsgruppe12.service.course.CourseService;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,7 +23,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Service
-public class CourseServiceImpl implements CourseService{
+public class CourseServiceImpl implements CourseService {
 
     @Autowired
     private CourseRepository courseRepository;

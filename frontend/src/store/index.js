@@ -7,55 +7,68 @@ export default createStore({
     email: '',
     loggedIn: false,
     isTeacher: true,
+    courses: [],
+    archived: []
   },
   mutations: {
-    SET_INFO(state, contactInfo) {
-      state.name = contactInfo.name;
-      state.email = contactInfo.email;
-    },
-    ADD_NAME(state, name){
+    SET_NAME(state, name) {
       state.name = name;
     },
-    ADD_EMAIL(state, email){
+    SET_EMAIL(state, email) {
       state.email = email;
     },
-    SET_LOGGED_IN(state, loggedIn) {
-      state.loggedIn = loggedIn;
+    SET_LOGGED_IN(state, bool) {
+      state.loggedIn = bool;
+    },
+    SET_IS_TEACHER(state, bool) {
+      state.isTeacher = bool;
+    },
+    SET_COURSES(state, courses) {
+      state.courses = courses;
+    },
+    SET_ARCHIVED(state, archived) {
+      state.archived = archived;
     }
   },
   actions: {
-    setInfo({ commit }, contactInfo) {
-      return commit("SET_INFO", contactInfo)
-        .catch((error) => {
-          throw error;
-        });
+    setName({ commit }, name) {
+      commit("SET_NAME", name)
     },
-    getName(state){
-      return state.name
+    setEmail({ commit }, email) {
+      commit("SET_EMAIL", email)
     },
-    getEmail(state){
-      return state.email
+    setLoggedIn({ commit }, bool) {
+      commit("SET_LOGGED_IN", bool)
     },
-    addName(state,name) {
-      state.name = (name)
+    setIsTeacher({ commit }, bool) {
+      commit("SET_IS_TEACHER", bool)
     },
-    addEmail(state,email) {
-      state.email = (email)
+    addCourses({ commit }, courses) {
+      commit("SET_COURSES", courses)
     },
-    setLoggedIn({ commit }, loggedIn) {
-      commit("SET_LOGGED_IN", loggedIn)
+    addArchived({ commit }, archived) {
+      commit("SET_ARCHIVED", archived)
     }
   },
   modules: {},
   getters: {
     name(state) {
-      return `${state.name}`
+      return state.name
+    },
+    email(state) {
+      return state.email
+    },
+    isLoggedIn(state) {
+      return state.loggedIn
     },
     isTeacher(state) {
       return state.isTeacher
     },
-    isLoggedIn(state) {
-      return state.loggedIn
+    courses(state) {
+      return state.courses
+    },
+    archived(state) {
+      return state.archived
     }
   }
 });

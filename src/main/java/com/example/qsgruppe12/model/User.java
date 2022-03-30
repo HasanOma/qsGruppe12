@@ -5,6 +5,8 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 
 import javax.persistence.*;
 import java.util.List;
@@ -26,6 +28,7 @@ public class User {
             generator = "user_sequence",
             strategy = GenerationType.SEQUENCE)
     @Column(name = "user_id")
+    @NotFound(action = NotFoundAction.IGNORE)
     private Long id;
     @NotBlank
     @Column(nullable = false)
@@ -46,7 +49,7 @@ public class User {
     @JoinColumn(name = "role_id", referencedColumnName = "role_id")
     private Role role;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     @ToString.Exclude
     private List<User_Course> courses;
 

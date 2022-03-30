@@ -47,7 +47,7 @@ public class Course {
     @NotNull
     private int nrOfStudents;
 
-    @OneToMany(mappedBy = "course", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "course", fetch = FetchType.EAGER)
     @ToString.Exclude
     private List<User_Course> users;
 

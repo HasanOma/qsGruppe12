@@ -2,15 +2,11 @@ package com.example.qsgruppe12.controller;
 
 import com.example.qsgruppe12.dto.CourseDto;
 import com.example.qsgruppe12.dto.userdtos.LoginDto;
+import com.example.qsgruppe12.dto.userdtos.RegistrationDto;
 import com.example.qsgruppe12.dto.userdtos.UserDto;
-<<<<<<< HEAD
 import com.example.qsgruppe12.dto.userdtos.UserLoginReturnDto;
-import com.example.qsgruppe12.service.UserService;
 import jakarta.validation.Valid;
-=======
-import com.example.qsgruppe12.dto.userdtos.UserLoginDto;
 import com.example.qsgruppe12.service.user.UserService;
->>>>>>> 47763c13384e0d635d62c16cd0006aec5e3d58a0
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,6 +28,12 @@ public class UserController {
     @ResponseStatus(HttpStatus.OK)
     public UserDto updateUser(@PathVariable Long userId, @RequestBody UserDto user){
         return userService.updateUser(userId, user);
+    }
+
+    @PostMapping("/{courseId}/add")
+    @ResponseStatus(HttpStatus.CREATED)
+    public List<UserDto> createUsers(@PathVariable Long courseId, @RequestBody List<RegistrationDto> userRegisterDto){
+        return userService.addUsersForCourse(courseId, userRegisterDto);
     }
 
     @GetMapping("/login")

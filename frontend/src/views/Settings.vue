@@ -1,15 +1,13 @@
 <template>
-  <StudentSettings />
+  <UserSettings />
 </template>
 
 <script>
-import StudentSettings from "@/views/SubView/UserSettings";
-import Navbar from "@/views/SubView/Navbar";
+import UserSettings from "@/views/SubView/UserSettings";
 
 export default {
   components: {
-    StudentSettings,
-    Navbar,
+    UserSettings,
   },
 };
 </script>

@@ -67,22 +67,47 @@ public class CourseServiceImpl implements CourseService{
 
     @Override
     public void checkExamStatus(Long courseId) {
-//        if (courseRepository.findById(courseId).isEmpty()){
-////            throw new CourseException();
-//        }
-//        Course course = courseRepository.findById(courseId).get();
-//        String rules = course.getRules();
-//        //split rules på hver 9ende karakter
-//        String twoRules = "3_1_5.1_6_8";
-//        String[] ruleArray =  rules.split("[.]");
-//        boolean[] ruleCheck = new boolean[ruleArray.length];
-//
-//        for(int i = 0;i<ruleArray.length;i++){
-//            String[] ovingArray = ruleArray[i].split("[_]");
-//            int nr = Integer.parseInt(ovingArray[0]);
-//            int from = Integer.parseInt(ovingArray[1]);
-//            int to = Integer.parseInt(ovingArray[2]);
-//        }
-//
+        if (courseRepository.findById(courseId).isEmpty()){
+//            throw new CourseException();
+        }
+        Course course = courseRepository.findById(courseId).get();
+        String rules = course.getRules();
+
+        String[] ruleArray =  rules.split("[.]");
+
+        for(int i=0;i<course.getNrOfStudents();i++){
+            //gjør om stringen til integers som skal sjekkes
+            User_Course user_course = course.getUsers().get(i);
+            String work = user_course.getWorkApproved();
+            char[] chars = work.toCharArray();
+            int[] workInt = new int[chars.length];
+            for(int x=0;x<chars.length;x++){
+                workInt[x] = Integer.parseInt(String.valueOf(chars[x]));
+            }
+
+            for(int j = 0;j<ruleArray.length;j++){
+                //splitter opp regelen til integers
+                String[] ovingArray = ruleArray[j].split("[_]");
+                int nrOfNeeded = Integer.parseInt(ovingArray[0]);
+                int from = Integer.parseInt(ovingArray[1])-1;
+                int to = Integer.parseInt(ovingArray[2])-1;
+
+                //sjekker her om arbeidet er gjort, 1 betyr godkjent, 0 betyr ikke godkjent
+                for(int k=from;k<=to;k++){
+                    if(workInt[k]==1) nrOfNeeded--;
+                }
+
+                //dersom antallet gjennomførte øvinger i gruppen er mer enn null, betyr det at
+                //studenten ikke har gjennomført riktig antall øvinger i gruppen og kan dermed ikke ta eksamen
+                if(nrOfNeeded>0){
+                    return;
+                }
+            }
+            //om man kommer seg til dette punktet i koden betyr det at man kan gå opp til eksamen
+            //fordi man har alltid gjort like mange eller flere øvingeer enn det som er nødvendig
+            user_course.setCanDoExam(true);
+        }
+
+
     }
 }

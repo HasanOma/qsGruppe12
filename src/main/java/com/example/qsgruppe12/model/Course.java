@@ -44,6 +44,8 @@ public class Course {
     private String rules;
     @Builder.Default
     private boolean archived = false;
+    @NotNull
+    private int nrOfStudents;
 
     @OneToMany(mappedBy = "course", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @ToString.Exclude
@@ -52,4 +54,8 @@ public class Course {
     @OneToOne
     @JoinColumn(name = "queue_id", referencedColumnName = "queue_id")
     private Queue queue;
+
+    public int getNrOfStudents() {
+        return nrOfStudents;
+    }
 }

@@ -18,4 +18,8 @@ public interface UserService {
     void addTAsForCourse(Long courseId, List<RegistrationDto> registrationDto);
 
     UserLoginDto getUserLoggingIn(String username);
+
+    UserDto getInQueue(Long courseId, String username);
+
+    List<UserDto> getUsersInQueue(Long courseId);
 }

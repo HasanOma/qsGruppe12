@@ -38,13 +38,17 @@ public class CourseServiceImpl implements CourseService{
         Course course = modelmapper.map(courseRegisterDto, Course.class);
         course.setSemester((LocalDate.now().getMonthValue()>=6 ?  "H" : "V") + LocalDate.now().getYear());
         course.setArchived(false);
+        course.setQueueActive(false);
         System.out.println("after mapper");
         return modelmapper.map(courseRepository.save(course), CourseDto.class);
     }
 
     @Override
-    public CourseDto update() {
-        return null;
+    public CourseDto update(Long courseId, CourseDto courseDto) {
+        Course course = courseRepository.findById(courseId).get();
+        course.setQueueActive(courseDto.isQueueActive());
+        course.setRules(courseDto.getRules());
+        return modelmapper.map(courseRepository.save(course),CourseDto.class);
     }
 
     @Override
@@ -52,7 +56,6 @@ public class CourseServiceImpl implements CourseService{
         if (courseRepository.findById(courseId).isEmpty()){
 //            throw new CourseException();
         }
-
         courseRepository.deleteById(courseId);
     }
 

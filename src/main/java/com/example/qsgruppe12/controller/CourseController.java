@@ -39,8 +39,7 @@ public class CourseController {
     @PutMapping("{courseId}/")
     public CourseDto updateCourse(Authentication authentication, @PathVariable Long courseId,
                                   @RequestBody CourseDto courseDto){
-//        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-//        return courseService.updateCourse(courseId, courseDto, userDetails.getUsername());
-        return null;
+        return courseService.update(courseId, courseDto);
     }
+
 }

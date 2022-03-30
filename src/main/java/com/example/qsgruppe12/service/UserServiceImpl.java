@@ -4,7 +4,10 @@ import com.example.qsgruppe12.dto.CourseDto;
 import com.example.qsgruppe12.dto.userdtos.RegistrationDto;
 import com.example.qsgruppe12.dto.userdtos.UserDto;
 import com.example.qsgruppe12.dto.userdtos.UserLoginDto;
+import com.example.qsgruppe12.model.Queue;
 import com.example.qsgruppe12.model.User;
+import com.example.qsgruppe12.repository.CourseRepository;
+import com.example.qsgruppe12.repository.QueueRepository;
 import com.example.qsgruppe12.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -28,6 +31,12 @@ public class UserServiceImpl implements UserService{
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private CourseRepository courseRepository;
+
+    @Autowired
+    private QueueRepository queueRepository;
 
     private BCryptPasswordEncoder cryptPasswordEncoder;
 
@@ -80,5 +89,25 @@ public class UserServiceImpl implements UserService{
             UserLoginDto user = modelMapper.map(userFromDB, UserLoginDto.class);
         }
         return null;
+    }
+
+    @Override
+    public UserDto getInQueue(Long courseId, String username) {
+
+
+        return null;
+    }
+
+    @Override
+    public List<UserDto> getUsersInQueue(Long courseId) {
+        if (!courseRepository.getById(courseId).isQueueActive()){
+            return null;
+        }
+        Queue queue = queueRepository.getById(courseRepository.getById(courseId).getQueue().getId());
+        List<UserDto> usersInQueue = new ArrayList<>();
+        for (int i = 0; i < queue.getUsersInQueue().size(); i++) {
+            usersInQueue.add(modelMapper.map(queue.getUsersInQueue().get(i), UserDto.class));
+        }
+        return usersInQueue;
     }
 }

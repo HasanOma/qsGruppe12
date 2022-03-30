@@ -37,6 +37,8 @@ public class Course {
     @Column(unique=true)
     private String semester;
     @NotNull
+    private boolean queueActive;
+    @NotNull
     private int totalWork;
     @NotNull
     private String rules;
@@ -47,4 +49,7 @@ public class Course {
     @ToString.Exclude
     private List<User_Course> users;
 
+    @OneToOne
+    @JoinColumn(name = "queue_id", referencedColumnName = "queue_id")
+    private Queue queue;
 }

@@ -24,6 +24,9 @@ public class CourseDto {
     @NotNull
     @NotEmpty
     private String semester;
+    @NotEmpty
+    @NotNull
+    private boolean queueActive;
     @NotNull
     @NotEmpty
     private int totalWork;

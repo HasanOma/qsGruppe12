@@ -3,15 +3,17 @@ package com.example.qsgruppe12.model.relationship;
 import com.example.qsgruppe12.model.Course;
 import com.example.qsgruppe12.model.User;
 import com.example.qsgruppe12.model.relationshipkey.UserCourseKey;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
 @Setter
+@SuperBuilder
+@NoArgsConstructor
+@AllArgsConstructor
 @ToString
 public class User_Course {
 

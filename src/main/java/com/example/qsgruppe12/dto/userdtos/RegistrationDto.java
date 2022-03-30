@@ -29,4 +29,6 @@ public class RegistrationDto {
     @NotNull
     @NotEmpty
     private String password;
+
+    private String role;
 }

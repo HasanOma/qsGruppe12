@@ -4,14 +4,16 @@ import com.example.qsgruppe12.dto.CourseDto;
 import com.example.qsgruppe12.dto.userdtos.RegistrationDto;
 import com.example.qsgruppe12.dto.userdtos.UserDto;
 import com.example.qsgruppe12.dto.userdtos.UserLoginDto;
+import com.example.qsgruppe12.model.Course;
 import com.example.qsgruppe12.model.Queue;
 import com.example.qsgruppe12.model.User;
-import com.example.qsgruppe12.repository.CourseRepository;
-import com.example.qsgruppe12.repository.QueueRepository;
-import com.example.qsgruppe12.repository.UserRepository;
+import com.example.qsgruppe12.model.relationship.User_Course;
+import com.example.qsgruppe12.repository.*;
+import com.example.qsgruppe12.util.RequestResponse;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -38,12 +40,23 @@ public class UserServiceImpl implements UserService{
     @Autowired
     private QueueRepository queueRepository;
 
+    @Autowired
+    private User_CourseRepository userCourseRepository;
+
+    @Autowired
+    private RoleRepository roleRepository;
+
     private BCryptPasswordEncoder cryptPasswordEncoder;
 
     private ModelMapper modelMapper;
 
     private boolean userExistsByEmail(String email){
         return userRepository.findByEmail(email).isPresent();
+    }
+
+    private String randomStringGenerator(){
+        String s = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789~`!@#$%^&*()-_=+[{]}\\|;:\'\",<.>/?";
+        return RandomStringUtils.random( 20, s );
     }
 
     @Override
@@ -58,28 +71,94 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public List<UserDto> addUsersForCourse(Long courseId, List<RegistrationDto> registrationDto) {
-        //TODO if course does not exist or if user exists throw exception
-        List<UserDto> savedStudents = new ArrayList<>();
-        for (RegistrationDto dto : registrationDto) {
+    public RequestResponse createUser(List<RegistrationDto> registrations){
+        for (RegistrationDto dto : registrations) {
+
             User student = modelMapper.map(dto, User.class);
+
+            String password = dto.getPassword();
+
+            if(password.isBlank()){
+                password = randomStringGenerator();
+            }
+
+            student.setPassword(password);
             student.setPassword(cryptPasswordEncoder.encode(dto.getPassword()));
+            student.setRole(roleRepository.getById((long) 3));
+            userRepository.save(student);
+
+            //TODO send email plus password with it
+
+        }
+        return new RequestResponse("User created");
+    }
+
+    @Override
+    public List<UserDto> addUsersForCourse(Long courseId, List<RegistrationDto> registrations) {
+        //TODO if course does not exist or if user exists throw exception
+
+        List<UserDto> savedStudents = new ArrayList<>();
+        Course course = courseRepository.getById(courseId);
+        for (RegistrationDto dto : registrations) {
+
+            User student = modelMapper.map(dto, User.class);
+
+            String password = dto.getPassword();
+
+            if(password.isBlank()){
+                password = randomStringGenerator();
+            }
+
+            student.setPassword(password);
+
+            student.setPassword(cryptPasswordEncoder.encode(dto.getPassword()));
+
+            student.setRole(roleRepository.getById((long) 3));
+
+            User_Course userCourse = User_Course.builder().course(course).user(student).build();
+            userCourseRepository.save(userCourse);
+
             UserDto studentAdded = modelMapper.map(userRepository.save(student), UserDto.class);
             savedStudents.add(studentAdded);
-            //TODO send email
+
+
+            //TODO send email plus password with it
         }
         return savedStudents;
     }
 
     @Override
-    public void addTAsForCourse(Long courseId, List<RegistrationDto> registrationDto) {
+    public List<UserDto> addTAsForCourse(Long courseId, List<RegistrationDto> registrations) {
+//TODO if course does not exist or if user exists throw exception
 
-        for(RegistrationDto dto: registrationDto){
-//            if(taRepository.findByEmail(dto.getEmail()).isPresent()){
-//                TA ta = taRepository.findByEmail(dto.getEmail()).get();
-//                TA_Course ta_course;
-//            }
+        List<UserDto> tas = new ArrayList<>();
+        Course course = courseRepository.getById(courseId);
+        for (RegistrationDto dto : registrations) {
+
+            User ta = modelMapper.map(dto, User.class);
+
+            String password = dto.getPassword();
+
+            if(password.isBlank()){
+                password = randomStringGenerator();
+            }
+
+            ta.setPassword(password);
+
+            ta.setPassword(cryptPasswordEncoder.encode(dto.getPassword()));
+
+            ta.setRole(roleRepository.getById((long) 2));
+
+            User_Course userCourse = User_Course.builder().course(course).user(ta).workApproved(null).build();
+            userCourseRepository.save(userCourse);
+
+            UserDto studentAdded = modelMapper.map(userRepository.save(ta), UserDto.class);
+            tas.add(studentAdded);
+
+
+            //TODO send email
         }
+        return tas;
     }
 
     @Override

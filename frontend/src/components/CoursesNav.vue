@@ -1,18 +1,5 @@
 <template>
-  <div class="container d-flex flex-row justify-content-center container-margin">
-    <ul class="nav nav-style">
-      <li class="nav-item">
-        <router-link to="/home" class="nav-link active link-style">
-          Dine emner
-        </router-link>
-      </li>
-      <li class="nav-item">
-        <router-link to="/inactiveCourses" class="nav-link right-link-style link-style">
-          Arkiverte emner
-        </router-link>
-      </li>
-    </ul>
-  </div>
+
 </template>
 
 <script>

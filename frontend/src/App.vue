@@ -4,7 +4,7 @@
     <!-- Container wrapper -->
     <div class="container">
       <!-- Navbar brand -->
-      <router-link to="/course" class="navbar-brand me-2">
+      <router-link to="/course/active" class="navbar-brand me-2">
         <img src="./assets/qS-logos.jpeg" class="nav-logo" />
       </router-link>
 
@@ -26,7 +26,7 @@
       <div class="collapse navbar-collapse justify-content-end" id="navbarButtonsExample">
 
         <div class="d-flex flex-sm-column flex-lg-row align-items-center">
-          <router-link to="/course" class="nav-item nav-link d-flex align-items-center">
+          <router-link to="/course/active" class="nav-item nav-link d-flex align-items-center">
             <i class="material-icons icon-size">school</i>&nbsp;Emner
           </router-link>
           <router-link to="/admin" class="nav-link d-flex align-items-center">

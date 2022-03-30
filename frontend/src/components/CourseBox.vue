@@ -22,6 +22,7 @@
                 <BaseButton
                   css-class="btn btn-outline-primary btn-sm rounded-pill"
                   icss="fa fa-arrow-circle-right icon-margin"
+                  @clicked="toQueue(course.course_id)"
                 >
                   Til kø
                 </BaseButton>
@@ -57,6 +58,11 @@ export default {
     plugin.async = true;
     document.head.appendChild(plugin);
   },
+  methods: {
+    toQueue(courseID) {
+      this.$router.push({ name: "Queue", query: { redirect: "/course/:id" }, params: { id: courseID } });
+    }
+  }
 };
 </script>
 

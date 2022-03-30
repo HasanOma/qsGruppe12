@@ -3,7 +3,7 @@
     <div class="d-flex flex-column" id="content-wrapper">
       <div id="content">
         <div class="container-fluid">
-          <h3 class="text-dark mb-4">Team</h3>
+          <h3 class="text-dark mb-4">{{ courseID }}</h3>
           <div class="card shadow">
             <div class="card-header py-3">
               <p class="text-primary m-0 fw-bold text-left">KØ</p>
@@ -33,6 +33,19 @@
                     </tr>
                   </thead>
                   <!--                  TODO HER KOMMER QUEue componenten-->
+                  <tbody>
+                    <tr v-for="person in inQueue" :key="person">
+                      <th>{{ person.name }}</th>
+                      <th>{{ person.room_table }}</th>
+                      <th>{{ person.work_type }}</th>
+                      <th>{{ person.time }}</th>
+                      <th style="width: 137.125px">{{ person.message }}</th>
+                      <th style="width: 116.7344px"></th>
+                      <th style="width: 116.7344px">
+                        <strong>Rediger</strong><br />
+                      </th>
+                    </tr>
+                  </tbody>
                   <tfoot>
                     <tr></tr>
                   </tfoot>
@@ -50,6 +63,9 @@
 export default {
   name: "Queue",
   props: {
+    courseID: {
+      type: String,
+    },
     inQueue: {
       type: Array,
     },

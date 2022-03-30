@@ -4,6 +4,7 @@ import Login from "../views/Login.vue";
 import Settings from "../views/Settings.vue";
 import ActiveCourses from "@/views/SubView/ActiveCourses";
 import ArchivedCourses from "@/views/SubView/ArchivedCourses";
+import CourseQueue from "@/views/CourseQueue";
 
 const routes = [
   {
@@ -26,6 +27,11 @@ const routes = [
         component: ArchivedCourses
       }
     ]
+  },
+  {
+    path: "/course/:id",
+    name: "Queue",
+    component: CourseQueue
   },
   {
     path: "/settings",

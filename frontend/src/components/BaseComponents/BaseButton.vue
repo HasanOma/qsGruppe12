@@ -1,5 +1,5 @@
 <template>
-  <button :type="type" :class="cssClass" :style="style">
+  <button :type="type" :class="cssClass" :style="style" @click="$emit('clicked')">
     <i :class="icss" />
     <slot />
   </button>

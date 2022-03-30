@@ -5,6 +5,7 @@ import Settings from "../views/Settings.vue";
 import ActiveCourses from "@/views/SubView/ActiveCourses";
 import ArchivedCourses from "@/views/SubView/ArchivedCourses";
 import CourseQueue from "@/views/CourseQueue";
+import WorkStatus from "@/views/WorkStatus";
 
 const routes = [
   {
@@ -32,6 +33,11 @@ const routes = [
     path: "/course/:id",
     name: "Queue",
     component: CourseQueue
+  },
+  {
+    path: "/course/:id/work",
+    name: "Work",
+    component: WorkStatus
   },
   {
     path: "/settings",

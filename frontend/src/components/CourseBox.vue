@@ -16,6 +16,7 @@
                 <BaseButton
                   css-class="btn btn-outline-primary btn-sm rounded-pill"
                   icss="fa fa-check-circle icon-margin"
+                  @clicked="toWorkStatus(course.course_id)"
                 >
                   Øvinger
                 </BaseButton>
@@ -61,6 +62,9 @@ export default {
   methods: {
     toQueue(courseID) {
       this.$router.push({ name: "Queue", query: { redirect: "/course/:id" }, params: { id: courseID } });
+    },
+    toWorkStatus(courseID) {
+      this.$router.push({ name: "Work", query: { redirect: "/course/:id/work" }, params: { id: courseID } });
     }
   }
 };

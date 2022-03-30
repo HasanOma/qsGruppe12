@@ -24,12 +24,12 @@ public class CourseController {
     public CourseDto createCourse(Authentication authentication ,@Valid @RequestBody CourseDto courseDto){
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         System.out.println("here");
-        return courseService.createCourse(courseDto, userDetails.getUsername());
+        return courseService.createCourse(courseDto);
     }
 
     @DeleteMapping("{courseId}/")
     @ResponseStatus(HttpStatus.OK)
-    public String deleteCourse(@RequestBody ){
+    public String deleteCourse(Authentication authentication, @RequestBody CourseDto courseDto){
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         courseService.deleteCourse(courseDto.getName(), courseDto.getSemester());
         return "Course " + courseDto.getName() + " " + courseDto.getSemester() + " has been deleted.";
@@ -38,6 +38,6 @@ public class CourseController {
     @PutMapping("{courseId}/")
     public CourseDto updateCourse(Authentication authentication){
         CourseDto courseDto = (CourseDto) authentication.getPrincipal();
-        return courseService.updateCourse();
+        return null;
     }
 }

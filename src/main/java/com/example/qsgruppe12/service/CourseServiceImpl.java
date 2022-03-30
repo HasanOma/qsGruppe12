@@ -11,6 +11,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+
 @Slf4j
 @NoArgsConstructor
 @AllArgsConstructor
@@ -34,15 +36,44 @@ public class CourseServiceImpl implements CourseService{
         }
         System.out.println("before mapper");
         Course course = modelmapper.map(courseRegisterDto, Course.class);
+        course.setSemester((LocalDate.now().getMonthValue()>=6 ?  "H" : "V") + LocalDate.now().getYear());
+        course.setArchived(false);
         System.out.println("after mapper");
         return modelmapper.map(courseRepository.save(course), CourseDto.class);
     }
 
     @Override
-    public void deleteCourse(String code, String semester) {
-        if (courseRepository.findByCodeAndSemester(code, semester).isEmpty()){
+    public CourseDto update() {
+        return null;
+    }
+
+    @Override
+    public void deleteCourse(Long courseId) {
+        if (courseRepository.findById(courseId).isEmpty()){
 //            throw new CourseException();
         }
-        courseRepository.deleteByCodeAndSemester(code, semester);
+
+        courseRepository.deleteById(courseId);
+    }
+
+    @Override
+    public void checkExamStatus(Long courseId) {
+//        if (courseRepository.findById(courseId).isEmpty()){
+////            throw new CourseException();
+//        }
+//        Course course = courseRepository.findById(courseId).get();
+//        String rules = course.getRules();
+//        //split rules på hver 9ende karakter
+//        String twoRules = "3_1_5.1_6_8";
+//        String[] ruleArray =  rules.split("[.]");
+//        boolean[] ruleCheck = new boolean[ruleArray.length];
+//
+//        for(int i = 0;i<ruleArray.length;i++){
+//            String[] ovingArray = ruleArray[i].split("[_]");
+//            int nr = Integer.parseInt(ovingArray[0]);
+//            int from = Integer.parseInt(ovingArray[1]);
+//            int to = Integer.parseInt(ovingArray[2]);
+//        }
+//
     }
 }

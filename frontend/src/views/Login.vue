@@ -38,7 +38,7 @@ export default {
     onSubmit() {
       this.$store.dispatch("setLoggedIn", true);
       console.log(this.$store.getters.isLoggedIn)
-      this.$router.push({ name: "Course", query: { redirect: "/course" } });
+      this.$router.push({ name: "Active", query: { redirect: "/course/active" } });
     },
   },
 };

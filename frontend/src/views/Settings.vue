@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import UserSettings from "@/views/SubView/UserSettings";
+import UserSettings from "@/components/UserSettings";
 
 export default {
   components: {

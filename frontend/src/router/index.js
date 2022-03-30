@@ -2,7 +2,8 @@ import { createRouter, createWebHistory } from "vue-router";
 import Course from "../views/Course.vue";
 import Login from "../views/Login.vue";
 import Settings from "../views/Settings.vue";
-import InactiveCourses from "../views/SubView/InactiveCourses";
+import ActiveCourses from "@/views/SubView/ActiveCourses";
+import ArchivedCourses from "@/views/SubView/ArchivedCourses";
 
 const routes = [
   {
@@ -11,14 +12,20 @@ const routes = [
     component: Login,
   },
   {
-    path: "/course",
-    name: "Course",
+    path: "/course/",
     component: Course,
-  },
-  {
-    path: "/inactiveCourses",
-    name: "InactiveCourses",
-    component: InactiveCourses,
+    children: [
+      {
+        path: "active",
+        name: "Active",
+        component: ActiveCourses
+      },
+      {
+        path: "archived",
+        name: "Archived",
+        component: ArchivedCourses
+      }
+    ]
   },
   {
     path: "/settings",

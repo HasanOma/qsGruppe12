@@ -112,9 +112,9 @@
 
 <script>
 import $ from "jquery";
-import BaseButton from "@/components/BaseButton";
-import BaseInputNoLabel from "@/components/BaseInputNoLabel";
-import BaseDragNDrop from "@/components/BaseDragNDrop";
+import BaseButton from "@/components/BaseComponents/BaseButton";
+import BaseInputNoLabel from "@/components/BaseComponents/BaseInputNoLabel";
+import BaseDragNDrop from "@/components/BaseComponents/BaseDragnDrop";
 export default {
   name: "StudentCourse",
   components: {

@@ -194,8 +194,8 @@
 </template>
 
 <script>
-import BaseButton from "@/components/BaseButton";
-import BaseInputNoLabel from "@/components/BaseInputNoLabel";
+import BaseButton from "@/components/BaseComponents/BaseButton";
+import BaseInputNoLabel from "@/components/BaseComponents/BaseInputNoLabel";
 export default {
   name: "CreateSubject",
   components: {

@@ -38,5 +38,5 @@ public class Queue {
     private Course course;
 
     @OneToMany
-    private List<User> usersInQueue;
+    private List<UserInQueue> usersInQueue;
 }

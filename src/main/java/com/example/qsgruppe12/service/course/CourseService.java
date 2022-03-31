@@ -17,5 +17,5 @@ public interface CourseService {
 
     void checkExamStatus(Long courseId);
 
-    RequestResponse activateCourse(Long courseId);
+    RequestResponse activateCourseQueue(Long courseId);
 }

@@ -1,7 +1,9 @@
 package com.example.qsgruppe12.dto.userdtos;
 
 import com.example.qsgruppe12.dto.CourseDto;
+import com.example.qsgruppe12.dto.CourseRegisterDto;
 import com.example.qsgruppe12.model.Course;
+import jakarta.validation.constraints.Email;
 import lombok.*;
 
 import javax.validation.constraints.NotEmpty;
@@ -25,11 +27,14 @@ public class UserDto {
     private String lastName;
     @NotNull
     @NotEmpty
+    @Email
     private String email;
+    @Email
+    public String altEmail;
 
     private String userRoleName;
 
     @NotNull
-    private List<CourseDto>  courses;
+    private List<CourseRegisterDto>  courses;
 
 }

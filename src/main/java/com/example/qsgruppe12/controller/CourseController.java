@@ -43,7 +43,7 @@ public class CourseController {
 
     @GetMapping("{courseId}/activate")
     public RequestResponse activateCourse(@PathVariable Long courseId){
-        return courseService.activateCourse(courseId);
+        return courseService.activateCourseQueue(courseId);
     }
 
 }

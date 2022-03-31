@@ -3,7 +3,7 @@ package com.example.qsgruppe12.dto;
 import lombok.Data;
 
 @Data
-public class courseIdDto {
+public class CourseIdDto {
 
     public String code;
 

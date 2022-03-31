@@ -13,6 +13,7 @@ import AddCourse from "@/views/SubView/AddCourse";
 import AdminOverview from "@/views/SubView/AdminOverview";
 import AddUserCourse from "@/views/SubView/AddUserCourse";
 import EditCourse from "@/views/SubView/EditCourse";
+import NProgress from 'nprogress';
 
 const routes = [
   {
@@ -93,5 +94,13 @@ const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
 });
+
+router.beforeEach(() => {
+  NProgress.start()
+})
+
+router.afterEach(() => {
+  NProgress.done()
+})
 
 export default router;

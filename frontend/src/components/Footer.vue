@@ -18,7 +18,7 @@ export default {
   name: "Footer",
   data() {
     return {
-      isLoggedIn: this.computed.isLoggedIn()
+      isLoggedIn: this.$store.getters.isLoggedIn
     }
   }
 };

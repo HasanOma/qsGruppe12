@@ -123,6 +123,7 @@ import { reactive, computed } from "vue";
 import BaseInputNoLabel from "@/components/BaseComponents/BaseInputNoLabel";
 
 export default {
+  inject: ["GStore"],
   name: "StudentSettings",
   components: {
     BaseInputNoLabel
@@ -167,6 +168,11 @@ export default {
     onSubmit() {
       this.v$.$validate()
       if(!this.v$.$error) {
+        this.GStore.flashMessage = "Thank you very much for your feedback: "
+
+        setTimeout(() => {
+          this.GStore.flashMessage = ' '
+        }, 3500)
         console.log("Form is sent")
       } else {
         console.log(this.v$.$error)

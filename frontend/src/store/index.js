@@ -3,19 +3,27 @@ import { createStore } from "vuex";
 
 export default createStore({
   state: {
-    name: 'admin',
-    email: '',
+    firstName: 'Anders',
+    lastName: 'Tellefsen',
+    email: 'andetel@stud.ntnu.no',
+    altEmail: 'anders1.tellefsen@gmail.com',
     loggedIn: false,
     isTeacher: true,
     courses: [],
     archived: []
   },
   mutations: {
-    SET_NAME(state, name) {
-      state.name = name;
+    SET_FIRSTNAME(state, firstName) {
+      state.firstName = firstName;
+    },
+    SET_LASTNAME(state, lastName) {
+      state.lastName = lastName;
     },
     SET_EMAIL(state, email) {
       state.email = email;
+    },
+    SET_ALT_EMAIL(state, altEmail) {
+      state.altEmail = altEmail;
     },
     SET_LOGGED_IN(state, bool) {
       state.loggedIn = bool;
@@ -31,11 +39,17 @@ export default createStore({
     }
   },
   actions: {
-    setName({ commit }, name) {
-      commit("SET_NAME", name)
+    setFirstName({ commit }, firstName) {
+      commit("SET_FIRSTNAME", firstName)
+    },
+    setLastName({ commit }, lastName) {
+      commit("SET_LASTNAME", lastName)
     },
     setEmail({ commit }, email) {
       commit("SET_EMAIL", email)
+    },
+    setAltEmail({ commit }, altEmail) {
+      commit("SET_ALT_EMAIL", altEmail)
     },
     setLoggedIn({ commit }, bool) {
       commit("SET_LOGGED_IN", bool)
@@ -52,11 +66,17 @@ export default createStore({
   },
   modules: {},
   getters: {
-    name(state) {
-      return state.name
+    firstName(state) {
+      return state.firstName
+    },
+    lastName(state) {
+      return state.lastName
     },
     email(state) {
       return state.email
+    },
+    altEmail(state) {
+      return state.altEmail
     },
     isLoggedIn(state) {
       return state.loggedIn

@@ -19,11 +19,9 @@
                             <strong>Rom</strong><br>
                           </label>
                           <select class="form-select">
-                            <optgroup label="This is a group">
-                              <option value="12" selected>This is item 1</option>
-                              <option value="13">This is item 2</option>
-                              <option value="14">This is item 3</option>
-                            </optgroup>
+                            <option value="1" selected disabled>Velg rom</option>
+                            <option value="13">This is item 2</option>
+                            <option value="14">This is item 3</option>
                           </select>
                         </div>
                       </div>
@@ -33,11 +31,9 @@
                             <strong>Sitteplass</strong>
                           </label>
                           <select class="form-select">
-                            <optgroup label="This is a group">
-                              <option value="12" selected="">This is item 1</option>
-                              <option value="13">This is item 2</option>
-                              <option value="14">This is item 3</option>
-                            </optgroup>
+                            <option value="1" selected disabled>Velg sitteplass</option>
+                            <option value="13">This is item 2</option>
+                            <option value="14">This is item 3</option>
                           </select></div>
                         </div>
                     </div>
@@ -47,13 +43,10 @@
                               <label class="form-label">
                                 <strong>Øving nr</strong><br>
                               </label>
-                              <select class="form-select">
-                                <optgroup label="This is a group">
-                                  <option value="12" selected="">This is item 1</option>
-                                  <option value="13">This is item 2</option>
-                                  <option value="14">This is item 3</option>
-                                </optgroup>
-                              </select>
+                              <BaseSelect
+                                  class="form-select"
+                                  :options="work"
+                              />
                             </div>
                           </div>
                           <div class="col">
@@ -62,11 +55,9 @@
                                 <strong>Type</strong>
                               </label>
                               <select class="form-select">
-                                <optgroup label="This is a group">
-                                  <option value="12" selected="">This is item 1</option>
-                                  <option value="13">This is item 2</option>
-                                  <option value="14">This is item 3</option>
-                                </optgroup>
+                                <option value="1" selected disabled>Velg type</option>
+                                <option value="approval">Godkjenning</option>
+                                <option value="help">Hjelp</option>
                               </select>
                             </div>
                           </div>
@@ -76,7 +67,7 @@
                         <label class="form-label">&nbsp;Melding til LA:&nbsp;&nbsp;<br></label>
                       </div>
                       <div class="mb-3">
-                        <input type="text">
+                        <input type="text" class="form-control">
                       </div>
                     </div>
                     <button class="btn btn-primary btn-sm" type="submit" style="margin: 10px;">Legg til</button>
@@ -98,7 +89,11 @@ export default {
   data() {
     return {
       courseName: String,
-      courseID: String
+      courseID: String,
+      room: [],
+      table: [],
+      work: [],
+      type: []
     }
   },
   created() {

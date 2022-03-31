@@ -1,5 +1,8 @@
 <template>
   <Navbar />
+  <div id="flashMessage" v-if="GStore.flashMessage">
+    {{ GStore.flashMessage }}
+  </div>
   <div id="main">
     <router-view />
   </div>
@@ -11,6 +14,7 @@ import Footer from "@/components/Footer.vue";
 import Navbar from "@/components/Navbar.vue";
 
 export default {
+  inject: ['GStore'],
   name: "App",
   components: {
     Navbar,

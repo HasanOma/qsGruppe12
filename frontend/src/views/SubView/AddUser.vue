@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import CreateUser from "@/components/CreateUser"
+import CreateUser from "@/components/Admin/CreateUser"
 
 export default {
   name: "AddUser",

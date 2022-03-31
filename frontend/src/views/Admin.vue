@@ -5,7 +5,7 @@
 
 <script>
 //import AdminPanel from "@/components/AdminPanel";
-import AdminButton from "@/components/AdminButton";
+import AdminButton from "@/components/Admin/AdminButton";
 
 export default {
   name: "Admin",

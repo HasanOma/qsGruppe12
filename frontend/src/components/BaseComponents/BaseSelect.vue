@@ -1,5 +1,5 @@
 <template>
-  <label v-if="label" :for="uuid">
+  <label :class="labelClass" v-if="label" :for="uuid">
     {{ label }}
   </label>
   <select
@@ -29,8 +29,8 @@
 </template>
 
 <script>
-import SetupForm from "@/features/SetupForm";
-import UniqueID from "@/features/UniqueID";
+import SetupForm from "@/feature/SetupForm";
+import UniqueID from "@/feature/UniqueID";
 
 export default {
   props: {
@@ -41,6 +41,9 @@ export default {
     label: {
       type: String,
       default: "",
+    },
+    labelClass: {
+      type: String
     },
     error: {
       type: String,

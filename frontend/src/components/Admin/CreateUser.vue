@@ -23,7 +23,7 @@
                   <label class="form-label">
                     <strong>Fornavn</strong>
                   </label>
-                  <input class="form-control" type="text" placeholder="Ola" name="first_name">
+                  <input class="form-control" type="text" placeholder="Ola" name="first_name" readonly="">
                 </div>
               </div>
               <div class="col">
@@ -31,7 +31,7 @@
                   <label class="form-label">
                     <strong>Etternavn</strong><br>
                   </label>
-                  <input class="form-control" type="text" placeholder="Nordmann" name="last_name">
+                  <input class="form-control" type="text" placeholder="Nordmann" name="last_name" readonly="">
                 </div>
               </div>
             </div>
@@ -70,7 +70,13 @@
           </form>
         </div>
         <div class="d-flex flex-row justify-content-start form-group mb-3" style="padding-left: 20px;">
-          <button class="btn btn-primary btn-sm" type="submit">Lagre</button>
+          <BaseButton
+              cssClass="btn btn-primary btn-sm"
+              type="submit"
+              id="ruleBtn"
+          >
+            Lagre
+          </BaseButton>
         </div>
       </div>
     </div>
@@ -78,8 +84,12 @@
 </template>
 
 <script>
+import BaseButton from "@/components/BaseComponents/BaseButton";
 export default {
-  name: "CreateUser"
+  name: "CreateUser",
+  components: {
+    BaseButton
+  }
 }
 </script>
 

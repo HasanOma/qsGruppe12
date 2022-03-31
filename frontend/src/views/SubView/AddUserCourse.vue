@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import AddUserToCourse from "@/components/AddUserToCourse";
+import AddUserToCourse from "@/components/Admin/AddUserToCourse";
 
 export default {
   name: "AddUserCourse",

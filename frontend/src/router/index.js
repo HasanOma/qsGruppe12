@@ -9,8 +9,10 @@ import WorkStatus from "@/views/WorkStatus";
 import AddToQueue from "@/components/AddToQueue";
 import Admin from "@/views/Admin";
 import AddUser from "@/views/SubView/AddUser";
+import AddCourse from "@/views/SubView/AddCourse";
 import AdminOverview from "@/views/SubView/AdminOverview";
 import AddUserCourse from "@/views/SubView/AddUserCourse";
+import EditCourse from "@/views/SubView/EditCourse";
 
 const routes = [
   {
@@ -65,13 +67,23 @@ const routes = [
       },
       {
         path: "add_user",
-        name: "Add user",
+        name: "Add_user",
         component: AddUser
       },
       {
         path: "add_user_course",
-        name: "Add user",
+        name: "Add_user_course",
         component: AddUserCourse
+      },
+      {
+        path: "new_course",
+        name: "New_course",
+        component: AddCourse
+      },
+      {
+        path: "edit_course",
+        name: "Edit_course",
+        component: EditCourse
       }
     ]
   },

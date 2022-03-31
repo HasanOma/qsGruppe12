@@ -44,6 +44,10 @@ class EmailServiceTest {
                 .message("Hei\nDu er nå registrert som bruker i QS!")
                 .subject("Registrert bruker")
                 .build();
+        //if you comment out this line you will see
+        //that a connection is established with google's gmail servers
+        //but as we dont have a gmail user for this project we are getting a bad credentials error when we reach them
+        //with a user this would work
         Mockito.doNothing().when(javaMailSender).send(any(MimeMessage.class));
     }
 

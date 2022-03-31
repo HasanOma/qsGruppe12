@@ -28,13 +28,11 @@ public class Course {
     @Column(name = "course_id")
     private Long id;
     @NotNull
-    @Column(unique=true)
     private String name;
     @NotNull
     @Column(unique=true)
     private String code;
     @NotNull
-    @Column(unique=true)
     private String semester;
     @NotNull
     private boolean queueActive;
@@ -51,7 +49,7 @@ public class Course {
     @ToString.Exclude
     private List<User_Course> users;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "queue_id", referencedColumnName = "queue_id")
     private Queue queue;
 

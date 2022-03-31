@@ -26,6 +26,8 @@ public class UserLoginReturnDto {
     @NotEmpty
     private String email;
 
+    private String userRoleName;
+
     @NotNull
     private List<CourseDto>  courses;
 

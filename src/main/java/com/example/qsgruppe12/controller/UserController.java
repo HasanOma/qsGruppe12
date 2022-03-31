@@ -5,6 +5,7 @@ import com.example.qsgruppe12.dto.userdtos.LoginDto;
 import com.example.qsgruppe12.dto.userdtos.RegistrationDto;
 import com.example.qsgruppe12.dto.userdtos.UserDto;
 import com.example.qsgruppe12.dto.userdtos.UserLoginReturnDto;
+import com.example.qsgruppe12.util.RequestResponse;
 import jakarta.validation.Valid;
 import com.example.qsgruppe12.service.user.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -28,6 +29,12 @@ public class UserController {
     @ResponseStatus(HttpStatus.OK)
     public UserDto updateUser(@PathVariable Long userId, @RequestBody UserDto user){
         return userService.updateUser(userId, user);
+    }
+
+    @PostMapping("/add/")
+    @ResponseStatus(HttpStatus.CREATED)
+    public RequestResponse createUsers(@RequestBody List<RegistrationDto> users){
+        return userService.createUser(users);
     }
 
     @PostMapping("/{courseId}/add")

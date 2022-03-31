@@ -21,8 +21,6 @@ public interface UserService {
 
     List<UserDto> addUsersForCourse(Long courseId, List<RegistrationDto> registrationDto);
 
-    List<UserDto> addTAsForCourse(Long courseId, List<RegistrationDto> registrationDto);
-
     UserLoginReturnDto getUserLoggingIn(LoginDto login);
 
     UserDto getInQueue(Long courseId, String username);

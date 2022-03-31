@@ -22,7 +22,7 @@ public class Queue {
     @Id
     @SequenceGenerator(
             name = "queue_sequence",
-            sequenceName = "course_sequence",
+            sequenceName = "queue_sequence",
             allocationSize = 1
     )
     @GeneratedValue(

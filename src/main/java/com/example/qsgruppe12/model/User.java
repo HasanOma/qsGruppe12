@@ -28,7 +28,6 @@ public class User {
             generator = "user_sequence",
             strategy = GenerationType.SEQUENCE)
     @Column(name = "user_id")
-    @NotFound(action = NotFoundAction.IGNORE)
     private Long id;
     @NotBlank
     @Column(nullable = false)
@@ -44,12 +43,13 @@ public class User {
     @Column(nullable = false)
     public String password;
 
+    private String userRoleName;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "role_id", referencedColumnName = "role_id")
     private Role role;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     @ToString.Exclude
     private List<User_Course> courses;
 

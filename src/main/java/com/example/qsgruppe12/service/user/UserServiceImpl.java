@@ -74,19 +74,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public RequestResponse createUser(List<RegistrationDto> registrations){
-        for (RegistrationDto dto : registrations) {
+        for (int i = 0; i < registrations.size(); i++) {
 
-            User student = modelMapper.map(dto, User.class);
+            User student = modelMapper.map(registrations.get(i), User.class);
 
-            String password = dto.getPassword();
-
-            if(password.isBlank()){
-                password = randomStringGenerator();
-            }
-
-            student.setPassword(password);
-            student.setPassword(cryptPasswordEncoder.encode(password));
-            student.setRole(roleRepository.getById((long) 3));
+            setPassword(registrations, i, student);
             userRepository.save(student);
 
             //TODO send email plus password with it
@@ -97,7 +89,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserDto> addUsersForCourse(Long courseId, List<RegistrationDto> registrations) {
-        //TODO if course does not exist or if user exists throw exception
 
         List<UserDto> savedStudents = new ArrayList<>();
         Course course = courseRepository.getById(courseId);
@@ -108,20 +99,12 @@ public class UserServiceImpl implements UserService {
             if (userRepository.findByEmail(student.getEmail()).isPresent()){
                 if (userCourseList.stream().findAny().isPresent()){
                     if(!userCourseList.stream().findAny().get().getUser().getEmail().equalsIgnoreCase(student.getEmail())){
-                        addUserRelationship(i, savedStudents, course, student);
+                        addUserRelationship(savedStudents, course, student);
                     }
                 }
             } else {
-                String password = registrations.get(i).getPassword();
-                if(password.isBlank()){
-                    password = randomStringGenerator();
-                }
-                student.setPassword(password);
-                student.setPassword(cryptPasswordEncoder.encode(password));
-
-                student.setRole(roleRepository.getById((long) 3));
-                addUserRelationship(i, savedStudents, course, student);
-
+                setPassword(registrations, i, student);
+                addUserRelationship(savedStudents, course, student);
             }
 
             //TODO send email plus password with it
@@ -129,44 +112,21 @@ public class UserServiceImpl implements UserService {
         return savedStudents;
     }
 
-    @Override
-    public List<UserDto> addTAsForCourse(Long courseId, List<RegistrationDto> registrations) {
-//TODO if course does not exist or if user exists throw exception
+    private void setPassword(List<RegistrationDto> registrations, int i, User student) {
+        String password = registrations.get(i).getPassword();
 
-        List<UserDto> tas = new ArrayList<>();
-        Course course = courseRepository.getById(courseId);
-        List<User_Course> userCourseList = userCourseRepository.findAll();
-        for (int i = 0; i < registrations.size(); i++) {
-
-            User ta = modelMapper.map(registrations.get(i), User.class);
-            ta.setCourses(new ArrayList<>());
-            if (userRepository.findByEmail(ta.getEmail()).isPresent()){
-                if(!userCourseList.stream().findAny().get().getUser().getEmail().equalsIgnoreCase(ta.getEmail())){
-
-                    addUserRelationship(i, tas, course, ta);
-                }
-            } else {
-                String password = registrations.get(i).getPassword();
-
-                if(password.isBlank()){
-                    password = randomStringGenerator();
-                }
-
-                ta.setPassword(password);
-
-                ta.setPassword(cryptPasswordEncoder.encode(password));
-
-                ta.setRole(roleRepository.getById((long) 2));
-                //TODO add course as well
-                addUserRelationship(i, tas, course, ta);
-            }
-            //TODO send email
+        if(password.isBlank()){
+            password = randomStringGenerator();
         }
-        return tas;
+
+        student.setPassword(password);
+        student.setPassword(cryptPasswordEncoder.encode(password));
+        student.setRole(roleRepository.getByName(registrations.get(i).getUserRoleName()));
     }
 
-    private void addUserRelationship(int i, List<UserDto> tas, Course course, User ta) {
-        UserDto studentAdded = modelMapper.map(userRepository.save(ta), UserDto.class);
+    private void addUserRelationship(List<UserDto> tas, Course course, User user) {
+        User userSaved = userRepository.save(user);
+        UserDto studentAdded = modelMapper.map(userSaved, UserDto.class);
         tas.add(studentAdded);
         course.setNrOfStudents(course.getNrOfStudents()+1);
 
@@ -174,8 +134,8 @@ public class UserServiceImpl implements UserService {
         UserCourseKey userCourseKey = new UserCourseKey();
         userCourseKey.setUserId(nrOfStudents);
         userCourseKey.setCourseId(course.getId());
-        User_Course userCourse = User_Course.builder().userCourseKey(userCourseKey).course(course).user(ta).workApproved("").build();
-        ta.getCourses().add(userCourse);
+        User_Course userCourse = User_Course.builder().userCourseKey(userCourseKey).course(course).user(user).workApproved("").build();
+        user.getCourses().add(userCourse);
         userCourseRepository.save(userCourse);
     }
 
@@ -190,10 +150,15 @@ public class UserServiceImpl implements UserService {
             return null;
         }
         User userFromDB = userRepository.findByEmail(login.getEmail()).get();
-        //        int nrOfCourses = userCourseRepository.findAll(Sort.by(userFromDB));
-//
-//        user.getCourses().addAll(courseRepository.getById(userCourseRepository.getCourseIdByUserId()));
-        return modelMapper.map(userFromDB, UserLoginReturnDto.class);
+        UserLoginReturnDto returnUser = modelMapper.map(userFromDB, UserLoginReturnDto.class);
+
+        List<User_Course> userCourseList = userCourseRepository.findAll();
+        for (int i = 0; i < userCourseList.size(); i++) {
+            if(userCourseList.get(i).getUser().getEmail().equalsIgnoreCase(returnUser.getEmail())){
+                returnUser.getCourses().add(modelMapper.map(userCourseList.get(i).getCourse(), CourseDto.class));
+            }
+        }
+        return returnUser;
     }
 
     @Override

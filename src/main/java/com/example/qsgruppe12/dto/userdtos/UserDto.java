@@ -27,6 +27,8 @@ public class UserDto {
     @NotEmpty
     private String email;
 
+    private String userRoleName;
+
     @NotNull
     private List<CourseDto>  courses;
 

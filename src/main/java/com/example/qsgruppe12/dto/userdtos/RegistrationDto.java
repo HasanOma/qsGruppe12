@@ -30,4 +30,6 @@ public class RegistrationDto {
     @NotEmpty
     private String password;
 
+    private String userRoleName;
+
 }

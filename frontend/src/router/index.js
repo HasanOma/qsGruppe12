@@ -60,6 +60,7 @@ const routes = [
   {
     path: "/admin/",
     component: Admin,
+    meta: { requiresAuth: true },
     children: [
       {
         path: "overview",
@@ -95,8 +96,17 @@ const router = createRouter({
   routes,
 });
 
-router.beforeEach(() => {
+router.beforeEach((to, from, next) => {
   NProgress.start()
+  const publicPages = ['/']
+  const authRequired = !publicPages.includes(to.path)
+  const loggedIn = localStorage.getItem('user')
+
+  if (authRequired && !loggedIn) {
+    return next('/')
+  }
+
+  next()
 })
 
 router.afterEach(() => {

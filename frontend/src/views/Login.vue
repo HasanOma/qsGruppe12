@@ -21,6 +21,9 @@
           placeholder="Passord"
         />
       </div>
+      <p v-if="status === 400">
+        Invalid login info.
+      </p>
       <div class="mb-3">
         <button class="btn btn-primary d-block w-100" type="submit">
           Logg inn
@@ -34,6 +37,13 @@
 <script>
 export default {
   name: "LoginView",
+  data () {
+    return {
+      email: '',
+      password: '',
+      status: null
+    }
+  },
   methods: {
     onSubmit() {
       this.$store.dispatch("setLoggedIn", true);
@@ -42,6 +52,14 @@ export default {
         name: "Active",
         query: { redirect: "/course/active" },
       });
+      //TODO error handling plus check first what auth the user has
+      // this.$store
+      //     .dispatch('login', {
+      //       email: this.email,
+      //       password: this.password
+      //     })
+      //     .then(() => { this.$router.push({ name: '/course/active' }) })
+      //     .catch(err => { this.status = err.response.status });
     },
   },
 };

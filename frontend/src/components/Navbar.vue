@@ -44,7 +44,7 @@
             <i class="icon ion-android-settings icon-size"></i
             >&nbsp;Instillinger
           </router-link>
-          <router-link to="/" class="nav-link d-flex align-items-center">
+          <router-link to="/" @Click="logout()" class="nav-link d-flex align-items-center">
             <i class="fa fa-sign-in icon-size"></i>&nbsp;Logg ut
           </router-link>
         </div>
@@ -58,6 +58,7 @@
 
 <script>
 import $ from "jquery";
+import { authComp } from '@/store/helpers'
 
 export default {
   name: "Navbar",
@@ -71,6 +72,12 @@ export default {
     toggle() {
       $("#navbarButtonsExample").toggleClass("show");
     },
+    logout() {
+      this.$store.dispatch('logout');
+    }
+  },
+  computed: {
+    ...authComp
   }
 };
 </script>

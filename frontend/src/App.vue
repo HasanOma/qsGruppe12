@@ -1,5 +1,5 @@
 <template>
-  <Navbar />
+  <Navbar v-if="this.$store.state.loggedIn"/>
   <div id="flashMessage" v-if="GStore.flashMessage">
     {{ GStore.flashMessage }}
   </div>
@@ -12,6 +12,7 @@
 <script>
 import Footer from "@/components/Footer.vue";
 import Navbar from "@/components/Navbar.vue";
+import { authComp } from "@/store/helpers";
 
 export default {
   inject: ['GStore'],
@@ -19,6 +20,9 @@ export default {
   components: {
     Navbar,
     Footer,
+  },
+  computed: {
+    ...authComp
   }
 };
 </script>

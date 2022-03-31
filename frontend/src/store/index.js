@@ -1,16 +1,19 @@
 /* eslint-disable */
 import { createStore } from "vuex";
+import axios from 'axios'
 
 export default createStore({
   state: {
-    firstName: 'Anders',
-    lastName: 'Tellefsen',
-    email: 'andetel@stud.ntnu.no',
-    altEmail: 'anders1.tellefsen@gmail.com',
-    loggedIn: false,
-    isTeacher: true,
-    courses: [],
-    archived: []
+    user: {
+      firstName: 'Anders',
+      lastName: 'Tellefsen',
+      email: 'andetel@stud.ntnu.no',
+      altEmail: 'anders1.tellefsen@gmail.com',
+      loggedIn: false,
+      isTeacher: true,
+      courses: [],
+      archived: []
+    }
   },
   mutations: {
     SET_FIRSTNAME(state, firstName) {
@@ -36,6 +39,17 @@ export default createStore({
     },
     SET_ARCHIVED(state, archived) {
       state.archived = archived;
+    },
+    SET_USER_DATA (state, userData) {
+      localStorage.setItem('user', JSON.stringify(userData))
+      axios.defaults.headers.common['Authorization'] = `Bearer ${
+          userData.token
+      }`
+      state.user = userData
+    },
+    LOGOUT () {
+      localStorage.removeItem('user')
+      location.reload()
     }
   },
   actions: {
@@ -62,7 +76,17 @@ export default createStore({
     },
     addArchived({ commit }, archived) {
       commit("SET_ARCHIVED", archived)
-    }
+    },
+    login ({ commit }, credentials) {
+      return axios
+          .post('//localhost:8080/users/login', credentials)
+          .then(({ data }) => {
+            commit('SET_USER_DATA', data)
+          })
+    },
+    logout ({ commit }) {
+      commit('LOGOUT')
+    },
   },
   modules: {},
   getters: {
@@ -89,6 +113,9 @@ export default createStore({
     },
     archived(state) {
       return state.archived
+    },
+    loggedIn(state){
+      return !!state.user
     }
   }
 });

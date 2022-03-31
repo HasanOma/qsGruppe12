@@ -10,12 +10,14 @@ import com.example.qsgruppe12.repository.CourseRepository;
 import com.example.qsgruppe12.repository.QueueRepository;
 import com.example.qsgruppe12.repository.User_CourseRepository;
 import com.example.qsgruppe12.service.course.CourseService;
+import com.example.qsgruppe12.util.RequestResponse;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.time.LocalDate;
 
@@ -119,5 +121,14 @@ public class CourseServiceImpl implements CourseService {
         }
 
 
+    }
+
+    @Override
+    public RequestResponse activateCourse(Long courseId) {
+        //TODO authenticate user permission
+        Course course = courseRepository.getById(courseId);
+        course.setArchived(true);
+        courseRepository.save(course);
+        return new RequestResponse("Queue for " + course.getCode() + " is now active");
     }
 }

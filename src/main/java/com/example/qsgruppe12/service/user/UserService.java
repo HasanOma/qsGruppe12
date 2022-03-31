@@ -23,7 +23,7 @@ public interface UserService {
 
     UserLoginReturnDto getUserLoggingIn(LoginDto login);
 
-    UserDto getInQueue(Long courseId, String username);
+    UserDto getInQueue(Long courseId, String email);
 
     List<UserDto> getUsersInQueue(Long courseId);
 }

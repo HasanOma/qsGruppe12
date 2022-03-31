@@ -3,6 +3,7 @@ package com.example.qsgruppe12.controller;
 import com.example.qsgruppe12.dto.CourseDto;
 import com.example.qsgruppe12.dto.CourseRegisterDto;
 import com.example.qsgruppe12.service.course.CourseService;
+import com.example.qsgruppe12.util.RequestResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -38,6 +39,11 @@ public class CourseController {
     public CourseDto updateCourse(Authentication authentication, @PathVariable Long courseId,
                                   @RequestBody CourseDto courseDto){
         return courseService.update(courseId, courseDto);
+    }
+
+    @GetMapping("{courseId}/activate")
+    public RequestResponse activateCourse(@PathVariable Long courseId){
+        return courseService.activateCourse(courseId);
     }
 
 }

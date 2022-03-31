@@ -1,10 +1,7 @@
 package com.example.qsgruppe12.controller;
 
 import com.example.qsgruppe12.dto.CourseDto;
-import com.example.qsgruppe12.dto.userdtos.LoginDto;
-import com.example.qsgruppe12.dto.userdtos.RegistrationDto;
-import com.example.qsgruppe12.dto.userdtos.UserDto;
-import com.example.qsgruppe12.dto.userdtos.UserLoginReturnDto;
+import com.example.qsgruppe12.dto.userdtos.*;
 import com.example.qsgruppe12.util.RequestResponse;
 import jakarta.validation.Valid;
 import com.example.qsgruppe12.service.user.UserService;
@@ -49,16 +46,16 @@ public class UserController {
         return userService.getUserLoggingIn(login);
     }
 
-    @GetMapping("queue/{courseId}/")
+    @PutMapping("queue/{courseId}/")
     @ResponseStatus(HttpStatus.OK)
-    public UserDto getInQueue(@PathVariable Long courseId, Authentication authentication){
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        return userService.getInQueue(courseId, userDetails.getUsername());
+    public UserDto getInQueue(@PathVariable Long courseId, @RequestBody QueueDto queueDto, Authentication authentication){
+//        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        return userService.getInQueue(courseId, queueDto.getEmail());
     }
 
     @GetMapping("queue/{courseId}/list")
     @ResponseStatus(HttpStatus.OK)
-    public List<UserDto> getUsersInQueue(@RequestBody CourseDto courseDto){
+    public List<UserDto> getUsersInQueue(@RequestBody CourseDto courseDto, @PathVariable String courseId){
         return userService.getUsersInQueue(courseDto.getId());
     }
 }

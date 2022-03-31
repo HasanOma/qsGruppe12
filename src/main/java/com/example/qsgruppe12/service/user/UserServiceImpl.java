@@ -162,9 +162,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto getInQueue(Long courseId, String username) {
-
-        return null;
+    public UserDto getInQueue(Long courseId, String email) {
+        if (queueRepository.getByCourseId(courseId).isPresent() && courseRepository.getById(courseId).isArchived()){
+            Queue queue = queueRepository.getByCourseId(courseId).get();
+            if(userRepository.findByEmail(email).isPresent()){
+                queue.getUsersInQueue().add(userRepository.findByEmail(email).get());
+            }
+            return null;
+        }else {
+            return null;
+        }
     }
 
     @Override

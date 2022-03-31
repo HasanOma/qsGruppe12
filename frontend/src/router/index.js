@@ -7,6 +7,7 @@ import ArchivedCourses from "@/views/SubView/ArchivedCourses";
 import CourseQueue from "@/views/CourseQueue";
 import WorkStatus from "@/views/WorkStatus";
 import AddToQueue from "@/components/AddToQueue";
+import Admin from "@/views/Admin";
 
 const routes = [
   {
@@ -53,7 +54,7 @@ const routes = [
   {
     path: "/admin",
     name: "Admin",
-    component: Settings,
+    component: Admin,
   },
 ];
 

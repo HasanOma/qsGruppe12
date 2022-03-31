@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container mt-5">
     <div class="col-lg-12 d-lg-flex justify-content-lg-center">
       <div class="card shadow mb-3">
         <div class="card-header py-3">

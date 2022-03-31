@@ -1,14 +1,17 @@
 <template>
-  <AdminPanel />
+  <AdminButton />
+  <router-view />
 </template>
 
 <script>
-import AdminPanel from "@/components/AdminPanel";
+//import AdminPanel from "@/components/AdminPanel";
+import AdminButton from "@/components/AdminButton";
 
 export default {
   name: "Admin",
   components: {
-    AdminPanel
+    //AdminPanel,
+    AdminButton
   }
 }
 </script>

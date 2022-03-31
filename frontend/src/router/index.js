@@ -8,6 +8,9 @@ import CourseQueue from "@/views/CourseQueue";
 import WorkStatus from "@/views/WorkStatus";
 import AddToQueue from "@/components/AddToQueue";
 import Admin from "@/views/Admin";
+import AddUser from "@/views/SubView/AddUser";
+import AdminOverview from "@/views/SubView/AdminOverview";
+import AddUserCourse from "@/views/SubView/AddUserCourse";
 
 const routes = [
   {
@@ -52,9 +55,25 @@ const routes = [
     component: Settings,
   },
   {
-    path: "/admin",
-    name: "Admin",
+    path: "/admin/",
     component: Admin,
+    children: [
+      {
+        path: "overview",
+        name: "Overview",
+        component: AdminOverview,
+      },
+      {
+        path: "add_user",
+        name: "Add user",
+        component: AddUser
+      },
+      {
+        path: "add_user_course",
+        name: "Add user",
+        component: AddUserCourse
+      }
+    ]
   },
 ];
 

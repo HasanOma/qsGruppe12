@@ -1,5 +1,5 @@
 <template>
-  <footer id="footerpad" v-if="isLoggedIn">
+  <footer id="footerpad">
     <div class="container">
       <div class="row">
         <div class="col-md-6 col-lg-8 mx-auto">
@@ -18,9 +18,9 @@ export default {
   name: "Footer",
   data() {
     return {
-      isLoggedIn: this.$store.getters.isLoggedIn,
-    };
-  },
+      isLoggedIn: this.computed.isLoggedIn()
+    }
+  }
 };
 </script>
 

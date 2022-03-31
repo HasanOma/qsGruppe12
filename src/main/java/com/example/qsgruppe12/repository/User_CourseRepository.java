@@ -15,13 +15,6 @@ import java.util.List;
 public interface User_CourseRepository extends JpaRepository<User_Course, UserCourseKey> {
     Iterable<Long> findAllByUserId(Long user_id);
 
-    Iterable<Long> findAllByUserIdAndCourseId(Long user_id, Long course_id);
-
     Iterable<Long> findAllByCourseId(Long course_id);
 
-
-//    @Query(
-//
-//    )
-//    List<Course>;
 }

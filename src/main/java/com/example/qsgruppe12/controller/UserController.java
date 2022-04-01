@@ -45,12 +45,6 @@ public class UserController {
         return userService.addExistingUserToCourse(courseId, userEmailsDto);
     }
 
-    @GetMapping("/login")
-    @ResponseStatus(HttpStatus.OK)
-    public UserLoginReturnDto getUserLogin(@Valid @RequestBody UserLoginDto login){
-        return userService.getUserLoggingIn(login);
-    }
-
     @PutMapping("queue/{courseId}/")
     @ResponseStatus(HttpStatus.OK)
     public UserDto getInQueue(@PathVariable Long courseId, @RequestBody UserGetInQueueDto queueDto){

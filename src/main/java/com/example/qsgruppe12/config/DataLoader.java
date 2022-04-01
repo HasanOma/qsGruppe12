@@ -53,7 +53,7 @@ public class DataLoader implements ApplicationRunner {
                 .lastName("Tellefsen")
                 .email("andetel@stud.ntnu.no")
                 .password(cryptPasswordEncoder.encode("passord123"))
-                .role(roleRepository.getByName("Student"))
+                .role(roleRepository.getByName("Admin"))
                 .build());
         userRepository.save(User.builder()
                 .id(2L)

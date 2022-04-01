@@ -57,7 +57,7 @@
 <script>
 import BaseInputNoLabel from "@/components/BaseComponents/BaseInputNoLabel";
 import BaseButton from "@/components/BaseComponents/BaseButton";
-import axios from "@/services/axios";
+// import axios from "@/services/axios";
 
 export default {
   name: "LoginView",
@@ -72,21 +72,21 @@ export default {
     }
   },
   methods: {
-    async onSubmit() {
-      // this.$store.dispatch("setLoggedIn", true);
-      const data = {
-        username: this.username,
-        password: this.password
-      }
+    onSubmit() {
+      this.$store.dispatch("setLoggedIn", true);
+      // const data = {
+      //   username: this.username,
+      //   password: this.password
+      // }
 
-      await axios.postLoginData(data).then(response => {
-        console.log(response)
-      })
+      // await axios.postLoginData(data).then(response => {
+      //   console.log(response)
+      // })
 
-      // await this.$router.push({
-      //   name: "Active",
-      //   query: { redirect: "/course/active" },
-      // });
+      this.$router.push({
+        name: "Active",
+        query: { redirect: "/course/active" },
+      });
       //TODO error handling plus check first what auth the user has
       // this.$store
       //     .dispatch('login', {

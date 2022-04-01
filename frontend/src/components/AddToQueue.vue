@@ -2,7 +2,7 @@
   <div class="d-xxl-flex justify-content-xxl-center w-100 mt-5 flex-sm-column">
     <h3>{{ this.courseID }} {{ this.courseName }}</h3>
     <div class="d-flex justify-content-center align-items-center mt-3">
-      <div id="content">
+      <div id="content width-50rem">
         <div class="container-fluid">
           <div class="row">
             <div class="col">
@@ -21,8 +21,11 @@
                           <BaseSelectNoLabel
                             css-class="form-select"
                             :options="room"
-                            v-model="form.room"
+                            v-model="state.room"
                           />
+                          <span class="text-danger" v-if="v$.room.$error">
+                            {{ v$.room.$errors[0].$message }}
+                          </span>
                         </div>
                       </div>
                       <div class="col">
@@ -33,12 +36,15 @@
                           <BaseSelectNoLabel
                             css-class="form-select"
                             :options="table"
-                            v-model="form.table"
+                            v-model="state.table"
                           />
+                          <span class="text-danger" v-if="v$.table.$error">
+                            {{ v$.table.$errors[0].$message }}
+                          </span>
                         </div>
                         </div>
                     </div>
-                    <div class="row">
+                        <div class="row">
                           <div class="col">
                             <div class="mb-3">
                               <label class="form-label">
@@ -47,7 +53,7 @@
                               <BaseSelectNoLabel
                                   class="form-select"
                                   :options="work"
-                                  v-model="form.work"
+                                  v-model="state.work"
                               />
                             </div>
                           </div>
@@ -59,8 +65,11 @@
                               <BaseSelectNoLabel
                                 css-class="form-select"
                                 :options="type"
-                                v-model="form.type"
+                                v-model="state.type"
                               />
+                              <span class="text-danger" v-if="v$.type.$error">
+                                {{ v$.type.$errors[0].$message }}
+                              </span>
                             </div>
                           </div>
                         </div>
@@ -69,7 +78,11 @@
                         <label class="form-label">&nbsp;Melding til LA:&nbsp;&nbsp;<br></label>
                       </div>
                       <div class="mb-3">
-                        <input type="text" class="form-control">
+                        <BaseInputNoLabel
+                          type="text"
+                          class="form-control"
+                          v-model="state.message"
+                        />
                       </div>
                     </div>
                     <BaseButton
@@ -92,6 +105,9 @@
 
 <script>
 import BaseSelectNoLabel from "@/components/BaseComponents/BaseSelectNoLabel";
+import { computed, reactive } from "vue";
+import { required, minLength } from "@vuelidate/validators";
+import useValidate from "@vuelidate/core";
 
 export default {
   name: "AddToQueue",
@@ -103,6 +119,7 @@ export default {
       courseName: String,
       courseID: String,
       room: [
+          "Digitalt",
           "A4-112",
           "A4-110",
           "A3-106",
@@ -125,14 +142,30 @@ export default {
           "Hjelp",
           "Godkjenning"
       ],
-      form: {
-        room: "",
-        table: "",
-        work: "",
-        type: "",
-        message: ""
-      }
     }
+  },
+  setup() {
+    const state = reactive({
+      room: '',
+      table: "",
+      work: "",
+      type: "",
+      message: "",
+    })
+
+    const rules = computed(() => {
+      return {
+        room: { required, minLength: minLength(1) },
+        table: { required, minLength: minLength(1) },
+        work: { required, minLength: minLength(1) },
+        type: { required, minLength: minLength(1) },
+        message: {}
+      }
+    })
+
+    const v$ = useValidate(rules, state)
+
+    return { state, v$ }
   },
   created() {
     this.courseName = this.$route.query.courseName
@@ -140,6 +173,7 @@ export default {
   },
   methods: {
     onSubmit(courseID, courseName) {
+      this.v$.$validate()
       console.log(courseID + " " + courseName)
       console.log(this.form.room)
       console.log(this.form.table)
@@ -153,5 +187,7 @@ export default {
 </script>
 
 <style scoped>
-
+.width-50rem {
+  width: 50rem;
+}
 </style>

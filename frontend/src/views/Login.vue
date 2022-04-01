@@ -3,7 +3,7 @@
     <form method="post" @submit.prevent="onSubmit">
       <h2 class="visually-hidden">Login Form</h2>
       <div class="illustration">
-        <i class="icon ion-ios-locked-outline"></i>
+        <img src="../assets/qS-logos.jpeg" class="icon ion-ios-locked-outline icon-size" />
       </div>
       <div class="mb-3">
         <BaseInputNoLabel

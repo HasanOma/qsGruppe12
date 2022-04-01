@@ -25,6 +25,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Implimentation class of {@link UserService}
+ */
 @Slf4j
 @NoArgsConstructor
 @AllArgsConstructor
@@ -116,7 +119,6 @@ public class UserServiceImpl implements UserService {
         for (int i = 0; i < registrations.size(); i++) {
 
             User user = modelMapper.map(registrations.get(i), User.class);
-
             String message = "Congratulations you are now registered in QS!\n";
             sendMailOnCreation(setPassword(registrations, i, user), user.getEmail(), message);
             userRepository.save(user);

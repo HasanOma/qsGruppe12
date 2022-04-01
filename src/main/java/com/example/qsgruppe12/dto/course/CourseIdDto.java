@@ -1,4 +1,4 @@
-package com.example.qsgruppe12.dto;
+package com.example.qsgruppe12.dto.course;
 
 import lombok.Data;
 
@@ -14,4 +14,8 @@ public class CourseIdDto {
     public boolean archived;
 
     public String rules;
+
+    public int examReady;
+
+    public int nrOfStudents;
 }

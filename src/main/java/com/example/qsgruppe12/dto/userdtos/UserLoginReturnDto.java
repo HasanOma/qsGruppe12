@@ -1,6 +1,8 @@
 package com.example.qsgruppe12.dto.userdtos;
 
-import com.example.qsgruppe12.dto.CourseDto;
+import com.example.qsgruppe12.dto.course.CourseIdDto;
+import com.example.qsgruppe12.dto.JWTResponse;
+import com.example.qsgruppe12.model.Role;
 import jakarta.validation.constraints.Email;
 import lombok.*;
 
@@ -29,9 +31,11 @@ public class UserLoginReturnDto {
     @Email
     private String altEmail;
 
-    private String userRoleName;
+    private Role userRole;
+
+    private JWTResponse jwtResponse;
 
     @NotNull
-    private List<CourseDto>  courses;
+    private List<CourseIdDto>  courses;
 
 }

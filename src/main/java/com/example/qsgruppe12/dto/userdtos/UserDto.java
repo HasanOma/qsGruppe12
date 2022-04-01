@@ -1,8 +1,6 @@
 package com.example.qsgruppe12.dto.userdtos;
 
-import com.example.qsgruppe12.dto.CourseDto;
-import com.example.qsgruppe12.dto.CourseRegisterDto;
-import com.example.qsgruppe12.model.Course;
+import com.example.qsgruppe12.dto.course.CourseRegisterDto;
 import jakarta.validation.constraints.Email;
 import lombok.*;
 

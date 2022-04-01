@@ -6,11 +6,13 @@ name: CI_backend
 on:
   # Triggers the workflow on push or pull request events but only for the main branch
   push:
-    branches: 
-    - backend
+    branches:
+      - backend
+      - main
   pull_request:
-    branches: 
-    - backend
+    branches:
+      - backend
+      - main
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -34,11 +36,10 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-       - uses: actions/checkout@v2
-       - uses: actions/setup-java@v2
-         with:
-            java-version: '11'
-            distribution: 'adopt'
-       - name: Run the Maven verify phase
-         run: mvn --batch-mode --update-snapshots verify
-          
+      - uses: actions/checkout@v2
+      - uses: actions/setup-java@v2
+        with:
+          java-version: '11'
+          distribution: 'adopt'
+      - name: Run the Maven verify phase
+        run: mvn --batch-mode --update-snapshots verify

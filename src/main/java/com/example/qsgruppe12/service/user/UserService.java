@@ -27,4 +27,6 @@ public interface UserService {
     List<QueueDto> getUsersInQueue(Long courseId);
 
     RequestResponse addExistingUserToCourse(Long courseId, List<UserEmailsDto> userEmailsDto);
+
+    RequestResponse forgotPassword(UserForgotPassword userForgotPassword);
 }

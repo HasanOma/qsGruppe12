@@ -33,7 +33,7 @@ public class CourseController {
     }
 
     @DeleteMapping("{courseId}/")
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.ACCEPTED)
     public String deleteCourse(Authentication authentication, @PathVariable Long courseId){
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         courseService.deleteCourse(courseId);
@@ -41,17 +41,20 @@ public class CourseController {
     }
 
     @PutMapping("{courseId}/")
+    @ResponseStatus(HttpStatus.OK)
     public CourseDto updateCourse(Authentication authentication, @PathVariable Long courseId,
                                   @RequestBody CourseDto courseDto){
         return courseService.update(courseId, courseDto);
     }
 
     @GetMapping("{courseId}/activate")
+    @ResponseStatus(HttpStatus.OK)
     public RequestResponse activateCourse(@PathVariable Long courseId){
         return courseService.activateCourseQueue(courseId);
     }
 
     @GetMapping("/activate")
+    @ResponseStatus(HttpStatus.OK)
     public List<CourseExamReadyDto> checkExamStatus(@RequestBody List<Long> courseIds){
         List<CourseExamReadyDto> courseRegisterDtos = new ArrayList<>();
         for (Long courseId : courseIds) {

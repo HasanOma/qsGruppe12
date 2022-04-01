@@ -2,6 +2,7 @@ package com.example.qsgruppe12.controller;
 
 import com.example.qsgruppe12.dto.JWTRequest;
 import com.example.qsgruppe12.dto.JWTResponse;
+import com.example.qsgruppe12.dto.userdtos.UserForgotPassword;
 import com.example.qsgruppe12.dto.userdtos.UserLoginDto;
 import com.example.qsgruppe12.dto.userdtos.UserLoginReturnDto;
 import com.example.qsgruppe12.repository.UserRepository;
@@ -68,5 +69,11 @@ public class LoginController {
                 jwtUtil.generateToken(userDetails);
         user.setJwtResponse(new JWTResponse(token));
         return  user;
+    }
+
+    @PutMapping
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public RequestResponse forgotPassword(@Valid @RequestBody UserForgotPassword userForgotPassword){
+        return userService.forgotPassword(userForgotPassword);
     }
 }

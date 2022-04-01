@@ -3,9 +3,10 @@ import http from '../../http-common.js'
 
 
 class axios {
-    getCalc() {
-        console.log("im receiving")
+    postLoginData(data) {
+        return http.post("users/login", JSON.stringify(data))
     }
+
     postCalc(object) {
         console.log("im sending")
         console.log(object)

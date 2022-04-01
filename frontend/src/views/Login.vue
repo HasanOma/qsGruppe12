@@ -6,28 +6,48 @@
         <i class="icon ion-ios-locked-outline"></i>
       </div>
       <div class="mb-3">
-        <input
-          class="form-control"
-          type="email"
-          name="email"
-          placeholder="Epost"
+        <BaseInputNoLabel
+            class="form-control"
+            type="email"
+            name="email"
+            placeholder="Epost"
+            v-model="email"
         />
+<!--        <input-->
+<!--          class="form-control"-->
+<!--          type="email"-->
+<!--          name="email"-->
+<!--          placeholder="Epost"-->
+<!--        />-->
       </div>
       <div class="mb-3">
-        <input
-          class="form-control"
-          type="password"
-          name="password"
-          placeholder="Passord"
+        <BaseInputNoLabel
+            class="form-control"
+            type="password"
+            name="password"
+            placeholder="Passord"
+            v-model="password"
         />
+<!--        <input-->
+<!--          class="form-control"-->
+<!--          type="password"-->
+<!--          name="password"-->
+<!--          placeholder="Passord"-->
+<!--        />-->
       </div>
-      <p v-if="status === 400">
-        Invalid login info.
-      </p>
+<!--      <p v-if="status === 400">-->
+<!--        Invalid login info.-->
+<!--      </p>-->
       <div class="mb-3">
-        <button class="btn btn-primary d-block w-100" type="submit">
+        <BaseButton
+            class="btn btn-primary d-block w-100"
+            type="submit"
+        >
           Logg inn
-        </button>
+        </Basebutton>
+<!--        <button class="btn btn-primary d-block w-100" type="submit">-->
+<!--          Logg inn-->
+<!--        </button>-->
       </div>
       <a class="forgot" href="#">Glemt passord?</a>
     </form>
@@ -35,23 +55,38 @@
 </template>
 
 <script>
+import BaseInputNoLabel from "@/components/BaseComponents/BaseInputNoLabel";
+import BaseButton from "@/components/BaseComponents/BaseButton";
+import axios from "@/services/axios";
+
 export default {
   name: "LoginView",
+  components: {
+    BaseInputNoLabel,
+    BaseButton
+  },
   data () {
     return {
       email: '',
-      password: '',
-      status: null
+      password: ''
     }
   },
   methods: {
-    onSubmit() {
-      this.$store.dispatch("setLoggedIn", true);
+    async onSubmit() {
+      // this.$store.dispatch("setLoggedIn", true);
+      const data = {
+        username: this.username,
+        password: this.password
+      }
 
-      this.$router.push({
-        name: "Active",
-        query: { redirect: "/course/active" },
-      });
+      await axios.postLoginData(data).then(response => {
+        console.log(response)
+      })
+
+      // await this.$router.push({
+      //   name: "Active",
+      //   query: { redirect: "/course/active" },
+      // });
       //TODO error handling plus check first what auth the user has
       // this.$store
       //     .dispatch('login', {

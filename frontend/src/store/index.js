@@ -29,7 +29,7 @@ export default createStore({
       state.altEmail = altEmail;
     },
     SET_LOGGED_IN(state, bool) {
-      state.loggedIn = bool;
+      state.user.loggedIn = bool;
     },
     SET_IS_TEACHER(state, bool) {
       state.isTeacher = bool;
@@ -91,31 +91,28 @@ export default createStore({
   modules: {},
   getters: {
     firstName(state) {
-      return state.firstName
+      return state.user.firstName
     },
     lastName(state) {
-      return state.lastName
+      return state.user.lastName
     },
     email(state) {
-      return state.email
+      return state.user.email
     },
     altEmail(state) {
-      return state.altEmail
+      return state.user.altEmail
     },
     isLoggedIn(state) {
-      return state.loggedIn
+      return state.user.loggedIn
     },
     isTeacher(state) {
-      return state.isTeacher
+      return state.user.isTeacher
     },
     courses(state) {
-      return state.courses
+      return state.user.courses
     },
     archived(state) {
-      return state.archived
-    },
-    loggedIn(state){
-      return !!state.user
+      return state.user.archived
     }
   }
 });

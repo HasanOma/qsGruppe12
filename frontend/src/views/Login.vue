@@ -234,4 +234,8 @@ export default {
 .login-dark form .btn-primary:active {
   transform: translateY(1px);
 }
+
+.icon-size {
+  height: 200px;
+}
 </style>

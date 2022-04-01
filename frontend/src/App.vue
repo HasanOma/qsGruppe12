@@ -26,6 +26,7 @@ export default {
   },
   created() {
     this.$store.dispatch("setLoggedIn", false)
+    console.log(localStorage.getItem('currentUser'))
   }
 };
 </script>

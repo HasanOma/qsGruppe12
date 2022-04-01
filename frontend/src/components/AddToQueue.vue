@@ -10,19 +10,19 @@
                 <div class="card-header py-3">
                   <p class="text-primary m-0 fw-bold">Still deg i kø</p>
                 </div>
-                <form @submit="onSubmit(courseID, courseName)">
+                <form @submit.prevent="onSubmit(courseID, courseName)">
                   <div class="card-body" style="height: auto;">
                     <div class="row">
                       <div class="col">
                         <div class="mb-3">
                           <label class="form-label">
-                            <strong>Rom</strong><br>
+                            <strong>Rom</strong>
                           </label>
-                          <select class="form-select">
-                            <option value="1" selected disabled>Velg rom</option>
-                            <option value="13">This is item 2</option>
-                            <option value="14">This is item 3</option>
-                          </select>
+                          <BaseSelectNoLabel
+                            css-class="form-select"
+                            :options="room"
+                            v-model="form.room"
+                          />
                         </div>
                       </div>
                       <div class="col">
@@ -30,11 +30,12 @@
                           <label class="form-label">
                             <strong>Sitteplass</strong>
                           </label>
-                          <select class="form-select">
-                            <option value="1" selected disabled>Velg sitteplass</option>
-                            <option value="13">This is item 2</option>
-                            <option value="14">This is item 3</option>
-                          </select></div>
+                          <BaseSelectNoLabel
+                            css-class="form-select"
+                            :options="table"
+                            v-model="form.table"
+                          />
+                        </div>
                         </div>
                     </div>
                     <div class="row">
@@ -43,9 +44,10 @@
                               <label class="form-label">
                                 <strong>Øving nr</strong><br>
                               </label>
-                              <BaseSelect
+                              <BaseSelectNoLabel
                                   class="form-select"
                                   :options="work"
+                                  v-model="form.work"
                               />
                             </div>
                           </div>
@@ -54,11 +56,11 @@
                               <label class="form-label">
                                 <strong>Type</strong>
                               </label>
-                              <select class="form-select">
-                                <option value="1" selected disabled>Velg type</option>
-                                <option value="approval">Godkjenning</option>
-                                <option value="help">Hjelp</option>
-                              </select>
+                              <BaseSelectNoLabel
+                                css-class="form-select"
+                                :options="type"
+                                v-model="form.type"
+                              />
                             </div>
                           </div>
                         </div>
@@ -70,7 +72,12 @@
                         <input type="text" class="form-control">
                       </div>
                     </div>
-                    <button class="btn btn-primary btn-sm" type="submit" style="margin: 10px;">Legg til</button>
+                    <BaseButton
+                        class="btn btn-primary btn-sm"
+                        type="submit"
+                    >
+                      Legg til
+                    </BaseButton>
                   </div>
                 </form>
                 </div>
@@ -84,16 +91,47 @@
 </template>
 
 <script>
+import BaseSelectNoLabel from "@/components/BaseComponents/BaseSelectNoLabel";
+
 export default {
   name: "AddToQueue",
+  components: {
+    BaseSelectNoLabel
+  },
   data() {
     return {
       courseName: String,
       courseID: String,
-      room: [],
-      table: [],
-      work: [],
-      type: []
+      room: [
+          "A4-112",
+          "A4-110",
+          "A3-106",
+          "A3-107"
+      ],
+      table: [
+          1,
+          2,
+          3,
+          4,
+          5
+      ],
+      work: [
+          "Øving 1",
+          "Øving 2",
+          "Øving 3",
+          "Øving 4"
+      ],
+      type: [
+          "Hjelp",
+          "Godkjenning"
+      ],
+      form: {
+        room: "",
+        table: "",
+        work: "",
+        type: "",
+        message: ""
+      }
     }
   },
   created() {
@@ -102,7 +140,13 @@ export default {
   },
   methods: {
     onSubmit(courseID, courseName) {
-      this.$router.push({ name: "Queue", query: { redirect: "/course/:id", courseName: courseName, courseID: courseID }, params: { id: courseID } });
+      console.log(courseID + " " + courseName)
+      console.log(this.form.room)
+      console.log(this.form.table)
+      console.log(this.form.work)
+      console.log(this.form.type)
+      console.log(this.form.message)
+      // this.$router.push({ name: "Queue", query: { redirect: "/course/:id", courseName: courseName, courseID: courseID }, params: { id: courseID } });
     }
   }
 }

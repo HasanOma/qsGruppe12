@@ -3,7 +3,7 @@
     {{ label }}
   </label>
   <select
-    class="field"
+    class="form-select"
     v-bind="{
       ...$attrs,
       onChange: ($event) => { $emit('update:modelValue', $event.target.value) },

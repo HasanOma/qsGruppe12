@@ -34,7 +34,7 @@
           >
             <i class="material-icons icon-size">school</i>&nbsp;Emner
           </router-link>
-          <router-link to="/admin/overview" class="nav-link d-flex align-items-center">
+          <router-link to="/admin/overview" class="nav-link d-flex align-items-center" v-if="this.$store.getters.role === 'Admin'">
             <i class="material-icons icon-size">home</i>&nbsp;Admin
           </router-link>
           <router-link
@@ -44,9 +44,15 @@
             <i class="icon ion-android-settings icon-size"></i
             >&nbsp;Instillinger
           </router-link>
-          <router-link to="/" @Click="logout()" class="nav-link d-flex align-items-center">
-            <i class="fa fa-sign-in icon-size"></i>&nbsp;Logg ut
-          </router-link>
+          <BaseButton
+              class="nav-link d-flex align-items-center"
+              @Click="logout()"
+          >
+            <i class="fa fa-sign-in icon-size"></i>Logg ut
+          </BaseButton>
+<!--          <router-link to="/" @Click="logout()" class="nav-link d-flex align-items-center">-->
+<!--            <i class="fa fa-sign-in icon-size"></i>&nbsp;Logg ut-->
+<!--          </router-link>-->
         </div>
       </div>
       <!-- Collapsible wrapper -->
@@ -59,6 +65,7 @@
 <script>
 import $ from "jquery";
 import { authComp } from '@/store/helpers'
+import {authenticationService} from "@/services/authentication.service";
 
 export default {
   name: "Navbar",
@@ -73,7 +80,9 @@ export default {
       $("#navbarButtonsExample").toggleClass("show");
     },
     logout() {
-      this.$store.dispatch('logout');
+      authenticationService.logout();
+      this.$store.dispatch("setLoggedIn", false)
+      this.$router.push('/');
     }
   },
   computed: {

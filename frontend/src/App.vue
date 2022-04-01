@@ -1,5 +1,5 @@
 <template>
-  <Navbar v-if="this.$store.getters.isLoggedIn"/>
+  <Navbar v-if="this.$store.getters.isLoggedIn"/> <!---->
   <div id="flashMessage" v-if="GStore.flashMessage">
     {{ GStore.flashMessage }}
   </div>

@@ -1,15 +1,14 @@
 package com.example.qsgruppe12.service.course;
 
 
-import com.example.qsgruppe12.dto.CourseDto;
-import com.example.qsgruppe12.dto.CourseRegisterDto;
+import com.example.qsgruppe12.dto.course.CourseDto;
+import com.example.qsgruppe12.dto.course.CourseRegisterDto;
 import com.example.qsgruppe12.model.Course;
 import com.example.qsgruppe12.model.Queue;
 import com.example.qsgruppe12.model.relationship.User_Course;
 import com.example.qsgruppe12.repository.CourseRepository;
 import com.example.qsgruppe12.repository.QueueRepository;
 import com.example.qsgruppe12.repository.User_CourseRepository;
-import com.example.qsgruppe12.service.course.CourseService;
 import com.example.qsgruppe12.util.RequestResponse;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -17,7 +16,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.time.LocalDate;
 
@@ -78,7 +76,8 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public void checkExamStatus(Long courseId) {
+    public int checkExamStatus(Long courseId) {
+        int examReady = 0;
         if (courseRepository.findById(courseId).isEmpty()){
 //            throw new CourseException();
         }
@@ -112,15 +111,15 @@ public class CourseServiceImpl implements CourseService {
                 //dersom antallet gjennomførte øvinger i gruppen er mer enn null, betyr det at
                 //studenten ikke har gjennomført riktig antall øvinger i gruppen og kan dermed ikke ta eksamen
                 if(nrOfNeeded>0){
-                    return;
+                    break;
                 }
             }
             //om man kommer seg til dette punktet i koden betyr det at man kan gå opp til eksamen
             //fordi man har alltid gjort like mange eller flere øvingeer enn det som er nødvendig
             user_course.setCanDoExam(true);
+            examReady++;
         }
-
-
+        return examReady;
     }
 
     @Override

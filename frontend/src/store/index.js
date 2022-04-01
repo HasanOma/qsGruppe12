@@ -11,14 +11,15 @@ export default createStore({
       email: '',
       altEmail: '',
       loggedIn: false,
-      isTeacher: true,
+      role: '',
       courses: [],
-      archived: []
+      archived: [],
+      jwtToken: null
     }
   },
   mutations: {
     SET_ID(state, id) {
-      state.user.id = id
+      state.user.id = id;
     },
     SET_FIRSTNAME(state, firstName) {
       state.user.firstName = firstName;
@@ -35,8 +36,8 @@ export default createStore({
     SET_LOGGED_IN(state, bool) {
       state.user.loggedIn = bool;
     },
-    SET_IS_TEACHER(state, bool) {
-      state.user.isTeacher = bool;
+    SET_ROLE(state, role) {
+      state.user.role = role;
     },
     SET_COURSES(state, courses) {
       state.user.courses = courses;
@@ -49,11 +50,14 @@ export default createStore({
       axios.defaults.headers.common['Authorization'] = `Bearer ${
           userData.token
       }`
-      state.user = userData
+      state.user = userData;
     },
     LOGOUT () {
       localStorage.removeItem('user')
       location.reload()
+    },
+    SET_JWT_TOKEN(state, token) {
+      state.user.jwtToken = token;
     }
   },
   actions: {
@@ -75,8 +79,8 @@ export default createStore({
     setLoggedIn({ commit }, bool) {
       commit("SET_LOGGED_IN", bool)
     },
-    setIsTeacher({ commit }, bool) {
-      commit("SET_IS_TEACHER", bool)
+    setRole({ commit }, role) {
+      commit("SET_ROLE", role)
     },
     addCourses({ commit }, courses) {
       commit("SET_COURSES", courses)
@@ -94,6 +98,9 @@ export default createStore({
     logout ({ commit }) {
       commit('LOGOUT')
     },
+    setJwtToken({ commit }, token) {
+      commit("SET_JWT_TOKEN", token)
+    }
   },
   modules: {},
   getters: {
@@ -115,14 +122,17 @@ export default createStore({
     isLoggedIn(state) {
       return state.user.loggedIn
     },
-    isTeacher(state) {
-      return state.user.isTeacher
+    role(state) {
+      return state.user.role
     },
     courses(state) {
       return state.user.courses
     },
     archived(state) {
       return state.user.archived
+    },
+    jwtToken(state) {
+      return state.user.jwtToken
     }
   }
 });

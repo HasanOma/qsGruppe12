@@ -1,4 +1,4 @@
-package com.example.qsgruppe12.dto;
+package com.example.qsgruppe12.dto.course;
 
 import lombok.*;
 

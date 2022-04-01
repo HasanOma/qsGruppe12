@@ -7,7 +7,7 @@
       </div>
       <div class="mb-3">
         <BaseInputNoLabel
-            class="form-control"
+            cssClass="form-control"
             type="email"
             name="email"
             placeholder="Epost"
@@ -22,7 +22,7 @@
       </div>
       <div class="mb-3">
         <BaseInputNoLabel
-            class="form-control"
+            cssClass="form-control"
             type="password"
             name="password"
             placeholder="Passord"
@@ -57,7 +57,8 @@
 <script>
 import BaseInputNoLabel from "@/components/BaseComponents/BaseInputNoLabel";
 import BaseButton from "@/components/BaseComponents/BaseButton";
-// import axios from "@/services/axios";
+import axios from "axios";
+// import LoginService from "../services/LoginService";
 
 export default {
   name: "LoginView",
@@ -73,28 +74,23 @@ export default {
   },
   methods: {
     onSubmit() {
-      this.$store.dispatch("setLoggedIn", true);
-      // const data = {
-      //   username: this.username,
-      //   password: this.password
-      // }
+      const data = {
+        username: this.username,
+        password: this.password
+      }
 
-      // await axios.postLoginData(data).then(response => {
-      //   console.log(response)
-      // })
+      axios.post("http://localhost:8080/login", data)
+          .then(response => {
+            console.log(response.data)
+            this.$store.dispatch("setLoggedIn", true);
+          })
 
       this.$router.push({
         name: "Active",
         query: { redirect: "/course/active" },
       });
       //TODO error handling plus check first what auth the user has
-      // this.$store
-      //     .dispatch('login', {
-      //       email: this.email,
-      //       password: this.password
-      //     })
-      //     .then(() => { this.$router.push({ name: '/course/active' }) })
-      //     .catch(err => { this.status = err.response.status });
+
     },
   },
 };

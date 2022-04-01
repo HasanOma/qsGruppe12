@@ -158,10 +158,6 @@ export default {
       firstName: this.$store.getters.firstName,
       lastName: this.$store.getters.lastName,
       formIsValid: false,
-      password: {
-        password: "",
-        confirm: ""
-      }
     }
   },
   methods: {

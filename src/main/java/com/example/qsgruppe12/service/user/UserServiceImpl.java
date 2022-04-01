@@ -1,15 +1,14 @@
 package com.example.qsgruppe12.service.user;
 
-import com.example.qsgruppe12.dto.CourseDto;
 import com.example.qsgruppe12.dto.QueueDto;
 import com.example.qsgruppe12.dto.userdtos.*;
 import com.example.qsgruppe12.model.Course;
-import com.example.qsgruppe12.model.Queue;
 import com.example.qsgruppe12.model.User;
 import com.example.qsgruppe12.model.UserInQueue;
 import com.example.qsgruppe12.model.relationship.User_Course;
 import com.example.qsgruppe12.model.relationshipkey.UserCourseKey;
 import com.example.qsgruppe12.repository.*;
+import com.example.qsgruppe12.service.course.CourseService;
 import com.example.qsgruppe12.util.RequestResponse;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -50,6 +49,9 @@ public class UserServiceImpl implements UserService {
     private RoleRepository roleRepository;
 
     @Autowired
+    private CourseService courseService;
+
+    @Autowired
     private UserInQueueRepository userInQueueRepository;
 
     private BCryptPasswordEncoder cryptPasswordEncoder = new BCryptPasswordEncoder();
@@ -60,21 +62,38 @@ public class UserServiceImpl implements UserService {
         return userRepository.findByEmail(email).isPresent();
     }
 
+    /**
+     * Generates a random string if the password is empty.
+     * @return returns a random char string.
+     */
     private String randomStringGenerator(){
         String s = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789~`!@#$%^&*()-_=+[{]}\\|;:\'\",<.>/?";
         return RandomStringUtils.random( 20, s );
     }
 
+    /**
+     * Method to update user.
+     * @param id id of the user in the repository.
+     * @param user the user changing his alt email or password.
+     * @return Returns a UserDto.
+     */
     @Override
     public UserDto updateUser(Long id, UserUpdateDto user) {
         //TODO check if logged in is user requesting for themself
         User userUpdate = userRepository.getById(id);
         userUpdate.setAltEmail(user.getAltEmail());
-        userUpdate.setPassword(cryptPasswordEncoder.encode(user.getPassword()));
+        if(user.getPassword() !=null || !user.getPassword().isBlank()){
+            userUpdate.setPassword(cryptPasswordEncoder.encode(user.getPassword()));
+        }
         userRepository.save(userUpdate);
         return modelMapper.map(userUpdate, UserDto.class);
     }
 
+    /**
+     * Method adds all users in specific course and returns them
+     * @param courseId course to retrieve users from
+     * @return returns list of UserDto in specific course
+     */
     @Override
     public List<UserDto> getUsersFromCourse(Long courseId) {
         //TODO permission to get all users from course
@@ -86,6 +105,11 @@ public class UserServiceImpl implements UserService {
         return usersInCourse;
     }
 
+    /**
+     * Method to add user in the repository.
+     * @param registrations list of users.
+     * @return returns confirmation to the client.
+     */
     @Override
     public RequestResponse createUser(List<UserRegistrationDto> registrations){
         for (int i = 0; i < registrations.size(); i++) {
@@ -101,6 +125,12 @@ public class UserServiceImpl implements UserService {
         return new RequestResponse("User created");
     }
 
+    /**
+     * Adds list of users to a specific course.
+     * @param courseId id of the course.
+     * @param registrations list of users.
+     * @return list of registered users.
+     */
     @Override
     public List<UserDto> addUsersForCourse(Long courseId, List<UserRegistrationDto> registrations) {
 
@@ -126,6 +156,12 @@ public class UserServiceImpl implements UserService {
         return savedUsers;
     }
 
+    /**
+     * Adds List of users already in the database to a specific course.
+     * @param courseId id of the course.
+     * @param userEmailsDto emails of the users in the database.
+     * @return confirmation to the client.
+     */
     @Override
     public RequestResponse addExistingUserToCourse(Long courseId, List<UserEmailsDto> userEmailsDto) {
         List<UserDto> savedUsers = new ArrayList<>();
@@ -138,19 +174,31 @@ public class UserServiceImpl implements UserService {
         return new RequestResponse("Users added to " + course.getCode() + " ");
     }
 
-    private void setPassword(List<UserRegistrationDto> registrations, int i, User student) {
+    /**
+     * Method that sets and encrypts the password of the user.
+     * @param registrations list of user information to register.
+     * @param i index of the loop.
+     * @param user user object.
+     */
+    private void setPassword(List<UserRegistrationDto> registrations, int i, User user) {
         String password = registrations.get(i).getPassword();
 
         if(password.isBlank()){
             password = randomStringGenerator();
         }
 
-        student.setPassword(password);
-        student.setPassword(cryptPasswordEncoder.encode(password));
+        user.setPassword(password);
+        user.setPassword(cryptPasswordEncoder.encode(password));
 //        student.setFirstName(roleRepository.getByName(registrations.get(i).getUserRoleName()).getName());
-        student.setRole(roleRepository.getByName(registrations.get(i).getUserRoleName()));
+        user.setRole(roleRepository.getByName(registrations.get(i).getUserRoleName()));
     }
 
+    /**
+     * Method that adds the relationship of the course and user.
+     * @param savedUsers users saved to the database.
+     * @param course course to create relationship with.
+     * @param user user to create relationship with.
+     */
     private void addUserRelationship(List<UserDto> savedUsers, Course course, User user) {
         User userSaved = userRepository.save(user);
         UserDto studentAdded = modelMapper.map(userSaved, UserDto.class);
@@ -166,28 +214,54 @@ public class UserServiceImpl implements UserService {
         userCourseRepository.save(userCourse);
     }
 
+    /**
+     * Login method that checks if the user exists and matches a user in the database.
+     * @param login user credentials.
+     * @return returns all information the client side needs to save in state.
+     */
     @Override
     public UserLoginReturnDto getUserLoggingIn(UserLoginDto login) {
         if (!userExistsByEmail(login.getEmail())) {
             //throw exception
+            System.out.println("finner ikke bruker med email");
             return null;
         }
         if (!cryptPasswordEncoder.matches(login.getPassword(), userRepository.findByEmail(login.getEmail()).get().getPassword())){
             //throw exception
+            System.out.println("passord check failer");
             return null;
         }
+        userRepository.findByEmail(login.getEmail()).isPresent();
         User userFromDB = userRepository.findByEmail(login.getEmail()).get();
         UserLoginReturnDto returnUser = modelMapper.map(userFromDB, UserLoginReturnDto.class);
-
+        System.out.println(userFromDB.getRole().getId());
         List<User_Course> userCourseList = userCourseRepository.findAll();
         for (int i = 0; i < userCourseList.size(); i++) {
             if(userCourseList.get(i).getUser().getEmail().equalsIgnoreCase(returnUser.getEmail())){
-                returnUser.getCourses().add(modelMapper.map(userCourseList.get(i).getCourse(), CourseDto.class));
+
+                returnUser.getCourses().get(i).setCode(userCourseList.get(i).getCourse().getCode());
+                returnUser.getCourses().get(i).setId(userCourseList.get(i).getCourse().getId());
+                returnUser.getCourses().get(i).setArchived(userCourseList.get(i).getCourse().isArchived());
+                returnUser.getCourses().get(i).setRules(userCourseList.get(i).getCourse().getRules());
+                returnUser.getCourses().get(i).setName(userCourseList.get(i).getCourse().getName());
+
+                if (userFromDB.getUserRoleName().equalsIgnoreCase("Admin")){
+                    returnUser.getCourses().get(i).setNrOfStudents(userCourseList.get(i).getCourse().getNrOfStudents());
+                    returnUser.getCourses().get(i).setExamReady(courseService
+                            .checkExamStatus(userCourseList.get(i).getCourse().getId()));
+                }
+
             }
         }
         return returnUser;
     }
 
+    /**
+     * Method to get in a queue that is active.
+     * @param courseId id of the course that has an active queue.
+     * @param queueDto user credentials needed to get in queue.
+     * @return returns user information of the user that got in queue.
+     */
     @Override
     public UserDto getInQueue(Long courseId, UserGetInQueueDto queueDto) {
         User user = userRepository.getById(queueDto.getUserId());
@@ -203,6 +277,11 @@ public class UserServiceImpl implements UserService {
         return modelMapper.map(user,UserDto.class);
     }
 
+    /**
+     * Retrieves info of users in queue.
+     * @param courseId id of the course.
+     * @return Returns queue information of all users in an active queue.
+     */
     @Override
     public List<QueueDto> getUsersInQueue(Long courseId) {
         if (!courseRepository.getById(courseId).isQueueActive()){

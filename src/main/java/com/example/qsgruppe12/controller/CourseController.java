@@ -1,7 +1,8 @@
 package com.example.qsgruppe12.controller;
 
-import com.example.qsgruppe12.dto.CourseDto;
-import com.example.qsgruppe12.dto.CourseRegisterDto;
+import com.example.qsgruppe12.dto.course.CourseDto;
+import com.example.qsgruppe12.dto.course.CourseExamReadyDto;
+import com.example.qsgruppe12.dto.course.CourseRegisterDto;
 import com.example.qsgruppe12.service.course.CourseService;
 import com.example.qsgruppe12.util.RequestResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -11,6 +12,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Slf4j
 @RestController
 @RequestMapping("/courses/")
@@ -18,6 +22,7 @@ public class CourseController {
 
     @Autowired
     CourseService courseService;
+
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -46,4 +51,13 @@ public class CourseController {
         return courseService.activateCourseQueue(courseId);
     }
 
+    @GetMapping("/activate")
+    public List<CourseExamReadyDto> checkExamStatus(@RequestBody List<Long> courseIds){
+        List<CourseExamReadyDto> courseRegisterDtos = new ArrayList<>();
+        for (Long courseId : courseIds) {
+            CourseExamReadyDto.builder()
+                    .examReady(courseService.checkExamStatus(courseId)).id(courseId).build();
+        }
+        return courseRegisterDtos;
+    }
 }

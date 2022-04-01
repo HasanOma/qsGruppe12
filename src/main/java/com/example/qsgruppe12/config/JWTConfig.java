@@ -16,6 +16,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * TODO skriv utfyllende her
+ */
 @Component
 public class JWTConfig extends OncePerRequestFilter {
 

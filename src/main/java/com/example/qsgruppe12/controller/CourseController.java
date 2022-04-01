@@ -23,6 +23,7 @@ public class CourseController {
     @Autowired
     CourseService courseService;
 
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public CourseDto createCourse(Authentication authentication, @RequestBody CourseRegisterDto courseDto){

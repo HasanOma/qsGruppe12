@@ -9,6 +9,9 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 import java.io.IOException;
 import java.util.Properties;
 
+/**
+ * Mail configuration
+ */
 @Configuration
 public class MailConfig {
 
@@ -25,6 +28,11 @@ public class MailConfig {
     private String EMAIL_PASSWORD;
 
 
+    /**
+     * TODO
+     * @return
+     * @throws IOException
+     */
     @Bean
     public JavaMailSender mailSender() throws IOException  {
         final JavaMailSenderImpl mailSender = new JavaMailSenderImpl();

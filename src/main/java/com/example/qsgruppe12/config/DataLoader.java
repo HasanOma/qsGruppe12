@@ -10,6 +10,9 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
+/**
+ * Loads the database with data on application initiation
+ */
 @Component
 public class DataLoader implements ApplicationRunner {
 
@@ -19,13 +22,17 @@ public class DataLoader implements ApplicationRunner {
 
     private CourseRepository courseRepository;
 
-//  spot  private RoomRepository roomRepository;
-
     private User_CourseRepository userCourseRepository;
 
     private BCryptPasswordEncoder cryptPasswordEncoder = new BCryptPasswordEncoder();
 
-
+    /**
+     * Constructor of the class.
+     * @param userRepository repository of the {@link User} object
+     * @param roleRepository repository of the {@link Role} object
+     * @param courseRepository repository of the {@link Course} object
+     * @param userCourseRepository repository of the User_Course object
+     */
     public DataLoader(UserRepository userRepository, RoleRepository roleRepository, CourseRepository courseRepository,
                       User_CourseRepository userCourseRepository) {
         this.userRepository = userRepository;
@@ -61,7 +68,7 @@ public class DataLoader implements ApplicationRunner {
                 .lastName("Minge")
                 .email("bragem@stud.ntnu.no")
                 .password(cryptPasswordEncoder.encode("passord123"))
-                .role(roleRepository.getByName("Student"))
+                .role(roleRepository.getByName("TA"))
                 .build());
         userRepository.save(User.builder()
                 .id(3L)

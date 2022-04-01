@@ -1,43 +1,34 @@
 <template>
   <section class="login-dark">
-    <form method="post" @submit="onSubmit">
+    <form method="post" @submit.prevent="onSubmit">
       <h2 class="visually-hidden">Login Form</h2>
       <div class="illustration">
         <i class="icon ion-ios-locked-outline"></i>
       </div>
       <div class="mb-3">
         <BaseInputNoLabel
-            class="form-control"
+            cssClass="form-control"
             type="email"
             name="email"
             placeholder="Epost"
-            v-model="email"
+            v-model="state.email"
         />
-<!--        <input-->
-<!--          class="form-control"-->
-<!--          type="email"-->
-<!--          name="email"-->
-<!--          placeholder="Epost"-->
-<!--        />-->
+        <span class="text-danger" v-if="v$.email.$error">
+          {{ v$.email.$errors[0].$message }}
+        </span>
       </div>
       <div class="mb-3">
         <BaseInputNoLabel
-            class="form-control"
+            cssClass="form-control"
             type="password"
             name="password"
             placeholder="Passord"
-            v-model="password"
+            v-model="state.password"
         />
-<!--        <input-->
-<!--          class="form-control"-->
-<!--          type="password"-->
-<!--          name="password"-->
-<!--          placeholder="Passord"-->
-<!--        />-->
+        <span class="text-danger" v-if="v$.password.$error">
+          {{ v$.password.$errors[0].$message }}
+        </span>
       </div>
-<!--      <p v-if="status === 400">-->
-<!--        Invalid login info.-->
-<!--      </p>-->
       <div class="mb-3">
         <BaseButton
             class="btn btn-primary d-block w-100"
@@ -45,9 +36,6 @@
         >
           Logg inn
         </Basebutton>
-<!--        <button class="btn btn-primary d-block w-100" type="submit">-->
-<!--          Logg inn-->
-<!--        </button>-->
       </div>
       <a class="forgot" href="#">Glemt passord?</a>
     </form>
@@ -57,8 +45,11 @@
 <script>
 import BaseInputNoLabel from "@/components/BaseComponents/BaseInputNoLabel";
 import BaseButton from "@/components/BaseComponents/BaseButton";
-import axios from "axios";
-// import LoginService from "../services/LoginService";
+// import axios from "axios";
+import {computed, reactive} from "vue";
+import {email, required } from "@vuelidate/validators";
+import useValidate from "@vuelidate/core";
+import {authenticationService} from "@/services/authentication.service";
 
 export default {
   name: "LoginView",
@@ -66,29 +57,80 @@ export default {
     BaseInputNoLabel,
     BaseButton
   },
-  data () {
-    return {
+  setup() {
+    const state = reactive({
       email: '',
       password: ''
+    })
+
+    const rules = computed(() => {
+      return {
+        email: { required, email },
+        password: { required }
+      }
+    })
+
+    const v$ = useValidate(rules, state)
+
+    return { state, v$ }
+  },
+  created() {
+    if (authenticationService.currentUserValue) {
+      return this.$router.push('/course/active');
     }
   },
   methods: {
     onSubmit() {
-      const data = {
-        username: this.username,
-        password: this.password
+      this.v$.$validate()
+      if(!this.v$.$error) {
+        const data = {
+          email: this.state.email,
+          password: this.state.password
+        }
+
+        console.log(data)
+
+        authenticationService.login(this.state.email, this.state.password)
+            .then(user => {
+                this.$store.dispatch("setRole", user.userRole.name)
+                this.$store.dispatch("setLoggedIn", true)
+                this.$router.push("/course/active")
+            }
+            )
+
+        // axios.post("http://localhost:8080/auth/login", data, {
+        //   'Content-Type': 'application/json',
+        //   'Authorization': 'Bearer'
+        // }).then(response => {
+        //   let activeCourses = []
+        //   let archivedCourses = []
+        //
+        //   for(let i = 0; i < response.data.courses.length; i++) {
+        //     if(!response.data.courses[i].archived) {
+        //       activeCourses.append(response.data.courses[i])
+        //     } else {
+        //       archivedCourses.append(response.data.courses[i])
+        //     }
+        //   }
+        //
+        //   this.$store.dispatch("setID", response.data.id)
+        //   this.$store.dispatch("setFirstName", response.data.firstName)
+        //   this.$store.dispatch("setLastName", response.data.lastName)
+        //   this.$store.dispatch("setEmail", response.data.email)
+        //   this.$store.dispatch("setAltEmail", response.data.altEmail)
+        //   this.$store.dispatch("setRole", response.data.userRole.name)
+        //   this.$store.dispatch("addCourses", activeCourses)
+        //   this.$store.dispatch("addArchived", archivedCourses)
+        //   this.$store.dispatch("setJwtToken", response.data.jwtResponse.jwtToken)
+        //
+        //
+        // })
+        //
+        // this.$router.push({
+        //   name: "Active",
+        //   query: { redirect: "/course/active" },
+        // });
       }
-
-      axios.post("http://localhost:8080/login", data)
-          .then(response => {
-            console.log(response.data)
-            this.$store.dispatch("setLoggedIn", true);
-          })
-
-      this.$router.push({
-        name: "Active",
-        query: { redirect: "/course/active" },
-      });
       //TODO error handling plus check first what auth the user has
 
     },

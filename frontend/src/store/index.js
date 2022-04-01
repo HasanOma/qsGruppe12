@@ -5,54 +5,65 @@ import axios from 'axios'
 export default createStore({
   state: {
     user: {
-      firstName: 'Anders',
-      lastName: 'Tellefsen',
-      email: 'andetel@stud.ntnu.no',
-      altEmail: 'anders1.tellefsen@gmail.com',
+      id: null,
+      firstName: '',
+      lastName: '',
+      email: '',
+      altEmail: '',
       loggedIn: false,
-      isTeacher: true,
+      role: '',
       courses: [],
-      archived: []
+      archived: [],
+      jwtToken: null
     }
   },
   mutations: {
+    SET_ID(state, id) {
+      state.user.id = id;
+    },
     SET_FIRSTNAME(state, firstName) {
-      state.firstName = firstName;
+      state.user.firstName = firstName;
     },
     SET_LASTNAME(state, lastName) {
-      state.lastName = lastName;
+      state.user.lastName = lastName;
     },
     SET_EMAIL(state, email) {
-      state.email = email;
+      state.user.email = email;
     },
     SET_ALT_EMAIL(state, altEmail) {
-      state.altEmail = altEmail;
+      state.user.altEmail = altEmail;
     },
     SET_LOGGED_IN(state, bool) {
       state.user.loggedIn = bool;
     },
-    SET_IS_TEACHER(state, bool) {
-      state.isTeacher = bool;
+    SET_ROLE(state, role) {
+      state.user.role = role;
     },
     SET_COURSES(state, courses) {
-      state.courses = courses;
+      state.user.courses = courses;
     },
     SET_ARCHIVED(state, archived) {
-      state.archived = archived;
+      state.user.archived = archived;
     },
     SET_USER_DATA (state, userData) {
       localStorage.setItem('user', JSON.stringify(userData))
       axios.defaults.headers.common['Authorization'] = `Bearer ${
           userData.token
       }`
-      state.user = userData
+      state.user = userData;
     },
     LOGOUT () {
       localStorage.removeItem('user')
       location.reload()
+    },
+    SET_JWT_TOKEN(state, token) {
+      state.user.jwtToken = token;
     }
   },
   actions: {
+    setID({ commit }, id) {
+      commit("SET_ID", id)
+    },
     setFirstName({ commit }, firstName) {
       commit("SET_FIRSTNAME", firstName)
     },
@@ -68,8 +79,8 @@ export default createStore({
     setLoggedIn({ commit }, bool) {
       commit("SET_LOGGED_IN", bool)
     },
-    setIsTeacher({ commit }, bool) {
-      commit("SET_IS_TEACHER", bool)
+    setRole({ commit }, role) {
+      commit("SET_ROLE", role)
     },
     addCourses({ commit }, courses) {
       commit("SET_COURSES", courses)
@@ -87,9 +98,15 @@ export default createStore({
     logout ({ commit }) {
       commit('LOGOUT')
     },
+    setJwtToken({ commit }, token) {
+      commit("SET_JWT_TOKEN", token)
+    }
   },
   modules: {},
   getters: {
+    id(state) {
+      return state.user.id
+    },
     firstName(state) {
       return state.user.firstName
     },
@@ -105,14 +122,17 @@ export default createStore({
     isLoggedIn(state) {
       return state.user.loggedIn
     },
-    isTeacher(state) {
-      return state.user.isTeacher
+    role(state) {
+      return state.user.role
     },
     courses(state) {
       return state.user.courses
     },
     archived(state) {
       return state.user.archived
+    },
+    jwtToken(state) {
+      return state.user.jwtToken
     }
   }
 });

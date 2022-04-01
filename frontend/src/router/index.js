@@ -13,7 +13,9 @@ import AddCourse from "@/views/SubView/AddCourse";
 import AdminOverview from "@/views/SubView/AdminOverview";
 import AddUserCourse from "@/views/SubView/AddUserCourse";
 import EditCourse from "@/views/SubView/EditCourse";
-// import NProgress from 'nprogress';
+import NProgress from 'nprogress';
+import {authenticationService} from "@/services/authentication.service";
+import {Role} from "@/helpers/role"
 
 const routes = [
   {
@@ -24,12 +26,16 @@ const routes = [
   {
     path: "/course/",
     component: Course,
+    meta: {
+      authorize: []
+    },
     children: [
       {
         path: "active",
         name: "Active",
         component: ActiveCourses,
       },
+
       {
         path: "archived",
         name: "Archived",
@@ -41,26 +47,40 @@ const routes = [
     path: "/course/:id",
     name: "Queue",
     component: CourseQueue,
+    meta: {
+      authorize: []
+    }
   },
   {
     path: "/course/:id/add_to_queue",
     name: "Add to queue",
     component: AddToQueue,
+    meta: {
+      authorize: []
+    }
   },
   {
     path: "/course/:id/work",
     name: "Work",
-    component: WorkStatus
+    component: WorkStatus,
+    meta: {
+      authorize: []
+    }
   },
   {
     path: "/settings",
     name: "Settings",
     component: Settings,
+    meta: {
+      authorize: []
+    }
   },
   {
     path: "/admin/",
     component: Admin,
-    meta: { requiresAuth: true },
+    meta: {
+      authorize: [Role.Admin]
+    },
     children: [
       {
         path: "overview",
@@ -96,21 +116,32 @@ const router = createRouter({
   routes,
 });
 
-// router.beforeEach((to, from, next) => {
-//   NProgress.start()
-//   const publicPages = ['/']
-//   const authRequired = !publicPages.includes(to.path)
-//   const loggedIn = localStorage.getItem('user')
-//
-//   if (authRequired && !loggedIn) {
-//     return next('/')
-//   }
-//
-//   next()
-// })
-//
-// router.afterEach(() => {
-//   NProgress.done()
-// })
+router.beforeEach((to, from, next) => {
+  NProgress.start()
+
+  // redirect to login page if not logged in and trying to access a restricted page
+  const { authorize } = to.meta;
+  console.log(to.meta)
+  const currentUser = authenticationService.currentUserValue;
+
+  if (authorize) {
+    if (!currentUser) {
+      // not logged in so redirect to login page with the return url
+      return next({ path: '/', query: { returnUrl: to.path } });
+    }
+
+    // check if route is restricted by role
+    if (authorize.length && !authorize.includes(currentUser.userRole.name)) {
+      // role not authorised so redirect to home page
+      return next({ path: '/course/active' });
+    }
+  }
+
+  next();
+})
+
+router.afterEach(() => {
+  NProgress.done()
+})
 
 export default router;

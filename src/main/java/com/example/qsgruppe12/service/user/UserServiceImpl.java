@@ -1,15 +1,14 @@
 package com.example.qsgruppe12.service.user;
 
-import com.example.qsgruppe12.dto.CourseDto;
 import com.example.qsgruppe12.dto.QueueDto;
 import com.example.qsgruppe12.dto.userdtos.*;
 import com.example.qsgruppe12.model.Course;
-import com.example.qsgruppe12.model.Queue;
 import com.example.qsgruppe12.model.User;
 import com.example.qsgruppe12.model.UserInQueue;
 import com.example.qsgruppe12.model.relationship.User_Course;
 import com.example.qsgruppe12.model.relationshipkey.UserCourseKey;
 import com.example.qsgruppe12.repository.*;
+import com.example.qsgruppe12.service.course.CourseService;
 import com.example.qsgruppe12.util.RequestResponse;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -48,6 +47,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private RoleRepository roleRepository;
+
+    @Autowired
+    private CourseService courseService;
 
     @Autowired
     private UserInQueueRepository userInQueueRepository;
@@ -178,11 +180,23 @@ public class UserServiceImpl implements UserService {
         }
         User userFromDB = userRepository.findByEmail(login.getEmail()).get();
         UserLoginReturnDto returnUser = modelMapper.map(userFromDB, UserLoginReturnDto.class);
-
+        System.out.println(userFromDB.getRole().getId());
         List<User_Course> userCourseList = userCourseRepository.findAll();
         for (int i = 0; i < userCourseList.size(); i++) {
             if(userCourseList.get(i).getUser().getEmail().equalsIgnoreCase(returnUser.getEmail())){
-                returnUser.getCourses().add(modelMapper.map(userCourseList.get(i).getCourse(), CourseDto.class));
+
+                returnUser.getCourses().get(i).setCode(userCourseList.get(i).getCourse().getCode());
+                returnUser.getCourses().get(i).setId(userCourseList.get(i).getCourse().getId());
+                returnUser.getCourses().get(i).setArchived(userCourseList.get(i).getCourse().isArchived());
+                returnUser.getCourses().get(i).setRules(userCourseList.get(i).getCourse().getRules());
+                returnUser.getCourses().get(i).setName(userCourseList.get(i).getCourse().getName());
+
+                if (userFromDB.getUserRoleName().equalsIgnoreCase("Admin")){
+                    returnUser.getCourses().get(i).setNrOfStudents(userCourseList.get(i).getCourse().getNrOfStudents());
+                    returnUser.getCourses().get(i).setExamReady(courseService
+                            .checkExamStatus(userCourseList.get(i).getCourse().getId()));
+                }
+
             }
         }
         return returnUser;

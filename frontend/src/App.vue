@@ -1,12 +1,36 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">frontend</router-link>
-  </nav>
-  <router-view />
+  <Navbar v-if="this.$store.state.loggedIn"/>
+  <div id="flashMessage" v-if="GStore.flashMessage">
+    {{ GStore.flashMessage }}
+  </div>
+  <div id="main">
+    <router-view />
+  </div>
+  <Footer />
 </template>
 
+<script>
+import Footer from "@/components/Footer.vue";
+import Navbar from "@/components/Navbar.vue";
+import { authComp } from "@/store/helpers";
+
+export default {
+  inject: ['GStore'],
+  name: "App",
+  components: {
+    Navbar,
+    Footer,
+  },
+  computed: {
+    ...authComp
+  }
+};
+</script>
+
 <style>
+@import "~bootstrap/dist/css/bootstrap.css";
+@import "assets/fonts/material-icons.min.css";
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -15,16 +39,7 @@
   color: #2c3e50;
 }
 
-nav {
-  padding: 30px;
-}
-
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-nav a.router-link-exact-active {
-  color: #42b983;
+#main {
+  min-height: 80vh;
 }
 </style>

@@ -5,10 +5,11 @@ import axios from 'axios'
 export default createStore({
   state: {
     user: {
-      firstName: 'Anders',
-      lastName: 'Tellefsen',
-      email: 'andetel@stud.ntnu.no',
-      altEmail: 'anders1.tellefsen@gmail.com',
+      id: null,
+      firstName: '',
+      lastName: '',
+      email: '',
+      altEmail: '',
       loggedIn: false,
       isTeacher: true,
       courses: [],
@@ -16,29 +17,32 @@ export default createStore({
     }
   },
   mutations: {
+    SET_ID(state, id) {
+      state.user.id = id
+    },
     SET_FIRSTNAME(state, firstName) {
-      state.firstName = firstName;
+      state.user.firstName = firstName;
     },
     SET_LASTNAME(state, lastName) {
-      state.lastName = lastName;
+      state.user.lastName = lastName;
     },
     SET_EMAIL(state, email) {
-      state.email = email;
+      state.user.email = email;
     },
     SET_ALT_EMAIL(state, altEmail) {
-      state.altEmail = altEmail;
+      state.user.altEmail = altEmail;
     },
     SET_LOGGED_IN(state, bool) {
       state.user.loggedIn = bool;
     },
     SET_IS_TEACHER(state, bool) {
-      state.isTeacher = bool;
+      state.user.isTeacher = bool;
     },
     SET_COURSES(state, courses) {
-      state.courses = courses;
+      state.user.courses = courses;
     },
     SET_ARCHIVED(state, archived) {
-      state.archived = archived;
+      state.user.archived = archived;
     },
     SET_USER_DATA (state, userData) {
       localStorage.setItem('user', JSON.stringify(userData))
@@ -53,6 +57,9 @@ export default createStore({
     }
   },
   actions: {
+    setID({ commit }, id) {
+      commit("SET_ID", id)
+    },
     setFirstName({ commit }, firstName) {
       commit("SET_FIRSTNAME", firstName)
     },
@@ -90,6 +97,9 @@ export default createStore({
   },
   modules: {},
   getters: {
+    id(state) {
+      return state.user.id
+    },
     firstName(state) {
       return state.user.firstName
     },

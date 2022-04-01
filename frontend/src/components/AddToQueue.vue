@@ -55,6 +55,9 @@
                                   :options="work"
                                   v-model="state.work"
                               />
+                              <span class="text-danger" v-if="v$.work.$error">
+                                {{ v$.work.$errors[0].$message }}
+                              </span>
                             </div>
                           </div>
                           <div class="col">
@@ -105,14 +108,19 @@
 
 <script>
 import BaseSelectNoLabel from "@/components/BaseComponents/BaseSelectNoLabel";
+import BaseInputNoLabel from "@/components/BaseComponents/BaseInputNoLabel";
+import BaseButton from "@/components/BaseComponents/BaseButton";
 import { computed, reactive } from "vue";
 import { required, minLength } from "@vuelidate/validators";
 import useValidate from "@vuelidate/core";
+import axios from "axios";
 
 export default {
   name: "AddToQueue",
   components: {
-    BaseSelectNoLabel
+    BaseSelectNoLabel,
+    BaseInputNoLabel,
+    BaseButton
   },
   data() {
     return {
@@ -174,12 +182,22 @@ export default {
   methods: {
     onSubmit(courseID, courseName) {
       this.v$.$validate()
-      console.log(courseID + " " + courseName)
-      console.log(this.form.room)
-      console.log(this.form.table)
-      console.log(this.form.work)
-      console.log(this.form.type)
-      console.log(this.form.message)
+      if(!this.v$.$error) {
+        let url = "http://localhost:8080/courses/queue/" + courseID
+
+        let data = {
+          id: this.$store.getters.id,
+          room: this.state.room,
+          table: this.state.table,
+          work: this.state.work,
+          type: this.state.type,
+          message: this.state.message
+        }
+
+        axios.post(url, data)
+
+        console.log(courseName)
+      }
       // this.$router.push({ name: "Queue", query: { redirect: "/course/:id", courseName: courseName, courseID: courseID }, params: { id: courseID } });
     }
   }

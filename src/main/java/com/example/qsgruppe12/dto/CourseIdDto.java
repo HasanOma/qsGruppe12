@@ -5,7 +5,13 @@ import lombok.Data;
 @Data
 public class CourseIdDto {
 
+    public Long id;
+
+    public String name;
+
     public String code;
 
-    public String semester;
+    public boolean archived;
+
+    public String rules;
 }

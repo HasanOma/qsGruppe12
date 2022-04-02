@@ -1,9 +1,6 @@
 package com.example.qsgruppe12.config;
 
-import com.example.qsgruppe12.model.Course;
-import com.example.qsgruppe12.model.Queue;
-import com.example.qsgruppe12.model.Role;
-import com.example.qsgruppe12.model.User;
+import com.example.qsgruppe12.model.*;
 import com.example.qsgruppe12.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;

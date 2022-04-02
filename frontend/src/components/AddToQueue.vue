@@ -126,6 +126,7 @@ export default {
     return {
       courseName: String,
       courseID: String,
+      courseCode: 1,
       room: [
           "Digitalt",
           "A4-112",
@@ -178,27 +179,44 @@ export default {
   created() {
     this.courseName = this.$route.query.courseName
     this.courseID = this.$route.query.courseID
+
+    console.log(this.$route.query)
   },
   methods: {
     onSubmit(courseID, courseName) {
+      //TODO: Make sure to recieve courses, else courseCode is empty
+      // for(let i = 0; i < this.$store.getters.courses.length; i++) {
+      //   if(this.$store.getters.courses[i].code === this.courseID) {
+      //     this.courseCode = this.$store.getters.courses[i].code
+      //   }
+      // }
+      
       this.v$.$validate()
       if(!this.v$.$error) {
-        let url = "http://localhost:8080/courses/queue/" + courseID
+        let url = "http://localhost:8080/queue/" + this.courseCode + "/add"
 
         let data = {
-          id: this.$store.getters.id,
+          userId: this.$store.getters.id,
           room: this.state.room,
-          table: this.state.table,
-          work: this.state.work,
-          type: this.state.type,
+          spot: this.state.table,
+          workType: this.state.type,
+          workNr: this.state.work,
           message: this.state.message
         }
 
-        axios.post(url, data)
-
-        console.log(courseName)
+        axios.post(url, data, {
+          headers: {
+            'Authorization': 'Bearer' + " " + this.$store.getters.jwtToken
+          }
+        }).then(response => {
+          if(response.status === 200) {
+            this.$router.push({ name: "Queue", query: { redirect: "/course/:id", courseName: courseName, courseID: courseID }, params: { id: courseID } });
+          } else {
+            //TODO: Do something if error
+            console.log(response.data)
+          }
+        })
       }
-      // this.$router.push({ name: "Queue", query: { redirect: "/course/:id", courseName: courseName, courseID: courseID }, params: { id: courseID } });
     }
   }
 }

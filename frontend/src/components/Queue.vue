@@ -56,16 +56,11 @@
                   </thead>
 
                   <tbody>
-                    <tr v-for="person in inQueue" :key="person">
-                      <th>{{ person.name }}</th>
-                      <th>{{ person.room_table }}</th>
-                      <th>{{ person.work_type }}</th>
-                      <th>{{ person.time }}</th>
-                      <th>{{ person.message }}</th>
-                      <th>
-                        <strong>Rediger</strong><br />
-                      </th>
-                    </tr>
+                    <UserInQueue
+                      v-for="person in this.inQueue"
+                      :key="person"
+                      :person="person"
+                    />
                   </tbody>
                   <tfoot>
                     <tr></tr>
@@ -83,22 +78,17 @@
 <script>
 import BaseButton from "@/components/BaseComponents/BaseButton.vue";
 import axios from "axios";
+import UserInQueue from "@/components/BaseComponents/UserInQueue";
 
 export default {
   name: "Queue",
   components: {
+    UserInQueue,
     BaseButton
   },
   props: {
     courseID: String,
     courseName: String,
-    inQueue: []
-  },
-  data() {
-    return {
-      isActive: false,
-      courseCode: ""
-    }
   },
   methods: {
     toAddToQueue(courseID, courseName) {
@@ -106,11 +96,11 @@ export default {
     },
     activate() {
       //TODO: Make sure to recieve courses, else courseCode is empty
-      for(let i = 0; i < this.$store.getters.courses.length; i++) {
-        if(this.$store.getters.courses[i].code === this.courseID) {
-          this.courseCode = this.$store.getters.courses[i].code
-        }
-      }
+      // for(let i = 0; i < this.$store.getters.courses.length; i++) {
+      //   if(this.$store.getters.courses[i].code === this.courseID) {
+      //     this.courseCode = this.$store.getters.courses[i].code
+      //   }
+      // }
 
       let url = "http://localhost:8080/queue/" + this.courseCode + "/activate"
 
@@ -137,24 +127,75 @@ export default {
         console.log(response.data)
         if(response.data.requestResponse === "closed") {
           this.isActive = false
+          this.inQueue = []
         } else {
           //TODO: Do something if error from server
         }
       })
+    },
+    edit(obj) {
+      console.log(obj)
+      // this.$router.push({ name: "Add to queue", query: { redirect: "/course/:id/add_to_queue", courseName: courseName, courseID: courseID }, params: { id: courseID } });
+    },
+    // async updateQueue() {
+    //   let url = "http://localhost:8080/queue/" + this.courseCode + "/list"
+    //   await axios.get(url, {
+    //     headers: {
+    //       'Authorization': 'Bearer' + " " + this.$store.getters.jwtToken
+    //     }
+    //   }).then(res => {
+    //     this.inQueue = res.data
+    //   })
+    // }
+  },
+  data() {
+    return {
+      isActive: false,
+      courseCode: 1,
+      inQueue: [],
     }
   },
   created() {
-    // let Stomp = require('stomp-client');
-    // let destination = '/queue/' + this.courseCode;
-    // let client = new Stomp('127.0.0.1', 61613, 'user', 'pass');
-    //
-    // client.connect(function() {
-    //   client.subscribe(destination, function(body) {
-    //     console.log('This is the body of a message on the subscribed queue:', body);
-    //   });
-    //
-    //   client.publish(destination, 'Oh herrow');
-    // });
+
+    let url = "http://localhost:8080/queue/" + this.courseCode + "/isActive"
+
+    axios.get(url, {
+      headers: {
+        'Authorization': 'Bearer' + " " + this.$store.getters.jwtToken
+      }
+    }).then(response => {
+      if(response.data) {
+        this.isActive = true
+
+        let url = "http://localhost:8080/queue/" + this.courseCode + "/list"
+        axios.get(url, {
+          headers: {
+            'Authorization': 'Bearer' + " " + this.$store.getters.jwtToken
+          }
+        }).then(res => {
+          console.log(res.data)
+          this.inQueue = res.data
+        })
+      } else {
+        //TODO: Do something if error from server
+      }
+    })
+
+    if(this.isActive) {
+      setInterval(this.updateQueue, 1000)
+    }
+
+    let Stomp = require('stomp-client');
+    let destination = '/queue/' + this.courseCode;
+    let client = new Stomp('127.0.0.1', 61613, 'user', 'pass');
+
+    client.connect(function() {
+      client.subscribe(destination, function(body) {
+        console.log('This is the body of a message on the subscribed queue:', body);
+      });
+
+      client.publish(destination, 'Oh herrow');
+    });
   }
 };
 </script>

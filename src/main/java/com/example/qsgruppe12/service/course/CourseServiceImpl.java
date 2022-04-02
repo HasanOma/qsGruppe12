@@ -139,22 +139,4 @@ public class CourseServiceImpl implements CourseService {
         return examReady;
     }
 
-    @Override
-    public RequestResponse activateCourseQueue(Long courseId) {
-        //TODO authenticate user permission
-        Course course = courseRepository.getById(courseId);
-        course.setQueueActive(true);
-        courseRepository.save(course);
-        System.out.println(courseRepository.getById(courseId));
-        return new RequestResponse("Queue for " + course.getCode() + " is now active");
-    }
-
-//    @Override
-    public RequestResponse deActivateCourse(Long courseId) {
-        //TODO authenticate user permission
-        Course course = courseRepository.getById(courseId);
-        course.setArchived(true);
-        courseRepository.save(course);
-        return new RequestResponse("Queue for " + course.getCode() + " is now active");
-    }
 }

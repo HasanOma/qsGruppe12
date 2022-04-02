@@ -22,10 +22,6 @@ public interface UserService {
 
     UserLoginReturnDto getUserLoggingIn(UserLoginDto login);
 
-    UserDto getInQueue(Long courseId, UserGetInQueueDto queueDto);
-
-    List<QueueDto> getUsersInQueue(Long courseId);
-
     RequestResponse addExistingUserToCourse(Long courseId, List<UserEmailsDto> userEmailsDto);
 
     RequestResponse forgotPassword(UserForgotPassword userForgotPassword);

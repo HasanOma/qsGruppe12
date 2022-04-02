@@ -14,6 +14,4 @@ public interface CourseService {
     void deleteCourse(Long courseId);
 
     int checkExamStatus(Long courseId);
-
-    RequestResponse activateCourseQueue(Long courseId);
 }

@@ -5,6 +5,7 @@ import com.example.qsgruppe12.dto.userdtos.UserDto;
 import com.example.qsgruppe12.dto.userdtos.UserGetInQueueDto;
 import com.example.qsgruppe12.service.SecurityService;
 import com.example.qsgruppe12.service.course.CourseService;
+import com.example.qsgruppe12.service.queue.QueueService;
 import com.example.qsgruppe12.service.user.UserService;
 import com.example.qsgruppe12.util.RequestResponse;
 import io.swagger.annotations.Api;
@@ -25,43 +26,41 @@ public class QueueController {
     //TODO LOGG
 
     @Autowired
-    UserService userService;
+    QueueService queueService;
 
     @Autowired
     SecurityService securityService;
 
-    @Autowired
-    CourseService courseService;
 
-    @PostMapping("/activate")
+    @PutMapping("activate")
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "Activate queue for a course")
     public RequestResponse activateCourse(@PathVariable Long courseId){
         //TODO check if user is TA in that course
-        return courseService.activateCourseQueue(courseId);
+        return queueService.activateCourseQueue(courseId);
     }
 
-    @PutMapping("")
+    @PostMapping("")
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "Get in queue of given course")
     public UserDto getInQueue(@PathVariable Long courseId, @RequestBody UserGetInQueueDto queueDto){
         System.out.println("trying to get in queue");
-        return userService.getInQueue(courseId, queueDto);
+        return queueService.getInQueue(courseId, queueDto);
     }
 
-    @GetMapping("/list")
+    @GetMapping("list")
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "Get all users in queue info")
     public List<QueueDto> getUsersInQueue(@PathVariable Long courseId){
-        return userService.getUsersInQueue(courseId);
+        return queueService.getUsersInQueue(courseId);
     }
 
-    @GetMapping()
+    @PatchMapping("close")
     @ResponseStatus(HttpStatus.ACCEPTED)
     @ApiOperation(value = "Closes a given queue")
-    public List<RequestResponse> closeQueue(@PathVariable Long courseId){
+    public RequestResponse closeQueue(@PathVariable Long courseId){
         //TODO check if user is TA
-        return null;
+        return queueService.deactivateQueue(courseId);
     }
 
     //TODO go out of queue update in queue

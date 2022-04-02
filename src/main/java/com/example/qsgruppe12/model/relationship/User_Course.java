@@ -32,8 +32,10 @@ public class User_Course {
     @JoinColumn(name = "course_id")
     Course course;
 
+    private String workApproved;
+
     @OneToMany
-    private List<Work> workApproved;
+    private List<Work> workList;
 
     boolean canDoExam = false;
 

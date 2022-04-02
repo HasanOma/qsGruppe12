@@ -37,11 +37,12 @@ public class DataLoader implements ApplicationRunner {
      * @param userCourseRepository repository of the User_Course object
      */
     public DataLoader(UserRepository userRepository, RoleRepository roleRepository, CourseRepository courseRepository,
-                      User_CourseRepository userCourseRepository) {
+                      User_CourseRepository userCourseRepository, QueueRepository queueRepository) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.courseRepository = courseRepository;
         this.userCourseRepository = userCourseRepository;
+        this.queueRepository = queueRepository;
     }
 
     public void run(ApplicationArguments args) {
@@ -88,7 +89,7 @@ public class DataLoader implements ApplicationRunner {
                 .semester("V2022")
                 .build();
         courseRepository.save(course);
-        Queue queue = Queue.builder().course(course).build();
+        Queue queue = Queue.builder().id(course.getId()).course(course).build();
         queueRepository.save(queue);
         course = Course.builder()
                 .id(2L)
@@ -97,7 +98,7 @@ public class DataLoader implements ApplicationRunner {
                 .semester("V2022")
                 .build();
         courseRepository.save(course);
-        queue = Queue.builder().course(course).build();
+        queue = Queue.builder().id(course.getId()).course(course).build();
         queueRepository.save(queue);
         course = Course.builder()
                 .id(3L)
@@ -106,7 +107,7 @@ public class DataLoader implements ApplicationRunner {
                 .semester("V2022")
                 .build();
         courseRepository.save(course);
-        queue = Queue.builder().course(course).build();
+        queue = Queue.builder().id(course.getId()).course(course).build();
         queueRepository.save(queue);
 
     }

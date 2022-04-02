@@ -1,5 +1,6 @@
 package com.example.qsgruppe12.service.user;
 
+import com.example.qsgruppe12.controller.CourseController;
 import com.example.qsgruppe12.dto.QueueDto;
 import com.example.qsgruppe12.dto.userdtos.*;
 import com.example.qsgruppe12.model.Course;
@@ -278,45 +279,6 @@ public class UserServiceImpl implements UserService {
             }
         }
         return returnUser;
-    }
-
-    /**
-     * Method to get in a queue that is active.
-     * @param courseId id of the course that has an active queue.
-     * @param queueDto user credentials needed to get in queue.
-     * @return returns user information of the user that got in queue.
-     */
-    @Override
-    public UserDto getInQueue(Long courseId, UserGetInQueueDto queueDto) {
-        User user = userRepository.getById(queueDto.getUserId());
-        if (queueRepository.getByCourseId(courseId).isPresent() && courseRepository.getById(courseId).isQueueActive()){
-            if(userRepository.findById(queueDto.getUserId()).isPresent()){
-                UserInQueue userInQueue = modelMapper.map(queueDto, UserInQueue.class);
-                userInQueue.setFullName(user.firstName + user.getLastName());
-                userInQueue.setCourseId(courseId);
-                userInQueue.setLocalDate(LocalDate.now());
-                userInQueueRepository.save(userInQueue);
-            }
-        }
-        return modelMapper.map(user,UserDto.class);
-    }
-
-    /**
-     * Retrieves info of users in queue.
-     * @param courseId id of the course.
-     * @return Returns queue information of all users in an active queue.
-     */
-    @Override
-    public List<QueueDto> getUsersInQueue(Long courseId) {
-        if (!courseRepository.getById(courseId).isQueueActive()){
-            return null;
-        }
-        List<UserInQueue> queue = userInQueueRepository.getByCourseId(courseId);
-        List<QueueDto> usersInQueue = new ArrayList<>();
-        for (UserInQueue userInQueue : queue) {
-            usersInQueue.add(modelMapper.map(userInQueue, QueueDto.class));
-        }
-        return usersInQueue;
     }
 
     /**

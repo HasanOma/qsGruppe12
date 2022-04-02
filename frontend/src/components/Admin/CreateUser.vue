@@ -87,9 +87,8 @@
             <div class="row">
               <div class="col">
                 <div class="form-group mb-3">
-                  <BaseDragnDrop
-                    v-model="this.files"
-                  />
+                  <DragNDrop />
+<!--                  <BaseDragnDrop />-->
                 </div>
               </div>
             </div>
@@ -113,20 +112,22 @@
 <script>
 import BaseButton from "@/components/BaseComponents/BaseButton";
 import BaseInputNoLabel from "@/components/BaseComponents/BaseInputNoLabel";
-import BaseDragnDrop from "@/components/BaseComponents/BaseDragnDrop";
+// import BaseDragnDrop from "@/components/BaseComponents/BaseDragnDrop";
 import BaseSelect from "@/components/BaseComponents/BaseSelect";
 import {computed, reactive} from "vue";
 import {email, required } from "@vuelidate/validators";
 import useValidate from "@vuelidate/core";
 import axios from "axios";
+import DragNDrop from "@/components/BaseComponents/DragNDrop";
 
 export default {
   name: "CreateUser",
   components: {
     BaseInputNoLabel,
     BaseButton,
-    BaseDragnDrop,
-    BaseSelect
+    // BaseDragnDrop,
+    BaseSelect,
+    DragNDrop
   },
   setup() {
     const state = reactive({
@@ -156,8 +157,7 @@ export default {
           'Admin',
           'Student',
           'TA'
-      ],
-      files: null
+      ]
     }
   },
   methods: {

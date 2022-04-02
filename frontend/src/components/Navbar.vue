@@ -44,12 +44,13 @@
             <i class="icon ion-android-settings icon-size"></i
             >&nbsp;Instillinger
           </router-link>
-          <BaseButton
+          <router-link
+              to="/"
               class="nav-link d-flex align-items-center"
               @Click="logout()"
           >
             <i class="fa fa-sign-in icon-size"></i>Logg ut
-          </BaseButton>
+          </router-link>
         </div>
       </div>
       <!-- Collapsible wrapper -->

@@ -31,6 +31,7 @@
     "yup": "^0.32.11"
   },
   "devDependencies": {
+    "@stomp/stompjs": "^6.1.2",
     "@vue/cli-plugin-babel": "~4.5.15",
     "@vue/cli-plugin-eslint": "~4.5.15",
     "@vue/cli-plugin-router": "~4.5.15",

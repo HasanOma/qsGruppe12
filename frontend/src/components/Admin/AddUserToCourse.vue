@@ -10,20 +10,19 @@
             <div class="col">
               <div class="mb-3">
                 <label class="form-label">
-                Velg emne
-                <br>
-              </label>
+                  Velg emne<br>
+                </label>
                 <select class="form-select">
-                <option value="12" selected="">
-                  Emne 1
-                </option>
-                <option value="13">
-                  Emne 2
-                </option>
-                <option value="14">
-                  Emne 3
-                </option>
-              </select>
+                  <option value="12" selected="">
+                    Emne 1
+                  </option>
+                  <option value="13">
+                    Emne 2
+                  </option>
+                  <option value="14">
+                    Emne 3
+                  </option>
+                </select>
               </div>
             </div>
           </div>

@@ -137,22 +137,29 @@ export default {
       console.log(obj)
       // this.$router.push({ name: "Add to queue", query: { redirect: "/course/:id/add_to_queue", courseName: courseName, courseID: courseID }, params: { id: courseID } });
     },
-    // async updateQueue() {
-    //   let url = "http://localhost:8080/queue/" + this.courseCode + "/list"
-    //   await axios.get(url, {
-    //     headers: {
-    //       'Authorization': 'Bearer' + " " + this.$store.getters.jwtToken
-    //     }
-    //   }).then(res => {
-    //     this.inQueue = res.data
-    //   })
-    // }
+    async updateQueue() {
+      let url = "http://localhost:8080/queue/" + this.courseCode + "/list"
+      await axios.get(url, {
+        headers: {
+          'Authorization': 'Bearer' + " " + this.$store.getters.jwtToken
+        }
+      }).then(res => {
+        this.inQueue = res.data
+        console.log(res.data)
+      })
+    }
   },
   data() {
     return {
       isActive: false,
       courseCode: 1,
       inQueue: [],
+      connection: null
+    }
+  },
+  mounted() {
+    if(this.isActive) {
+      setInterval(this.updateQueue, 1000)
     }
   },
   created() {
@@ -181,21 +188,6 @@ export default {
       }
     })
 
-    if(this.isActive) {
-      setInterval(this.updateQueue, 1000)
-    }
-
-    let Stomp = require('stomp-client');
-    let destination = '/queue/' + this.courseCode;
-    let client = new Stomp('127.0.0.1', 61613, 'user', 'pass');
-
-    client.connect(function() {
-      client.subscribe(destination, function(body) {
-        console.log('This is the body of a message on the subscribed queue:', body);
-      });
-
-      client.publish(destination, 'Oh herrow');
-    });
   }
 };
 </script>

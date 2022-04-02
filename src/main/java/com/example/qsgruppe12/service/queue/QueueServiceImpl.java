@@ -11,6 +11,9 @@ import com.example.qsgruppe12.repository.QueueRepository;
 import com.example.qsgruppe12.repository.UserInQueueRepository;
 import com.example.qsgruppe12.repository.UserRepository;
 import com.example.qsgruppe12.util.RequestResponse;
+import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import lombok.extern.slf4j.XSlf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +25,8 @@ import java.util.List;
 /**
  * Service class for Queue
  */
+@Slf4j
+@NoArgsConstructor
 @Service
 public class QueueServiceImpl implements QueueService{
 
@@ -40,23 +45,24 @@ public class QueueServiceImpl implements QueueService{
     ModelMapper modelMapper = new ModelMapper();
 
     /**
-     *
-     * @param courseId
-     * @return
+     * Method to deactivate a queue
+     * @param courseId course id of the queue to close
+     * @return returns an acknowledgement
      */
     @Override
     public RequestResponse deactivateQueue(Long courseId) {
         //TODO authenticate user permission
         Course course = courseRepository.getById(courseId);
-        course.setArchived(false);
+        course.setQueueActive(false);
         courseRepository.save(course);
-        return new RequestResponse("Queue for " + course.getCode() + " is now active");
+        System.out.println(courseRepository.getById(courseId));
+        return new RequestResponse("closed");
     }
 
     /**
-     *
-     * @param courseId
-     * @return
+     * Method to activate a queue
+     * @param courseId course id of the queue to close
+     * @return returns an acknowledgement
      */
     @Override
     public RequestResponse activateCourseQueue(Long courseId) {
@@ -65,7 +71,7 @@ public class QueueServiceImpl implements QueueService{
         course.setQueueActive(true);
         courseRepository.save(course);
         System.out.println(courseRepository.getById(courseId));
-        return new RequestResponse("Queue for " + course.getCode() + " is now active");
+        return new RequestResponse("active");
     }
 
     /**

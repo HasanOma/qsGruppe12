@@ -43,8 +43,6 @@ public class LoginController {
     @Autowired
     private UserService userService;
 
-//    private BCryptPasswordEncoder cryptPasswordEncoder = new BCryptPasswordEncoder();
-
     @Autowired
     private UserServiceDetails userServiceDetails;
 

@@ -31,8 +31,7 @@ public class QueueController {
     @Autowired
     SecurityService securityService;
 
-
-    @PutMapping("activate")
+    @GetMapping("activate")
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "Activate queue for a course")
     public RequestResponse activateCourse(@PathVariable Long courseId){
@@ -55,7 +54,7 @@ public class QueueController {
         return queueService.getUsersInQueue(courseId);
     }
 
-    @PatchMapping("close")
+    @GetMapping("close")
     @ResponseStatus(HttpStatus.ACCEPTED)
     @ApiOperation(value = "Closes a given queue")
     public RequestResponse closeQueue(@PathVariable Long courseId){

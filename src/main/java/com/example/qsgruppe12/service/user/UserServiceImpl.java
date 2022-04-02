@@ -3,6 +3,7 @@ package com.example.qsgruppe12.service.user;
 import com.example.qsgruppe12.controller.CourseController;
 import com.example.qsgruppe12.dto.QueueDto;
 import com.example.qsgruppe12.dto.userdtos.*;
+import com.example.qsgruppe12.exception.FileNotSupportedException;
 import com.example.qsgruppe12.model.Course;
 import com.example.qsgruppe12.model.User;
 import com.example.qsgruppe12.model.UserInQueue;
@@ -21,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -295,5 +297,16 @@ public class UserServiceImpl implements UserService {
             return new RequestResponse("Your new password is now sent to your email!");
         }
         return new RequestResponse("Your email is not registered in our database!");
+    }
+
+
+    public List<User> handleFile(MultipartFile file){
+        String fileType = file.getOriginalFilename().split(".")[1];
+        if (!fileType.equalsIgnoreCase("csv")){
+            throw new FileNotSupportedException("File is not a csv file");
+        }
+
+
+        return null;
     }
 }

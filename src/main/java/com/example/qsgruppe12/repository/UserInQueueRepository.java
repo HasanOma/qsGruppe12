@@ -11,4 +11,8 @@ import java.util.List;
 @Repository
 public interface UserInQueueRepository extends JpaRepository<UserInQueue,Long> {
     List<UserInQueue> getByCourseId(Long courseId);
+
+    @Modifying
+    @Query("delete from UserInQueue u where u.courseId = ?1")
+    void deleteByCourseId(Long courseId);
 }

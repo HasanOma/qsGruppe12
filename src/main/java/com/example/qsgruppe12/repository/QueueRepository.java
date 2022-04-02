@@ -7,4 +7,5 @@ import java.util.Optional;
 
 public interface QueueRepository extends JpaRepository<Queue, Long> {
     Optional<Queue> getByCourseId(Long course_id);
+
 }

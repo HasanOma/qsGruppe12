@@ -14,7 +14,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -34,7 +36,7 @@ public class UserController {
 
     @PutMapping("{userId}/")
     @ResponseStatus(HttpStatus.OK)
-    @ApiOperation(value = "Update a users info", response = UserDto.class)
+    @ApiOperation(value = "Update a users info", response = RequestResponse.class)
     public UserDto updateUser(@PathVariable Long userId, @RequestBody UserUpdateDto user){
         return userService.updateUser(userId, user);
     }
@@ -46,11 +48,27 @@ public class UserController {
         return userService.createUser(users);
     }
 
+    @RequestMapping(value = "add/file" , method = RequestMethod.POST)
+    @ResponseStatus(HttpStatus.CREATED)
+    @ApiOperation(value = "Adds new users to the database", response = RequestResponse.class)
+    public RequestResponse createUsers(@RequestPart("file") MultipartFile mul){
+        System.out.println(mul.getContentType());
+        return userService.createUser(new ArrayList<UserRegistrationDto>());
+    }
+
     @PostMapping("{courseId}/add")
     @ResponseStatus(HttpStatus.CREATED)
-    @ApiOperation(value = "Adds new users to a course", response = UserDto.class)
+    @ApiOperation(value = "Adds new users to a course", response = RequestResponse.class)
     public List<UserDto> createUsers(@PathVariable Long courseId, @RequestBody List<UserRegistrationDto> userRegisterDto){
         return userService.addUsersForCourse(courseId, userRegisterDto);
+    }
+
+    @RequestMapping(value = "{courseId}/add/file" , method = RequestMethod.POST)
+    @ResponseStatus(HttpStatus.CREATED)
+    @ApiOperation(value = "Adds new users to the database", response = RequestResponse.class)
+    public RequestResponse addUsersToCourse(@PathVariable Long courseId, @RequestPart("file") MultipartFile mul){
+        System.out.println(mul.getContentType());
+        return userService.createUser(new ArrayList<UserRegistrationDto>());
     }
 
     @PutMapping("/{courseId}/")

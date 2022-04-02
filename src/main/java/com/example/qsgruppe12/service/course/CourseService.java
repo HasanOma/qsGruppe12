@@ -1,5 +1,6 @@
 package com.example.qsgruppe12.service.course;
 
+import com.example.qsgruppe12.dto.StudentCourseDto;
 import com.example.qsgruppe12.dto.course.CourseDto;
 import com.example.qsgruppe12.dto.course.CourseRegisterDto;
 import com.example.qsgruppe12.util.RequestResponse;
@@ -14,4 +15,7 @@ public interface CourseService {
     void deleteCourse(Long courseId);
 
     int checkExamStatus(Long courseId);
+
+    StudentCourseDto getVariables();
+
 }

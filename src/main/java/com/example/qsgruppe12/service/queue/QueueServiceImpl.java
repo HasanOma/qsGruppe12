@@ -58,6 +58,9 @@ public class QueueServiceImpl implements QueueService{
         Course course = courseRepository.getById(courseId);
         course.setQueueActive(false);
         courseRepository.save(course);
+        for (int i = 0; i < userInQueueRepository.findAll().size(); i++) {
+            userInQueueRepository.deleteByCourseId(courseId);
+        }
         System.out.println(courseRepository.getById(courseId));
         return new RequestResponse("closed");
     }

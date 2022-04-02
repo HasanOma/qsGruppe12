@@ -21,6 +21,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * Implementation of {@link CourseService}
@@ -36,6 +39,9 @@ public class CourseServiceImpl implements CourseService {
 
     @Autowired
     private User_CourseRepository userCourseRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Autowired
     private QueueRepository queueRepository;
@@ -79,6 +85,12 @@ public class CourseServiceImpl implements CourseService {
         return modelmapper.map(courseRepository.save(course), CourseDto.class);
     }
 
+    /**
+     * Returns the updated course
+     * @param courseId id of the course
+     * @param courseDto dto object of course to update
+     * @returnreturns updated dto of course
+     */
     @Override
     public CourseDto update(Long courseId, CourseDto courseDto) {
         Course course = courseRepository.findById(courseId).get();
@@ -87,6 +99,10 @@ public class CourseServiceImpl implements CourseService {
         return modelmapper.map(courseRepository.save(course),CourseDto.class);
     }
 
+    /**
+     * Method to delete a given course
+     * @param courseId course id of method to delete
+     */
     @Override
     public void deleteCourse(Long courseId) {
         if (courseRepository.findById(courseId).isEmpty()){
@@ -95,6 +111,11 @@ public class CourseServiceImpl implements CourseService {
         courseRepository.deleteById(courseId);
     }
 
+    /**
+     * Method to check wether students cualify to participate in taking the exam
+     * @param courseId
+     * @return
+     */
     @Override
     public int checkExamStatus(Long courseId) {
         int examReady = 0;

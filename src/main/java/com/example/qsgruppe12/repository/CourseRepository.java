@@ -11,6 +11,7 @@ import java.util.Optional;
 @Repository
 public interface CourseRepository extends JpaRepository<Course, Long> {
     Optional<Course> findByCodeAndSemester(@NotNull String code, @NotNull String semester);
+
     Optional<Course> findById(@NotNull Long id);
     void deleteById(Long id);
 }

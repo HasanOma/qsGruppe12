@@ -49,4 +49,11 @@ public class UserInQueue {
 
     @ManyToOne
     private Queue queue;
+
+    @PreRemove
+    void remove(){
+        if(queue!=null){
+            queue = null;
+        }
+    }
 }

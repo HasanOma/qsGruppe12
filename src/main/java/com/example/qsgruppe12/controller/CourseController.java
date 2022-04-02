@@ -1,5 +1,6 @@
 package com.example.qsgruppe12.controller;
 
+import com.example.qsgruppe12.dto.StudentCourseDto;
 import com.example.qsgruppe12.dto.course.CourseDto;
 import com.example.qsgruppe12.dto.course.CourseExamReadyDto;
 import com.example.qsgruppe12.dto.course.CourseRegisterDto;
@@ -29,6 +30,12 @@ public class CourseController {
     @Autowired
     CourseService courseService;
 
+    @GetMapping("student_courses")
+    @ResponseStatus(HttpStatus.OK)
+    @ApiOperation(value = "Returns variables client can choose from", response = StudentCourseDto.class)
+    public StudentCourseDto getVariables(){
+        return courseService.getVariables();
+    }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)

@@ -14,15 +14,23 @@
                 <BaseButton
                     css-class="btn btn-outline-primary btn-sm rounded-pill"
                     @clicked="toAddToQueue(courseID, courseName)"
+                    :disabled="!isActive"
                 >
                   Still i kø
                 </BaseButton>
                 <BaseButton
                     css-class="btn btn-outline-primary btn-sm rounded-pill"
                     @clicked="activate()"
-                    v-if="this.$store.getters.role !== 'Student'"
+                    v-if="this.$store.getters.role !== 'Student' && !this.isActive"
                 >
                   Aktivér kø
+                </BaseButton>
+                <BaseButton
+                    css-class="btn btn-outline-primary btn-sm rounded-pill"
+                    @clicked="deactivate()"
+                    v-if="this.$store.getters.role !== 'Student' && this.isActive"
+                >
+                  Deaktivér kø
                 </BaseButton>
               </div>
             </div>
@@ -86,28 +94,67 @@ export default {
     courseName: String,
     inQueue: []
   },
+  data() {
+    return {
+      isActive: false,
+      courseCode: ""
+    }
+  },
   methods: {
     toAddToQueue(courseID, courseName) {
       this.$router.push({ name: "Add to queue", query: { redirect: "/course/:id/addToQueue", courseName: courseName, courseID: courseID }, params: { id: courseID } });
     },
     activate() {
-      let code = null;
+      //TODO: Make sure to recieve courses, else courseCode is empty
       for(let i = 0; i < this.$store.getters.courses.length; i++) {
         if(this.$store.getters.courses[i].code === this.courseID) {
-          code = this.$store.getters.courses[i].code
+          this.courseCode = this.$store.getters.courses[i].code
         }
       }
 
-      let url = "http://localhost:8080/courses/" + code + "/activate"
+      let url = "http://localhost:8080/queue/" + this.courseCode + "/activate"
 
       axios.get(url, {
         headers: {
           'Authorization': 'Bearer' + " " + this.$store.getters.jwtToken
         }
       }).then(response => {
-        console.log(response.data.message)
+        if(response.data.requestResponse === "active") {
+          this.isActive = true
+        } else {
+          //TODO: Do something if error from server
+        }
+      })
+    },
+    deactivate() {
+      let url = "http://localhost:8080/queue/" + this.courseCode + "/close"
+
+      axios.get(url, {
+        headers: {
+          'Authorization': 'Bearer' + " " + this.$store.getters.jwtToken
+        }
+      }).then(response => {
+        console.log(response.data)
+        if(response.data.requestResponse === "closed") {
+          this.isActive = false
+        } else {
+          //TODO: Do something if error from server
+        }
       })
     }
+  },
+  created() {
+    // let Stomp = require('stomp-client');
+    // let destination = '/queue/' + this.courseCode;
+    // let client = new Stomp('127.0.0.1', 61613, 'user', 'pass');
+    //
+    // client.connect(function() {
+    //   client.subscribe(destination, function(body) {
+    //     console.log('This is the body of a message on the subscribed queue:', body);
+    //   });
+    //
+    //   client.publish(destination, 'Oh herrow');
+    // });
   }
 };
 </script>

@@ -22,8 +22,12 @@
 <script>
 import SetupForm from "@/feature/SetupForm";
 import UniqueID from "@/feature/UniqueID";
+import BaseErrorMessage from "@/components/BaseComponents/BaseErrorMessage"
 
 export default {
+  components: {
+    BaseErrorMessage
+  },
   props: {
     label: {
       type: String,

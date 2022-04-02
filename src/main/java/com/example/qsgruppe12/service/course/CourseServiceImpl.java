@@ -1,13 +1,16 @@
 package com.example.qsgruppe12.service.course;
 
 
+import com.example.qsgruppe12.dto.StudentCourseDto;
 import com.example.qsgruppe12.dto.course.CourseDto;
 import com.example.qsgruppe12.dto.course.CourseRegisterDto;
 import com.example.qsgruppe12.model.Course;
 import com.example.qsgruppe12.model.Queue;
+import com.example.qsgruppe12.model.User;
 import com.example.qsgruppe12.model.relationship.User_Course;
 import com.example.qsgruppe12.repository.CourseRepository;
 import com.example.qsgruppe12.repository.QueueRepository;
+import com.example.qsgruppe12.repository.UserRepository;
 import com.example.qsgruppe12.repository.User_CourseRepository;
 import com.example.qsgruppe12.util.RequestResponse;
 import lombok.AllArgsConstructor;
@@ -137,6 +140,32 @@ public class CourseServiceImpl implements CourseService {
             examReady++;
         }
         return examReady;
+    }
+
+    /**
+     * Returns all variables needed to add student in a course
+     * @return returns StudentCourseDto containing list of all courses and list of all students.
+     */
+    @Override
+    public StudentCourseDto getVariables() {
+        StudentCourseDto student = new StudentCourseDto();
+        student.setEmail(new ArrayList<>());
+        student.setCourse(new ArrayList<>());
+        student.setCourseIds(new ArrayList<>());
+
+        List<Course> courses = courseRepository.findAll();
+        List<User> users = userRepository.findAll();
+
+        for (Course course : courses) {
+            student.getCourse().add(course.getName() + " " +
+                    course.getCode());
+            student.getCourseIds().add(course.getId());
+        }
+        for (User user : users) {
+            student.getEmail().add(user.getEmail());
+        }
+
+        return student;
     }
 
 }

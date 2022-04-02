@@ -5,24 +5,22 @@
         <p class="text-primary m-0 fw-bold">Legg til student</p>
       </div>
       <div class="card-body">
-        <form>
+        <form @submit.prevent="onSubmit">
           <div class="row">
             <div class="col">
               <div class="mb-3">
                 <label class="form-label">
-                  Velg emne<br>
+                  <strong>
+                    Velg emne
+                  </strong>
                 </label>
-                <select class="form-select">
-                  <option value="12" selected="">
-                    Emne 1
-                  </option>
-                  <option value="13">
-                    Emne 2
-                  </option>
-                  <option value="14">
-                    Emne 3
-                  </option>
-                </select>
+                <BaseSelect
+                  :options="this.courses"
+                  v-model="state.course"
+                />
+                <span class="text-danger" v-if="v$.course.$error">
+                  {{ v$.course.$errors[0].$message }}
+                </span>
               </div>
             </div>
           </div>
@@ -31,22 +29,16 @@
               <div class="mb-3">
                 <label class="form-label">
                   <strong>
-                    Email Address
+                    Epost til bruker
                   </strong>
                 </label>
-                <select class="form-select">
-                <optgroup label="This is a group">
-                  <option value="12" selected="">
-                    This is item 1
-                  </option>
-                  <option value="13">
-                    This is item 2
-                  </option>
-                  <option value="14">
-                    This is item 3
-                  </option>
-                </optgroup>
-              </select>
+                <BaseSelect
+                  :options="this.userEmails"
+                  v-model="state.userEmail"
+                />
+                <span class="text-danger" v-if="v$.userEmail.$error">
+                  {{ v$.userEmail.$errors[0].$message }}
+                </span>
               </div>
             </div>
           </div>
@@ -58,58 +50,14 @@
         </p>
       </div>
       <div class="card-body">
-        <form>
-          <div class="row">
-            <div class="col">
-              <div class="mb-3">
-                <label class="form-label">
-                  Velg emne
-                  <br>
-                </label>
-                <select class="form-select">
-                <option value="12" selected="">
-                  Emne 1
-                </option>
-                <option value="13">
-                  Emne 2
-                </option>
-                <option value="14">
-                  Emne 3
-                </option>
-              </select>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col">
-              <div class="mb-3">
-                <label class="form-label">
-                  <strong>
-                    Velg tag
-                  </strong>
-                  <br>
-                </label>
-                <BaseSelect/>
-<!--                    options={{courses}}-->
-                <select class="form-select">
-                <optgroup label="This is a group">
-                  <option value="12" selected="">
-                    This is item 1
-                  </option>
-                  <option value="13">
-                    This is item 2
-                  </option>
-                  <option value="14">
-                    This is item 3
-                  </option>
-                </optgroup>
-              </select>
-              </div>
-            </div>
-          </div>
-        </form>
+        <div class="row">
+          <DragNDropWithSelect
+            :options="this.courses"
+            :courseIDs="this.courseIds"
+          />
+        </div>
         <BaseButton
-            cssClass="btn btn-primary btn-sm"
+            cssClass="btn btn-primary btn-sm mt-4"
             type="submit"
         >
           Legg til
@@ -122,16 +70,85 @@
 <script>
 import BaseButton from "@/components/BaseComponents/BaseButton";
 import BaseSelect from "@/components/BaseComponents/BaseSelect";
+import axios from "axios";
+import {computed, reactive} from "vue";
+import { required } from "@vuelidate/validators";
+import useValidate from "@vuelidate/core";
+import DragNDropWithSelect from "@/components/BaseComponents/DragNDropWithSelect";
+
 export default {
   name: "AddUserToCourse",
   data() {
     return {
-      courses: ["This is item 1", "This is item 2", "This is item 3"]
+      courses: [],
+      userEmails: [],
+      courseIds: []
     }
   },
   components: {
+    DragNDropWithSelect,
     BaseButton,
     BaseSelect
+  },
+  setup() {
+    const state = reactive({
+      course: '',
+      userEmail: ""
+    })
+
+    const rules = computed(() => {
+      return {
+        course: { required },
+        userEmail: { required },
+      }
+    })
+
+    const v$ = useValidate(rules, state)
+
+    return { state, v$ }
+  },
+  created() {
+    
+    axios.get("http://localhost:8080/courses/student_courses", {
+      headers: {
+        'Authorization': 'Bearer' + " " + this.$store.getters.jwtToken
+      }
+    }).then( response => {
+      if(response.status === 200) {
+        console.log(response.data);
+        this.courseIds = response.data.courseIds
+        this.courses = response.data.course
+        this.userEmails = response.data.email
+      }
+    }).catch( error => {
+      console.log(error)
+    })
+  },
+  methods: {
+    onSubmit() {
+      console.log(this.state.course)
+      console.log(this.state.userEmail)
+      
+      let chosenCourse;
+      
+      for(let i = 0; i < this.courses.length; i++) {
+        if(this.state.course === this.courses[i]) {
+          chosenCourse = this.courseIds[i]
+        }
+      }
+
+      let url = "http://localhost:8080/courses/" + chosenCourse + "/add"
+      
+      axios.get(url, {
+        headers: {
+          'Authorization': 'Bearer' + " " + this.$store.getters.jwtToken
+        }
+      }).then( response => {
+        console.log(response.status)
+      }).catch( error => {
+        console.log(error)
+      })
+    }
   }
 }
 </script>

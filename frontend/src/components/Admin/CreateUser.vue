@@ -88,7 +88,6 @@
               <div class="col">
                 <div class="form-group mb-3">
                   <DragNDrop />
-<!--                  <BaseDragnDrop />-->
                 </div>
               </div>
             </div>

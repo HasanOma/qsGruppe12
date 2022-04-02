@@ -10,12 +10,19 @@
               <p class="text-primary m-0 fw-bold text-left">
                 Melding fra LA:&nbsp;
               </p>
-              <div class="d-flex align-items-start">
+              <div class="d-flex justify-content-between">
                 <BaseButton
                     css-class="btn btn-outline-primary btn-sm rounded-pill"
                     @clicked="toAddToQueue(courseID, courseName)"
                 >
                   Still i kø
+                </BaseButton>
+                <BaseButton
+                    css-class="btn btn-outline-primary btn-sm rounded-pill"
+                    @clicked="activate()"
+                    v-if="this.$store.getters.role !== 'Student'"
+                >
+                  Aktivér kø
                 </BaseButton>
               </div>
             </div>
@@ -67,6 +74,7 @@
 
 <script>
 import BaseButton from "@/components/BaseComponents/BaseButton.vue";
+import axios from "axios";
 
 export default {
   name: "Queue",
@@ -81,6 +89,24 @@ export default {
   methods: {
     toAddToQueue(courseID, courseName) {
       this.$router.push({ name: "Add to queue", query: { redirect: "/course/:id/addToQueue", courseName: courseName, courseID: courseID }, params: { id: courseID } });
+    },
+    activate() {
+      let code = null;
+      for(let i = 0; i < this.$store.getters.courses.length; i++) {
+        if(this.$store.getters.courses[i].code === this.courseID) {
+          code = this.$store.getters.courses[i].code
+        }
+      }
+
+      let url = "http://localhost:8080/courses/" + code + "/activate"
+
+      axios.get(url, {
+        headers: {
+          'Authorization': 'Bearer' + " " + this.$store.getters.jwtToken
+        }
+      }).then(response => {
+        console.log(response.data.message)
+      })
     }
   }
 };

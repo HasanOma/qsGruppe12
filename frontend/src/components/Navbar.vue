@@ -50,9 +50,6 @@
           >
             <i class="fa fa-sign-in icon-size"></i>Logg ut
           </BaseButton>
-<!--          <router-link to="/" @Click="logout()" class="nav-link d-flex align-items-center">-->
-<!--            <i class="fa fa-sign-in icon-size"></i>&nbsp;Logg ut-->
-<!--          </router-link>-->
         </div>
       </div>
       <!-- Collapsible wrapper -->
@@ -81,6 +78,7 @@ export default {
     },
     logout() {
       authenticationService.logout();
+      sessionStorage.clear();
       this.$store.dispatch("setLoggedIn", false)
       this.$router.push('/');
     }

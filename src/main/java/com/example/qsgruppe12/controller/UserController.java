@@ -27,13 +27,13 @@ public class UserController {
         return userService.updateUser(userId, user);
     }
 
-    @PostMapping("/add/")
+    @PostMapping("add")
     @ResponseStatus(HttpStatus.CREATED)
     public RequestResponse createUsers(@RequestBody List<UserRegistrationDto> users){
         return userService.createUser(users);
     }
 
-    @PostMapping("/{courseId}/add")
+    @PostMapping("{courseId}/add")
     @ResponseStatus(HttpStatus.CREATED)
     public List<UserDto> createUsers(@PathVariable Long courseId, @RequestBody List<UserRegistrationDto> userRegisterDto){
         return userService.addUsersForCourse(courseId, userRegisterDto);

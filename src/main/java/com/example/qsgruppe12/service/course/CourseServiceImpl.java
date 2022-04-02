@@ -19,6 +19,9 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 
+/**
+ * Implementation of {@link CourseService}
+ */
 @Slf4j
 @NoArgsConstructor
 @AllArgsConstructor
@@ -36,10 +39,21 @@ public class CourseServiceImpl implements CourseService {
 
     private ModelMapper modelmapper = new ModelMapper();
 
+    /**
+     * Helper method to see if course exists.
+     * @param courseRegisterDto Course Dto used to register courses.
+     * @return returns true if course already exists.
+     */
     private boolean courseExists(CourseDto courseRegisterDto){
         return courseRepository.findByCodeAndSemester(courseRegisterDto.getCode(), courseRegisterDto.getSemester()).isPresent();
     }
 
+    /**
+     * Course registration method
+     * @param courseRegisterDto Dto user to register a course
+     * @param email
+     * @return returns a course Dto object to client
+     */
     @Override
     public CourseDto createCourse(CourseRegisterDto courseRegisterDto, String email) {
         CourseDto courseDto = modelmapper.map(courseRegisterDto, CourseDto.class);
@@ -49,7 +63,10 @@ public class CourseServiceImpl implements CourseService {
         }
         System.out.println("before mapper");
         Course course = modelmapper.map(courseRegisterDto, Course.class);
-        course.setSemester((LocalDate.now().getMonthValue()>=6 ?  "H" : "V") + LocalDate.now().getYear());
+
+        if (course.getSemester().isBlank() || course.getSemester() == null){
+            course.setSemester((LocalDate.now().getMonthValue()>=6 ?  "H" : "V") + LocalDate.now().getYear());
+        }
         course.setArchived(false);
         course.setQueueActive(false);
         Queue queue = Queue.builder().course(course).build();

@@ -3,7 +3,7 @@
     <form method="post" @submit.prevent="onSubmit">
       <h2 class="visually-hidden">Login Form</h2>
       <div class="illustration">
-        <i class="icon ion-ios-locked-outline"></i>
+        <img src="../assets/qS-logos.jpeg" class="icon ion-ios-locked-outline icon-size" />
       </div>
       <div class="mb-3">
         <BaseInputNoLabel
@@ -75,6 +75,7 @@ export default {
     return { state, v$ }
   },
   created() {
+
     if (authenticationService.currentUserValue) {
       return this.$router.push('/course/active');
     }
@@ -92,7 +93,26 @@ export default {
 
         authenticationService.login(this.state.email, this.state.password)
             .then(user => {
+                let activeCourses = []
+                let archivedCourses = []
+
+                for(let i = 0; i < user.courses.length; i++) {
+                  if(!user.courses[i].archived) {
+                    activeCourses.append(user.courses[i])
+                  } else {
+                    archivedCourses.append(user.courses[i])
+                  }
+                }
+
+                this.$store.dispatch("setID", user.id)
+                this.$store.dispatch("setFirstName", user.firstName)
+                this.$store.dispatch("setLastName", user.lastName)
+                this.$store.dispatch("setEmail", user.email)
+                this.$store.dispatch("setAltEmail", user.altEmail)
                 this.$store.dispatch("setRole", user.userRole.name)
+                this.$store.dispatch("addCourses", activeCourses)
+                this.$store.dispatch("addArchived", archivedCourses)
+                this.$store.dispatch("setJwtToken", user.jwtResponse.jwtToken)
                 this.$store.dispatch("setLoggedIn", true)
                 this.$router.push("/course/active")
             }
@@ -213,5 +233,9 @@ export default {
 
 .login-dark form .btn-primary:active {
   transform: translateY(1px);
+}
+
+.icon-size {
+  height: 200px;
 }
 </style>

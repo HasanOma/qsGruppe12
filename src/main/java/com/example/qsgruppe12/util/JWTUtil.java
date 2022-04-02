@@ -12,6 +12,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
+/**
+ * TODO javadoc
+ */
 @Component
 public class JWTUtil implements Serializable {
 

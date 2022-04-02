@@ -1,8 +1,12 @@
 /* eslint-disable */
 import { createStore } from "vuex";
 import axios from 'axios'
+import createPersistedState from 'vuex-persistedstate';
 
 export default createStore({
+  plugins: [createPersistedState({
+    storage: window.sessionStorage,
+  })],
   state: {
     user: {
       id: null,
@@ -10,7 +14,7 @@ export default createStore({
       lastName: '',
       email: '',
       altEmail: '',
-      loggedIn: false,
+      loggedIn: null,
       role: '',
       courses: [],
       archived: [],

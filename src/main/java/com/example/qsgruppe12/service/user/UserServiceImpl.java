@@ -9,6 +9,7 @@ import com.example.qsgruppe12.model.relationship.User_Course;
 import com.example.qsgruppe12.model.relationshipkey.UserCourseKey;
 import com.example.qsgruppe12.repository.*;
 import com.example.qsgruppe12.service.course.CourseService;
+import com.example.qsgruppe12.service.email.EmailService;
 import com.example.qsgruppe12.util.RequestResponse;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -24,14 +25,14 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Implimentation class of {@link UserService}
+ */
 @Slf4j
 @NoArgsConstructor
 @AllArgsConstructor
 @Service
 public class UserServiceImpl implements UserService {
-
-    //TODO email sent to users created
-    //TODO return just courseIdDTO when logging in
 
     @Autowired
     private UserRepository userRepository;
@@ -53,6 +54,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserInQueueRepository userInQueueRepository;
+
+    @Autowired
+    private EmailService emailService;
 
     private BCryptPasswordEncoder cryptPasswordEncoder = new BCryptPasswordEncoder();
 
@@ -114,15 +118,12 @@ public class UserServiceImpl implements UserService {
     public RequestResponse createUser(List<UserRegistrationDto> registrations){
         for (int i = 0; i < registrations.size(); i++) {
 
-            User student = modelMapper.map(registrations.get(i), User.class);
-
-            setPassword(registrations, i, student);
-            userRepository.save(student);
-
-            //TODO send email plus password with it
-
+            User user = modelMapper.map(registrations.get(i), User.class);
+            String message = "Congratulations you are now registered in QS!\n";
+            sendMailOnCreation(setPassword(registrations, i, user), user.getEmail(), message);
+            userRepository.save(user);
         }
-        return new RequestResponse("User created");
+        return new RequestResponse("User(s) created");
     }
 
     /**
@@ -144,14 +145,18 @@ public class UserServiceImpl implements UserService {
                 if (userCourseList.stream().findAny().isPresent()){
                     if(!userCourseList.stream().findAny().get().getUser().getEmail().equalsIgnoreCase(user.getEmail())){
                         addUserRelationship(savedUsers, course, user);
+                        String message = "You are now added in the Course " +
+                                course.getCode() + " " + course.getName() + "\n";
+                        sendMailOnCreation("your old one ",user.getEmail(), message);
                     }
                 }
             } else {
-                setPassword(registrations, i, user);
+                String message = "Congratulations you are now registered in QS!\n" +
+                        "You are now added in the Course " + course.getCode() + " " + course.getName() + "\n";
+                sendMailOnCreation(setPassword(registrations, i, user), user.getEmail(), message);
                 addUserRelationship(savedUsers, course, user);
                 savedUsers.get(i).setUserRoleName(registrations.get(i).getUserRoleName());
             }
-            //TODO send email plus password with it
         }
         return savedUsers;
     }
@@ -170,8 +175,27 @@ public class UserServiceImpl implements UserService {
             User user = modelMapper.map(userEmailsDto.get(i), User.class);
             addUserRelationship(savedUsers, course, user);
             savedUsers.get(i).setUserRoleName(user.getUserRoleName());
+            String message = "You are now added in the Course " +
+                    course.getCode() + " " + course.getName() + "\n";
+            sendMailOnCreation("your old one ",user.getEmail(), message);
         }
         return new RequestResponse("Users added to " + course.getCode() + " ");
+    }
+
+    /**
+     * Helper Method to send a mail.
+     * @param password password created for the new user.
+     * @param email email of the user being created.
+     * @param message message to the user.
+     */
+    private void sendMailOnCreation(String password, String email, String message){
+        message += "email: " + email +"\n password: " + password;
+        try {
+            emailService.sendEmail("QS",email,"New user in QS", message);
+        } catch (Exception e){
+            e.printStackTrace();
+            //Own throw method
+        }
     }
 
     /**
@@ -180,7 +204,7 @@ public class UserServiceImpl implements UserService {
      * @param i index of the loop.
      * @param user user object.
      */
-    private void setPassword(List<UserRegistrationDto> registrations, int i, User user) {
+    private String setPassword(List<UserRegistrationDto> registrations, int i, User user) {
         String password = registrations.get(i).getPassword();
 
         if(password.isBlank()){
@@ -189,8 +213,8 @@ public class UserServiceImpl implements UserService {
 
         user.setPassword(password);
         user.setPassword(cryptPasswordEncoder.encode(password));
-//        student.setFirstName(roleRepository.getByName(registrations.get(i).getUserRoleName()).getName());
         user.setRole(roleRepository.getByName(registrations.get(i).getUserRoleName()));
+        return password;
     }
 
     /**
@@ -293,5 +317,21 @@ public class UserServiceImpl implements UserService {
             usersInQueue.add(modelMapper.map(userInQueue, QueueDto.class));
         }
         return usersInQueue;
+    }
+
+    /**
+     * Method to send user a new password if they forgot.
+     * @param userForgotPassword email of the user.
+     * @return returns conditionally whether user exists in database.
+     */
+    @Override
+    public RequestResponse forgotPassword(UserForgotPassword userForgotPassword){
+        if (userRepository.findByEmail(userForgotPassword.getEmail()).isPresent()){
+            String message = "Nytt passord er lagd for deg. \n";
+            String password = randomStringGenerator();
+            sendMailOnCreation(password,userForgotPassword.getEmail(), message);
+            return new RequestResponse("Your new password is now sent to your email!");
+        }
+        return new RequestResponse("Your email is not registered in our database!");
     }
 }

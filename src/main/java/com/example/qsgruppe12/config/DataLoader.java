@@ -1,6 +1,7 @@
 package com.example.qsgruppe12.config;
 
 import com.example.qsgruppe12.model.Course;
+import com.example.qsgruppe12.model.Queue;
 import com.example.qsgruppe12.model.Role;
 import com.example.qsgruppe12.model.User;
 import com.example.qsgruppe12.repository.*;
@@ -21,6 +22,8 @@ public class DataLoader implements ApplicationRunner {
     private RoleRepository roleRepository;
 
     private CourseRepository courseRepository;
+
+    private QueueRepository queueRepository;
 
     private User_CourseRepository userCourseRepository;
 
@@ -78,20 +81,33 @@ public class DataLoader implements ApplicationRunner {
                 .password(cryptPasswordEncoder.encode("passord123"))
                 .role(roleRepository.getByName("Student"))
                 .build());
-        courseRepository.save(Course.builder()
+        Course course = Course.builder()
+                .id(1L)
                 .code("IDATT2104")
                 .name("Nettverksprogrammering")
                 .semester("V2022")
-                .build());
-        courseRepository.save(Course.builder()
+                .build();
+        courseRepository.save(course);
+        Queue queue = Queue.builder().course(course).build();
+        queueRepository.save(queue);
+        course = Course.builder()
+                .id(2L)
                 .code("IDATT2105")
                 .name("Full-Stack Applikasjonsutvikling")
                 .semester("V2022")
-                .build());
-        courseRepository.save(Course.builder()
+                .build();
+        courseRepository.save(course);
+        queue = Queue.builder().course(course).build();
+        queueRepository.save(queue);
+        course = Course.builder()
+                .id(3L)
                 .code("IFYT1001")
                 .name("Fysikk")
                 .semester("V2022")
-                .build());
+                .build();
+        courseRepository.save(course);
+        queue = Queue.builder().course(course).build();
+        queueRepository.save(queue);
+
     }
 }

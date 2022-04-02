@@ -2,11 +2,13 @@ package com.example.qsgruppe12.model.relationship;
 
 import com.example.qsgruppe12.model.Course;
 import com.example.qsgruppe12.model.User;
+import com.example.qsgruppe12.model.Work;
 import com.example.qsgruppe12.model.relationshipkey.UserCourseKey;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Getter
@@ -30,7 +32,8 @@ public class User_Course {
     @JoinColumn(name = "course_id")
     Course course;
 
-    String workApproved;
+    @OneToMany
+    private List<Work> workApproved;
 
     boolean canDoExam = false;
 

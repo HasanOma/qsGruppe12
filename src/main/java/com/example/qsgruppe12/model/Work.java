@@ -1,5 +1,6 @@
 package com.example.qsgruppe12.model;
 
+import com.example.qsgruppe12.model.relationship.User_Course;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -31,4 +32,7 @@ public class Work {
     private int Nr;
 
     private boolean completed;
+
+    @ManyToOne
+    private User_Course user_course;
 }

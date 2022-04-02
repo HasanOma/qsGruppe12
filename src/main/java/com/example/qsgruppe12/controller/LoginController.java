@@ -10,6 +10,8 @@ import com.example.qsgruppe12.service.user.UserService;
 import com.example.qsgruppe12.service.user.UserServiceDetails;
 import com.example.qsgruppe12.util.JWTUtil;
 import com.example.qsgruppe12.util.RequestResponse;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -25,7 +27,10 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @RestController
 @RequestMapping("/auth")
+@Api(tags = "Login management")
 public class LoginController {
+
+    //TODO LOGG
 
     @Autowired
     private JWTUtil jwtUtil;
@@ -51,11 +56,13 @@ public class LoginController {
      */
     @PostMapping("/login")
     @ResponseStatus(HttpStatus.OK)
+    @ApiOperation(value = "Authenticates, logs in user and createsJWT token")
     public UserLoginReturnDto authenticate(@Valid @RequestBody JWTRequest jwtRequest) throws Exception{
-        UserLoginReturnDto user = new UserLoginReturnDto();
+        UserLoginReturnDto user;
         System.out.println(jwtRequest.getEmail() + " " + jwtRequest.getPassword());
+
         try {
-//            String password = cryptPasswordEncoder.encode();
+
             user = userService.getUserLoggingIn(modelMapper.map(jwtRequest, UserLoginDto.class));
 
         } catch (BadCredentialsException e) {
@@ -64,15 +71,17 @@ public class LoginController {
 
         final UserDetails userDetails
                 = userServiceDetails.loadUserByUsername(jwtRequest.getEmail());
-        System.out.println(userDetails);
+
         final String token =
                 jwtUtil.generateToken(userDetails);
+
         user.setJwtResponse(new JWTResponse(token));
         return  user;
     }
 
     @PutMapping
     @ResponseStatus(HttpStatus.ACCEPTED)
+    @ApiOperation(value = "")
     public RequestResponse forgotPassword(@Valid @RequestBody UserForgotPassword userForgotPassword){
         return userService.forgotPassword(userForgotPassword);
     }

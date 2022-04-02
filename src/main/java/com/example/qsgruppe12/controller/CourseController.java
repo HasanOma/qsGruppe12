@@ -5,6 +5,8 @@ import com.example.qsgruppe12.dto.course.CourseExamReadyDto;
 import com.example.qsgruppe12.dto.course.CourseRegisterDto;
 import com.example.qsgruppe12.service.course.CourseService;
 import com.example.qsgruppe12.util.RequestResponse;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,7 +20,11 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequestMapping("/courses/")
+@Api(tags = "Course management")
 public class CourseController {
+
+    //TODO add authorization checks on calls
+    //TODO LOGG
 
     @Autowired
     CourseService courseService;
@@ -26,6 +32,7 @@ public class CourseController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
+    @ApiOperation(value = "Creates a course")
     public CourseDto createCourse(Authentication authentication, @RequestBody CourseRegisterDto courseDto){
 //        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         System.out.println("here");
@@ -34,6 +41,7 @@ public class CourseController {
 
     @DeleteMapping("{courseId}/")
     @ResponseStatus(HttpStatus.ACCEPTED)
+    @ApiOperation(value = "Deletes a course")
     public String deleteCourse(Authentication authentication, @PathVariable Long courseId){
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         courseService.deleteCourse(courseId);
@@ -42,19 +50,15 @@ public class CourseController {
 
     @PutMapping("{courseId}/")
     @ResponseStatus(HttpStatus.OK)
+    @ApiOperation(value = "Update a course's info")
     public CourseDto updateCourse(Authentication authentication, @PathVariable Long courseId,
                                   @RequestBody CourseDto courseDto){
         return courseService.update(courseId, courseDto);
     }
 
-    @GetMapping("{courseId}/activate")
-    @ResponseStatus(HttpStatus.OK)
-    public RequestResponse activateCourse(@PathVariable Long courseId){
-        return courseService.activateCourseQueue(courseId);
-    }
-
     @GetMapping("/activate")
     @ResponseStatus(HttpStatus.OK)
+    @ApiOperation(value = "Checks the exam status of the course")
     public List<CourseExamReadyDto> checkExamStatus(@RequestBody List<Long> courseIds){
         List<CourseExamReadyDto> courseRegisterDtos = new ArrayList<>();
         for (Long courseId : courseIds) {

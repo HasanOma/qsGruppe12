@@ -31,7 +31,7 @@ public class Queue {
     @Column(name = "queue_id")
     private Long id;
 
-//    private LocalDate localdate = LocalDate.now() - LocalDate.get;
+    private String message;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "course_id", referencedColumnName = "course_id")

@@ -124,7 +124,6 @@ export default {
   components: {
     BaseInputNoLabel,
     BaseButton,
-    // BaseDragnDrop,
     BaseSelect,
     DragNDrop
   },

@@ -93,7 +93,7 @@ export default {
   setup() {
     const state = reactive({
       course: '',
-      userEmail: ""
+      userEmail: ''
     })
 
     const rules = computed(() => {
@@ -126,16 +126,15 @@ export default {
   },
   methods: {
     onSubmit() {
-      console.log(this.state.course)
-      console.log(this.state.userEmail)
-      
       let chosenCourse;
-      
       for(let i = 0; i < this.courses.length; i++) {
         if(this.state.course === this.courses[i]) {
           chosenCourse = this.courseIds[i]
         }
       }
+
+      this.state.course = ''
+      this.state.userEmail = ''
 
       let url = "http://localhost:8080/courses/" + chosenCourse + "/add"
       

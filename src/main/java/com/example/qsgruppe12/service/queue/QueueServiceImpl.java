@@ -39,15 +39,25 @@ public class QueueServiceImpl implements QueueService{
 
     ModelMapper modelMapper = new ModelMapper();
 
+    /**
+     *
+     * @param courseId
+     * @return
+     */
     @Override
     public RequestResponse deactivateQueue(Long courseId) {
         //TODO authenticate user permission
         Course course = courseRepository.getById(courseId);
-        course.setArchived(true);
+        course.setArchived(false);
         courseRepository.save(course);
         return new RequestResponse("Queue for " + course.getCode() + " is now active");
     }
 
+    /**
+     *
+     * @param courseId
+     * @return
+     */
     @Override
     public RequestResponse activateCourseQueue(Long courseId) {
         //TODO authenticate user permission

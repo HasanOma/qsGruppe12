@@ -109,6 +109,5 @@ public class DataLoader implements ApplicationRunner {
         courseRepository.save(course);
         queue = Queue.builder().id(course.getId()).course(course).build();
         queueRepository.save(queue);
-
     }
 }

@@ -32,7 +32,7 @@ public class CourseController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    @ApiOperation(value = "Creates a course")
+    @ApiOperation(value = "Creates a course", response = CourseDto.class)
     public CourseDto createCourse(Authentication authentication, @RequestBody CourseRegisterDto courseDto){
 //        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         System.out.println("here");
@@ -41,16 +41,16 @@ public class CourseController {
 
     @DeleteMapping("{courseId}/")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    @ApiOperation(value = "Deletes a course")
-    public String deleteCourse(Authentication authentication, @PathVariable Long courseId){
+    @ApiOperation(value = "Deletes a course", response = CourseDto.class)
+    public RequestResponse deleteCourse(Authentication authentication, @PathVariable Long courseId){
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         courseService.deleteCourse(courseId);
-        return "Course has been deleted.";
+        return new RequestResponse("Course has been deleted.");
     }
 
     @PutMapping("{courseId}/")
     @ResponseStatus(HttpStatus.OK)
-    @ApiOperation(value = "Update a course's info")
+    @ApiOperation(value = "Update a course's info", response = CourseDto.class)
     public CourseDto updateCourse(Authentication authentication, @PathVariable Long courseId,
                                   @RequestBody CourseDto courseDto){
         return courseService.update(courseId, courseDto);
@@ -58,7 +58,7 @@ public class CourseController {
 
     @GetMapping("/activate")
     @ResponseStatus(HttpStatus.OK)
-    @ApiOperation(value = "Checks the exam status of the course")
+    @ApiOperation(value = "Checks the exam status of the course", response = CourseExamReadyDto.class)
     public List<CourseExamReadyDto> checkExamStatus(@RequestBody List<Long> courseIds){
         List<CourseExamReadyDto> courseRegisterDtos = new ArrayList<>();
         for (Long courseId : courseIds) {

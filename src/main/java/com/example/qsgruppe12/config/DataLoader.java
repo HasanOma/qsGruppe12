@@ -2,11 +2,12 @@ package com.example.qsgruppe12.config;
 
 import com.example.qsgruppe12.model.*;
 import com.example.qsgruppe12.repository.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
+
+import java.time.LocalTime;
 
 /**
  * Loads the database with data on application initiation
@@ -22,6 +23,8 @@ public class DataLoader implements ApplicationRunner {
 
     private QueueRepository queueRepository;
 
+    private UserInQueueRepository userInQueueRepository;
+
     private User_CourseRepository userCourseRepository;
 
     private BCryptPasswordEncoder cryptPasswordEncoder = new BCryptPasswordEncoder();
@@ -34,12 +37,13 @@ public class DataLoader implements ApplicationRunner {
      * @param userCourseRepository repository of the User_Course object
      */
     public DataLoader(UserRepository userRepository, RoleRepository roleRepository, CourseRepository courseRepository,
-                      User_CourseRepository userCourseRepository, QueueRepository queueRepository) {
+                      User_CourseRepository userCourseRepository, QueueRepository queueRepository, UserInQueueRepository userInQueue) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.courseRepository = courseRepository;
         this.userCourseRepository = userCourseRepository;
         this.queueRepository = queueRepository;
+        this.userInQueueRepository = userInQueue;
     }
 
     public void run(ApplicationArguments args) {
@@ -84,9 +88,21 @@ public class DataLoader implements ApplicationRunner {
                 .code("IDATT2104")
                 .name("Nettverksprogrammering")
                 .semester("V2022")
+                .queueActive(true)
                 .build();
         courseRepository.save(course);
         Queue queue = Queue.builder().id(course.getId()).course(course).build();
+        UserInQueue userInQueue = UserInQueue.builder()
+                .fullName("Anders")
+                .courseId(course.getId())
+                .localDate(LocalTime.now())
+                .message("hei test")
+                .room("A4")
+                .spot("1")
+                .workNr("3")
+                .workType("heia")
+                .build();
+        userInQueueRepository.save(userInQueue);
         queueRepository.save(queue);
         course = Course.builder()
                 .id(2L)

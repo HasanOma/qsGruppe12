@@ -78,6 +78,17 @@ public class QueueServiceImpl implements QueueService{
     }
 
     /**
+     * Method to check if a queue isactive
+     * @param courseId id of the course
+     * @return returns true if queue is active
+     */
+    @Override
+    public boolean isQueueActive(Long courseId){
+        Course course = courseRepository.getById(courseId);
+        return course.isQueueActive();
+    }
+
+    /**
      * Method to get in a queue that is active.
      * @param courseId id of the course that has an active queue.
      * @param queueDto user credentials needed to get in queue.
@@ -89,9 +100,10 @@ public class QueueServiceImpl implements QueueService{
         if (queueRepository.getByCourseId(courseId).isPresent() && courseRepository.getById(courseId).isQueueActive()){
             if(userRepository.findById(queueDto.getUserId()).isPresent()){
                 UserInQueue userInQueue = modelMapper.map(queueDto, UserInQueue.class);
-                userInQueue.setFullName(user.firstName + user.getLastName());
+                userInQueue.setFullName(user.getFirstName() + " " + user.getLastName());
                 userInQueue.setCourseId(courseId);
-                userInQueue.setLocalDate(LocalDate.now());
+                userInQueue.setLocalDate(LocalTime.now());
+                System.out.println(LocalDate.now());
                 userInQueueRepository.save(userInQueue);
             }
         }
@@ -112,6 +124,13 @@ public class QueueServiceImpl implements QueueService{
         List<QueueDto> usersInQueue = new ArrayList<>();
         for (UserInQueue userInQueue : queue) {
             usersInQueue.add(modelMapper.map(userInQueue, QueueDto.class));
+            LocalTime hourInQueue = LocalTime.now().minusHours(userInQueue.getLocalDate().getHour());
+            LocalTime minInQueue = LocalTime.now().minusMinutes(userInQueue.getLocalDate().getMinute());
+            LocalTime secInQueue = LocalTime.now().minusSeconds(userInQueue.getLocalDate().getSecond());
+//            usersInQueue.get(usersInQueue.size() - 1).setLocalDate((userInQueue.getLocalDate().getHour() + " : "
+//                    + userInQueue.getLocalDate().getMinute() + " : " + userInQueue.getLocalDate().getSecond() ));
+//            usersInQueue.get(usersInQueue.size() - 1).setLocalDate(hourInQueue + "");
+            usersInQueue.get(usersInQueue.size()-1).setLocalDate(userInQueue.getLocalDate() + "");
         }
         return usersInQueue;
     }

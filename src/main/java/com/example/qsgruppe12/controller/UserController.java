@@ -34,28 +34,28 @@ public class UserController {
 
     @PutMapping("{userId}/")
     @ResponseStatus(HttpStatus.OK)
-    @ApiOperation(value = "Update a users info")
+    @ApiOperation(value = "Update a users info", response = UserDto.class)
     public UserDto updateUser(@PathVariable Long userId, @RequestBody UserUpdateDto user){
         return userService.updateUser(userId, user);
     }
 
     @PostMapping("add")
     @ResponseStatus(HttpStatus.CREATED)
-    @ApiOperation(value = "Adds new users to the database")
+    @ApiOperation(value = "Adds new users to the database", response = RequestResponse.class)
     public RequestResponse createUsers(@RequestBody List<UserRegistrationDto> users){
         return userService.createUser(users);
     }
 
     @PostMapping("{courseId}/add")
     @ResponseStatus(HttpStatus.CREATED)
-    @ApiOperation(value = "Adds new users to a course")
+    @ApiOperation(value = "Adds new users to a course", response = UserDto.class)
     public List<UserDto> createUsers(@PathVariable Long courseId, @RequestBody List<UserRegistrationDto> userRegisterDto){
         return userService.addUsersForCourse(courseId, userRegisterDto);
     }
 
     @PutMapping("/{courseId}/")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    @ApiOperation(value = "Adds existing users to a course")
+    @ApiOperation(value = "Adds existing users to a course", response = RequestResponse.class)
     public RequestResponse addExistingUserToCourse(@PathVariable Long courseId, @RequestBody List<UserEmailsDto> userEmailsDto){
         return userService.addExistingUserToCourse(courseId, userEmailsDto);
     }

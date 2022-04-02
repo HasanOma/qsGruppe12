@@ -2,6 +2,7 @@ package com.example.qsgruppe12.controller;
 
 import com.example.qsgruppe12.dto.JWTRequest;
 import com.example.qsgruppe12.dto.JWTResponse;
+import com.example.qsgruppe12.dto.course.CourseDto;
 import com.example.qsgruppe12.dto.userdtos.UserForgotPassword;
 import com.example.qsgruppe12.dto.userdtos.UserLoginDto;
 import com.example.qsgruppe12.dto.userdtos.UserLoginReturnDto;
@@ -54,7 +55,7 @@ public class LoginController {
      */
     @PostMapping("/login")
     @ResponseStatus(HttpStatus.OK)
-    @ApiOperation(value = "Authenticates, logs in user and createsJWT token")
+    @ApiOperation(value = "Authenticates, logs in user and createsJWT token", response = UserLoginReturnDto.class)
     public UserLoginReturnDto authenticate(@Valid @RequestBody JWTRequest jwtRequest) throws Exception{
         UserLoginReturnDto user;
         System.out.println(jwtRequest.getEmail() + " " + jwtRequest.getPassword());
@@ -79,7 +80,7 @@ public class LoginController {
 
     @PutMapping
     @ResponseStatus(HttpStatus.ACCEPTED)
-    @ApiOperation(value = "")
+    @ApiOperation(value = "Sends user a new Password to their email", response = RequestResponse.class)
     public RequestResponse forgotPassword(@Valid @RequestBody UserForgotPassword userForgotPassword){
         return userService.forgotPassword(userForgotPassword);
     }

@@ -43,7 +43,7 @@ public class UserInQueue {
 
     private String workNr;
 
-    private LocalDate localDate;
+    private LocalTime localDate;
 
     private String message;
 

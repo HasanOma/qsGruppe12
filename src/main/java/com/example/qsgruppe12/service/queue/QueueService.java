@@ -16,4 +16,7 @@ public interface QueueService {
     UserDto getInQueue(Long courseId, UserGetInQueueDto queueDto);
 
     List<QueueDto> getUsersInQueue(Long courseId);
+
+    boolean isQueueActive(Long courseId);
+
 }

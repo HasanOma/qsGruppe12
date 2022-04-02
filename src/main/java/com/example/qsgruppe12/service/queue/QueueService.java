@@ -19,4 +19,6 @@ public interface QueueService {
 
     boolean isQueueActive(Long courseId);
 
+    RequestResponse helpStudent(Long studentId);
+
 }

@@ -34,6 +34,8 @@ import java.util.Optional;
 @Service
 public class CourseServiceImpl implements CourseService {
 
+    //TODO handle csv file
+
     @Autowired
     private CourseRepository courseRepository;
 
@@ -67,6 +69,7 @@ public class CourseServiceImpl implements CourseService {
     public CourseDto createCourse(CourseRegisterDto courseRegisterDto, String email) {
         CourseDto courseDto = modelmapper.map(courseRegisterDto, CourseDto.class);
         if (courseExists(courseDto)) {
+            System.out.println("exists");
 //            throw new CourseExistsException();
             return null;
         }

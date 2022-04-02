@@ -14,6 +14,8 @@ import java.util.List;
 @Builder
 public class CourseRegisterDto {
 
+    @NotNull
+    @NotEmpty
     private String name;
     @NotNull
     @NotEmpty
@@ -24,5 +26,5 @@ public class CourseRegisterDto {
     @NotNull
     private int totalWork;
 
-    private String rules;
+    private List<String> rules;
 }

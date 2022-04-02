@@ -303,7 +303,7 @@ public class UserServiceImpl implements UserService {
     public List<User> handleFile(MultipartFile file){
         String fileType = file.getOriginalFilename().split(".")[1];
         if (!fileType.equalsIgnoreCase("csv")){
-            throw new FileNotSupportedException("File is not a csv file");
+//            throw new FileNotSupportedException("File is not a csv file");
         }
 
 

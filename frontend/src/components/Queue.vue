@@ -60,12 +60,36 @@
                       v-for="person in this.inQueue"
                       :key="person"
                       :person="person"
+                      @click="helpUser()"
                     />
                   </tbody>
                   <tfoot>
                     <tr></tr>
                   </tfoot>
                 </table>
+<!--                <BaseModal-->
+<!--                    :model-value="true"-->
+<!--                    :close="helpStudent() || dontHelpStudent()"-->
+<!--                    :disabled="!showHelp"-->
+<!--                >-->
+<!--                  <div class="modal">-->
+<!--                    <p>-->
+<!--                      Do you want to help this student?-->
+<!--                    </p>-->
+<!--                    <button-->
+<!--                        :class="style.button"-->
+<!--                        @click="helpStudent()"-->
+<!--                    >-->
+<!--                      close-->
+<!--                    </button>-->
+<!--                    <button-->
+<!--                        :class="style.button"-->
+<!--                        @click="dontHelpStudent()"-->
+<!--                    >-->
+<!--                      close-->
+<!--                    </button>-->
+<!--                  </div>-->
+<!--                </BaseModal>-->
               </div>
             </div>
           </div>
@@ -79,12 +103,14 @@
 import BaseButton from "@/components/BaseComponents/BaseButton.vue";
 import axios from "axios";
 import UserInQueue from "@/components/BaseComponents/UserInQueue";
+// import BaseModal from "@/components/BaseComponents/BaseModal"
 
 export default {
   name: "Queue",
   components: {
     UserInQueue,
-    BaseButton
+    BaseButton,
+    // BaseModal
   },
   props: {
     courseID: String,
@@ -93,6 +119,14 @@ export default {
   methods: {
     toAddToQueue(courseID, courseName) {
       this.$router.push({ name: "Add to queue", query: { redirect: "/course/:id/addToQueue", courseName: courseName, courseID: courseID }, params: { id: courseID } });
+      },
+    helpUser(){
+      if(this.$store.getters.role === "TA"){
+        if(this.showHelp === false){
+          this.showHelp = true;
+        }
+        this.showHelp = false;
+      }
     },
     activate() {
       //TODO: Make sure to recieve courses, else courseCode is empty
@@ -154,7 +188,8 @@ export default {
       isActive: false,
       courseCode: 1,
       inQueue: [],
-      connection: null
+      connection: null,
+      showHelp: false
     }
   },
   mounted() {

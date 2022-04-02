@@ -14,7 +14,16 @@
                     Emnekode
                   </strong>
                 </label>
-                <input class="form-control" type="text" id="emnekode" placeholder="IDATTxxxx" name="emnekode">
+                <BaseInputNoLabel
+                    cssClass="form-control"
+                    type="text"
+                    placeholder="IDATTxxxx"
+                    name="emnekode"
+                    v-model="state.courseCode"
+                />
+                <span class="text-danger" v-if="v$.courseCode.$error">
+                  {{ v$.courseCode.$errors[0].$message }}
+                </span>
               </div>
             </div>
             <div class="col">

@@ -40,7 +40,7 @@ public class CourseController {
     @PostMapping("add")
     @ResponseStatus(HttpStatus.CREATED)
     @ApiOperation(value = "Creates a course", response = CourseDto.class)
-    public CourseDto createCourse(Authentication authentication, @RequestBody CourseRegisterDto courseDto){
+    public CourseDto createCourse( @RequestBody CourseRegisterDto courseDto){
 //        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         System.out.println("here");
         return courseService.createCourse(courseDto, "min email");

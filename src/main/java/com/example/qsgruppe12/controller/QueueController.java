@@ -73,4 +73,11 @@ public class QueueController {
 
     //TODO go out of queue update in queue
 
+    @GetMapping("{studentId}/helped")
+    @ResponseStatus(HttpStatus.OK)
+    @ApiOperation(value = "Sets that the student is being helped")
+    public RequestResponse helpStudent(@PathVariable Long studentId){
+        return queueService.helpStudent(studentId);
+    }
+
 }

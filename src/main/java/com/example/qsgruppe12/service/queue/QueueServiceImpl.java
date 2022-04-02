@@ -137,4 +137,14 @@ public class QueueServiceImpl implements QueueService{
         }
         return usersInQueue;
     }
+
+    /**
+     *
+     * @param studentId
+     * @return
+     */
+    @Override
+    public RequestResponse helpStudent(Long studentId){
+        return null;
+    }
 }

@@ -37,7 +37,7 @@ public class CourseController {
         return courseService.getVariables();
     }
 
-    @PostMapping
+    @PostMapping("add")
     @ResponseStatus(HttpStatus.CREATED)
     @ApiOperation(value = "Creates a course", response = CourseDto.class)
     public CourseDto createCourse(Authentication authentication, @RequestBody CourseRegisterDto courseDto){

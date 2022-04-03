@@ -66,6 +66,8 @@ export default {
         let url =
           "http://localhost:8080/queue/" + this.$route.params.id + "/help";
 
+        console.log("Route id: " + this.$route.params.id)
+
         let data = {
           id: this.$props.person.userId,
         };
@@ -77,6 +79,7 @@ export default {
             },
           })
           .then((response) => {
+            console.log(response.status)
             if (response.status === 200) {
               this.$router.push({
                 name: "Work Approval",

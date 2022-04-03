@@ -23,6 +23,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Service class for Queue
@@ -137,8 +138,8 @@ public class QueueServiceImpl implements QueueService{
      * @return
      */
     @Override
-    public RequestResponse helpStudent(QueueUserIdDto queueDto, String courseId){
-        Course course = courseRepository.getByCode(courseId);
+    public RequestResponse helpStudent(QueueUserIdDto queueDto, Long courseId){
+        Course course = courseRepository.findById(courseId).get();
         UserInQueue userInQueue = userInQueueRepository.getByIdAndCourseId(queueDto.getUserId(), course.getId());
         if (!userInQueue.isHelped()){
             userInQueue.setHelped(true);

@@ -3,7 +3,7 @@
     <div class="d-flex flex-column w-100">
       <div id="content">
         <div class="container-fluid">
-          <h3 class="text-dark mb-4">{{ courseID }} {{ courseName }}</h3>
+          <h3 class="text-dark mb-4">{{ courseCode }} {{ courseName }}</h3>
           <div class="card shadow">
             <div class="card-header py-3">
               <p class="text-primary m-0 fw-bold text-left">KØ</p>
@@ -13,7 +13,7 @@
               <div class="d-flex justify-content-between">
                 <BaseButton
                   css-class="btn btn-outline-primary btn-sm rounded-pill"
-                  @clicked="toAddToQueue(courseID, courseName)"
+                  @clicked="toAddToQueue(courseCode, courseName, courseId)"
                   :disabled="!isActive"
                 >
                   Still i kø
@@ -86,47 +86,45 @@ export default {
     BaseButton,
   },
   props: {
-    courseID: String,
+    courseCode: String,
     courseName: String,
+    courseId: Number
   },
   data() {
     return {
       isActive: false,
-      courseCode: 1,
       inQueue: [],
       connection: null,
       showHelp: false,
     };
   },
   methods: {
-    toAddToQueue(courseID, courseName) {
+    toAddToQueue(courseCode, courseName, courseId) {
       this.$router.push({
         name: "Add to queue",
         query: {
           redirect: "/course/:id/addToQueue",
           courseName: courseName,
-          courseID: courseID,
+          courseCode: courseCode
         },
-        params: { id: courseID },
+        params: { id: courseId },
       });
     },
-    activate() {
-      //TODO: Make sure to recieve courses, else courseCode is empty
-      // for(let i = 0; i < this.$store.getters.courses.length; i++) {
-      //   if(this.$store.getters.courses[i].code === this.courseID) {
-      //     this.courseCode = this.$store.getters.courses[i].code
-      //   }
-      // }
+    async activate() {
 
-      let url = "http://localhost:8080/queue/" + this.courseCode + "/activate";
+      let url = "http://localhost:8080/queue/" + this.$props.courseId + "/activate";
 
-      axios
-        .get(url, {
+      console.log(this.$props.courseId)
+      console.log(typeof this.$props.courseId)
+
+      await axios
+        .post(url, {
           headers: {
             Authorization: "Bearer" + " " + this.$store.getters.jwtToken,
           },
         })
         .then((response) => {
+          console.log("Inside queue component: " + response)
           if (response.data.requestResponse === "active") {
             this.isActive = true;
           } else {
@@ -177,7 +175,7 @@ export default {
   created() {
     // setInterval(this.updateQueue, 100000000)
 
-    let url = "http://localhost:8080/queue/" + this.courseCode + "/isActive";
+    let url = "http://localhost:8080/queue/" + this.$props.courseId + "/isActive";
 
     axios
       .get(url, {
@@ -189,7 +187,7 @@ export default {
         if (response.data) {
           this.isActive = true;
 
-          let url = "http://localhost:8080/queue/" + this.courseCode + "/list";
+          let url = "http://localhost:8080/queue/" + this.$props.courseId + "/list";
           axios
             .get(url, {
               headers: {

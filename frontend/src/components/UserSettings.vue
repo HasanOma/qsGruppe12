@@ -6,7 +6,7 @@
           <p class="text-primary m-0 fw-bold">Instillinger</p>
         </div>
         <div class="card-body">
-          <form @submit.prevent="onSubmit()">
+          <form @submit.prevent="onSubmit">
             <div class="row">
               <div class="col">
                 <div class="form-group mb-3">
@@ -161,7 +161,7 @@ export default {
     }
   },
   methods: {
-    onSubmit() {
+    async onSubmit() {
       this.v$.$validate()
       if(!this.v$.$error) {
         let url = "http://localhost:8080/users/" + this.$store.getters.id
@@ -173,7 +173,7 @@ export default {
           password: this.state.password
         }
 
-        axios.put(url, data, {
+        await axios.put(url, data, {
           headers: {
             'Authorization': 'Bearer' + " " + this.$store.getters.jwtToken
           }

@@ -133,6 +133,7 @@ public class UserServiceImpl implements UserService {
             User user = modelMapper.map(registrations.get(i), User.class);
             String message = "Congratulations you are now registered in QS!\n";
             sendMailOnCreation(setPassword(registrations, i, user), user.getEmail(), message);
+            System.out.println(user);
             userRepository.save(user);
         }
         log.info("Saved {} users to the repository", registrations.size());

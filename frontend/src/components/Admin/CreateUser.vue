@@ -158,7 +158,6 @@ export default {
   methods: {
     onSubmit() {
       this.v$.$validate();
-      console.log(this.files);
       if (!this.v$.$error) {
         let data = [
           {
@@ -170,6 +169,14 @@ export default {
           },
         ];
 
+        console.log({
+          email: this.state.email,
+          firstName: this.state.firstName,
+          lastName: this.state.lastName,
+          password: "",
+          userRoleName: this.state.role,
+        })
+
         axios
           .post("http://localhost:8080/users/add", data, {
             headers: {
@@ -177,18 +184,23 @@ export default {
             },
           })
           .then((response) => {
-            if (response.status === 200) {
+            console.log(response)
+            if (response.status === 201) {
               this.GStore.flashMessage = "Bruker(ene) ble opprettet!";
+
+              setTimeout(() => {
+                this.GStore.flashMessage = "";
+              }, 3500);
             }
           })
           .catch((error) => {
             this.GStore.flashMessage = "Noe galt skjedde..";
             console.log(error);
-          });
 
-        setTimeout(() => {
-          this.GStore.flashMessage = "";
-        }, 3500);
+            setTimeout(() => {
+              this.GStore.flashMessage = "";
+            }, 3500);
+          });
       } else {
         this.GStore.flashMessage =
           "Alle feltene er ikke fylt ut eller gyldige..";

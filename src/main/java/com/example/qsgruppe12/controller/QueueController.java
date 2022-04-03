@@ -3,11 +3,8 @@ package com.example.qsgruppe12.controller;
 import com.example.qsgruppe12.dto.QueueDto;
 import com.example.qsgruppe12.dto.userdtos.UserDto;
 import com.example.qsgruppe12.dto.userdtos.UserGetInQueueDto;
-import com.example.qsgruppe12.dto.userdtos.UserLoginReturnDto;
 import com.example.qsgruppe12.service.SecurityService;
-import com.example.qsgruppe12.service.course.CourseService;
 import com.example.qsgruppe12.service.queue.QueueService;
-import com.example.qsgruppe12.service.user.UserService;
 import com.example.qsgruppe12.util.RequestResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -16,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import javax.websocket.OnMessage;
 import java.util.List;
 
 @Slf4j
@@ -38,6 +34,7 @@ public class QueueController {
     @ApiOperation(value = "Activate queue for a course", response = RequestResponse.class)
     public RequestResponse activateCourse(@PathVariable Long courseId){
         //TODO check if user is TA in that course
+        log.debug("[X] Request to activate the queue for course with id = {}",courseId);
         return queueService.activateCourseQueue(courseId);
     }
 
@@ -46,6 +43,7 @@ public class QueueController {
     @ApiOperation(value = "Get in queue of given course", response = UserDto.class)
     public UserDto getInQueue(@PathVariable Long courseId, @RequestBody UserGetInQueueDto queueDto){
         System.out.println("trying to get in queue");
+        log.debug("[X] Request by user with id = {} to get in queue for course with id = {}", queueDto.getUserId(),courseId);
         return queueService.getInQueue(courseId, queueDto);
     }
 
@@ -53,6 +51,7 @@ public class QueueController {
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "Get all users in queue info", response = QueueDto.class)
     public List<QueueDto> getUsersInQueue(@PathVariable Long courseId){
+        log.debug("[X] Request to get all users in queue for course with id = {}",courseId);
         return queueService.getUsersInQueue(courseId);
     }
 
@@ -61,6 +60,7 @@ public class QueueController {
     @ApiOperation(value = "Closes a given queue", response = RequestResponse.class)
     public RequestResponse closeQueue(@PathVariable Long courseId){
         //TODO check if user is TA
+        log.debug("[X] Request to close a course with id = {}", courseId);
         return queueService.deactivateQueue(courseId);
     }
 
@@ -73,11 +73,20 @@ public class QueueController {
 
     //TODO go out of queue update in queue
 
-    @GetMapping("{studentId}/helped")
+    @GetMapping("{studentId}/help")
     @ResponseStatus(HttpStatus.OK)
-    @ApiOperation(value = "Sets that the student is being helped")
+    @ApiOperation(value = "Sets that the student is being helped", response = RequestResponse.class)
     public RequestResponse helpStudent(@PathVariable Long studentId){
+        log.debug("[X] Request to help user with id = {}", studentId);
         return queueService.helpStudent(studentId);
+    }
+
+    @PostMapping("{studentId}/update")
+    @ResponseStatus(HttpStatus.OK)
+    @ApiOperation(value = "Updates User in queue.", response = RequestResponse.class)
+    public RequestResponse updateStudentInQueue(@PathVariable Long studentId){
+        log.debug("[X] Request to update user with id = {}", studentId);
+        return null;
     }
 
 }

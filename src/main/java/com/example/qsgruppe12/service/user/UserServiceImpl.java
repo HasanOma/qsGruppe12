@@ -20,13 +20,23 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.orm.jpa.EntityManagerProxy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.persistence.*;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaDelete;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.CriteriaUpdate;
+import javax.persistence.metamodel.Metamodel;
+import java.io.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 /**
  * Implimentation class of {@link UserService}
@@ -54,9 +64,6 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private CourseService courseService;
-
-    @Autowired
-    private UserInQueueRepository userInQueueRepository;
 
     @Autowired
     private EmailService emailService;
@@ -93,6 +100,7 @@ public class UserServiceImpl implements UserService {
             userUpdate.setPassword(cryptPasswordEncoder.encode(user.getPassword()));
         }
         userRepository.save(userUpdate);
+        log.info("User with id {} updated to the database",userUpdate.getId());
         return modelMapper.map(userUpdate, UserDto.class);
     }
 
@@ -109,6 +117,7 @@ public class UserServiceImpl implements UserService {
         for (User user: users){
             usersInCourse.add(modelMapper.map(user, UserDto.class));
         }
+        log.info("List of users from course with id {} returned",courseId);
         return usersInCourse;
     }
 
@@ -120,13 +129,46 @@ public class UserServiceImpl implements UserService {
     @Override
     public RequestResponse createUser(List<UserRegistrationDto> registrations){
         for (int i = 0; i < registrations.size(); i++) {
-
             User user = modelMapper.map(registrations.get(i), User.class);
             String message = "Congratulations you are now registered in QS!\n";
             sendMailOnCreation(setPassword(registrations, i, user), user.getEmail(), message);
             userRepository.save(user);
         }
+        log.info("Saved {} users to the repository", registrations.size());
         return new RequestResponse("User(s) created");
+    }
+
+    /**
+     * Method to create users reading them from a file.
+     * @param file file to read users from.
+     * @return returns a response if.
+     * @throws IOException File reading throws an error.
+     */
+    @Override
+    public RequestResponse createUser(MultipartFile file) throws IOException {
+        log.info("File {} received to add users from.",file.getContentType());
+        List<User> users = handleFile(0L,file);
+        if (users != null) {
+            userRepository.saveAll(users);
+            log.info("Saved {} users to the repository", users.size());
+            return new RequestResponse("Users added successfully");
+        }
+        return new RequestResponse(new FileNotSupportedException());
+    }
+
+    /**
+     * Method to add user for a specific course from a file
+     * @param courseId course id to add users to
+     * @param file file to add users from
+     * @return return a
+     * @throws IOException
+     */
+    @Override
+    public RequestResponse addUsersForCourse(Long courseId, MultipartFile file) throws IOException {
+        log.info("File {} received to add users from.",file.getContentType());
+        handleFile(courseId, file);
+        return new RequestResponse("Users added successfully for " +
+                courseRepository.getById(courseId).getCode() + courseRepository.getById(courseId).getCode());
     }
 
     /**
@@ -161,6 +203,8 @@ public class UserServiceImpl implements UserService {
                 savedUsers.get(i).setUserRoleName(registrations.get(i).getUserRoleName());
             }
         }
+        log.info("Saved {} users to the repository.",savedUsers.size());
+        log.info("Saved to course with id {}", courseId);
         return savedUsers;
     }
 
@@ -182,6 +226,7 @@ public class UserServiceImpl implements UserService {
                     course.getCode() + " " + course.getName() + "\n";
             sendMailOnCreation("your old one ",user.getEmail(), message);
         }
+        log.info("Users added to course with id {} ",courseId);
         return new RequestResponse("Users added to " + course.getCode() + " ");
     }
 
@@ -198,6 +243,7 @@ public class UserServiceImpl implements UserService {
         } catch (Exception e){
             e.printStackTrace();
             //Own throw method
+            log.debug("[X] Email was not sent to user with email {}", email);
         }
     }
 
@@ -250,12 +296,12 @@ public class UserServiceImpl implements UserService {
     public UserLoginReturnDto getUserLoggingIn(UserLoginDto login) {
         if (!userExistsByEmail(login.getEmail())) {
             //throw exception
-            System.out.println("finner ikke bruker med email");
+            log.info("Did not find user with email {} ", login.getEmail());
             return null;
         }
         if (!cryptPasswordEncoder.matches(login.getPassword(), userRepository.findByEmail(login.getEmail()).get().getPassword())){
             //throw exception
-            System.out.println("passord check failer");
+            log.debug("[X] Password check failed for user with email {}", login.getEmail());
             return null;
         }
         userRepository.findByEmail(login.getEmail()).isPresent();
@@ -299,14 +345,53 @@ public class UserServiceImpl implements UserService {
         return new RequestResponse("Your email is not registered in our database!");
     }
 
-
-    public List<User> handleFile(MultipartFile file){
-        String fileType = file.getOriginalFilename().split(".")[1];
+    /**
+     * Method to find out if file is a .csv file and read in and create users out of that.
+     * @param courseId course id.
+     * @param file file to read in users from.
+     * @return returns a list of users that have been added to a specific course or will be.
+     * @throws IOException Filereader throws exception.
+     */
+    public List<User> handleFile(Long courseId, MultipartFile file) throws IOException {
+        String fileType = Objects.requireNonNull(file.getOriginalFilename()).split("\\.")[1];
         if (!fileType.equalsIgnoreCase("csv")){
 //            throw new FileNotSupportedException("File is not a csv file");
+            List<User> userss = null;
+            return userss;
         }
-
-
-        return null;
+        List<User> users = new ArrayList<>();
+        BufferedReader reader = new BufferedReader(new FileReader((File) file));
+        String line;
+        while ((line = reader.readLine()) != null) {
+            String[] variable = line.split(",");
+            User userToAdd = User.builder()
+                    .lastName(variable[0])
+                    .firstName(variable[1])
+                    .email(variable[2])
+                    .role(roleRepository.getByName("Student"))
+                    .build();
+            users.add(userToAdd);
+        }
+        if (courseId != 0){
+            Course course = courseRepository.getById(courseId);
+            for(User user : users){
+                course.setNrOfStudents(course.getNrOfStudents()+1);
+                courseRepository.save(course);
+                long nrOfStudents = userRepository.findAll().size();
+                UserCourseKey userCourseKey = new UserCourseKey();
+                userCourseKey.setUserId(nrOfStudents);
+                userCourseKey.setCourseId(courseId);
+                User_Course userCourse = User_Course.builder()
+                        .userCourseKey(userCourseKey)
+                        .course(course)
+                        .user(user)
+                        .workApproved("")
+                        .build();
+                user.getCourses().add(userCourse);
+                userCourseRepository.save(userCourse);
+                userRepository.save(user);
+            }
+        }
+        return users;
     }
 }

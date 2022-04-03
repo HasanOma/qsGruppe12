@@ -1,5 +1,6 @@
 package com.example.qsgruppe12.util;
 
+import com.example.qsgruppe12.exception.FileNotSupportedException;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -18,4 +19,8 @@ import lombok.Setter;
 public class RequestResponse {
     @ApiModelProperty(notes = "Response in the form of a string")
     private String requestResponse;
+
+    public RequestResponse(Exception e) {
+        this.requestResponse = e.getMessage();
+    }
 }

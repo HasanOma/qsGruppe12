@@ -16,6 +16,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,9 +52,9 @@ public class UserController {
     @RequestMapping(value = "add/file" , method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
     @ApiOperation(value = "Adds new users to the database", response = RequestResponse.class)
-    public RequestResponse createUsers(@RequestPart("file") MultipartFile mul){
-        System.out.println(mul.getContentType());
-        return userService.createUser(new ArrayList<UserRegistrationDto>());
+    public RequestResponse createUsers(@RequestPart("file") MultipartFile file) throws IOException {
+
+        return userService.createUser(file);
     }
 
     @PostMapping("{courseId}/add")
@@ -66,9 +67,9 @@ public class UserController {
     @RequestMapping(value = "{courseId}/add/file" , method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
     @ApiOperation(value = "Adds new users to the database", response = RequestResponse.class)
-    public RequestResponse addUsersToCourse(@PathVariable Long courseId, @RequestPart("file") MultipartFile mul){
-        System.out.println(mul.getContentType());
-        return userService.createUser(new ArrayList<UserRegistrationDto>());
+    public RequestResponse addUsersToCourse(@PathVariable Long courseId, @RequestPart("file") MultipartFile file){
+
+        return userService.addUsersForCourse(courseId, file);
     }
 
     @PutMapping("/{courseId}/")

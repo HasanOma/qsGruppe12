@@ -45,6 +45,8 @@ public class UserInQueue {
 
     private LocalTime localDate;
 
+    private boolean helped;
+
     private String message;
 
     @ManyToOne

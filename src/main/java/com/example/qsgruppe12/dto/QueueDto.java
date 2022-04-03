@@ -5,8 +5,6 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDate;
-
 @Getter
 @Setter
 @ApiModel(description = "Queue DTO sent to show the queue")
@@ -32,6 +30,9 @@ public class QueueDto {
 
     @ApiModelProperty(notes = "Time when the student got in the queue")
     private String localDate;
+
+    @ApiModelProperty(notes = "Attribute shows if the student is being helped")
+    private boolean helped;
 
     @ApiModelProperty(notes = "Message from the student to the TA or Teacher")
     private String message;

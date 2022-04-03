@@ -3,6 +3,7 @@ package com.example.qsgruppe12.service.queue;
 import com.example.qsgruppe12.dto.QueueDto;
 import com.example.qsgruppe12.dto.userdtos.UserDto;
 import com.example.qsgruppe12.dto.userdtos.UserGetInQueueDto;
+import com.example.qsgruppe12.exception.CourseNotFoundException;
 import com.example.qsgruppe12.model.Course;
 import com.example.qsgruppe12.model.User;
 import com.example.qsgruppe12.model.UserInQueue;
@@ -13,7 +14,6 @@ import com.example.qsgruppe12.repository.UserRepository;
 import com.example.qsgruppe12.util.RequestResponse;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import lombok.extern.slf4j.XSlf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,8 +21,6 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -81,7 +79,7 @@ public class QueueServiceImpl implements QueueService{
     }
 
     /**
-     * Method to check if a queue isactive
+     * Method to check if a queue is active
      * @param courseId id of the course
      * @return returns true if queue is active
      */
@@ -119,23 +117,34 @@ public class QueueServiceImpl implements QueueService{
      * @return Returns queue information of all users in an active queue.
      */
     @Override
-    public List<QueueDto> getUsersInQueue(Long courseId) {
+    public List<QueueDto> getUsersInQueue(Long courseId) throws CourseNotFoundException {
         if (!courseRepository.getById(courseId).isQueueActive()){
-            return null;
+            throw new CourseNotFoundException();
         }
         List<UserInQueue> queue = userInQueueRepository.getByCourseId(courseId);
         List<QueueDto> usersInQueue = new ArrayList<>();
         for (UserInQueue userInQueue : queue) {
             usersInQueue.add(modelMapper.map(userInQueue, QueueDto.class));
-            LocalTime hourInQueue = LocalTime.now().minusHours(userInQueue.getLocalDate().getHour());
-            LocalTime minInQueue = LocalTime.now().minusMinutes(userInQueue.getLocalDate().getMinute());
-            LocalTime secInQueue = LocalTime.now().minusSeconds(userInQueue.getLocalDate().getSecond());
-//            usersInQueue.get(usersInQueue.size() - 1).setLocalDate((userInQueue.getLocalDate().getHour() + " : "
-//                    + userInQueue.getLocalDate().getMinute() + " : " + userInQueue.getLocalDate().getSecond() ));
-//            usersInQueue.get(usersInQueue.size() - 1).setLocalDate(hourInQueue + "");
             usersInQueue.get(usersInQueue.size()-1).setLocalDate(userInQueue.getLocalDate() + "");
         }
         return usersInQueue;
+    }
+
+    /**
+     *
+     * @param
+     * @return
+     */
+    @Override
+    public RequestResponse helpStudent(QueueDto queueDto, Long courseId){
+        UserInQueue userInQueue = userInQueueRepository.getByIdAndCourseId(queueDto.getUserId(), courseId);
+        if (!userInQueue.isHelped()){
+            userInQueue.setHelped(true);
+            return new RequestResponse("Helped");
+        } else {
+            userInQueue.setHelped(false);
+            return new RequestResponse("Not helped");
+        }
     }
 
     /**
@@ -144,7 +153,7 @@ public class QueueServiceImpl implements QueueService{
      * @return
      */
     @Override
-    public RequestResponse helpStudent(Long studentId){
+    public RequestResponse updateStudentInQueue(Long studentId) {
         return null;
     }
 }

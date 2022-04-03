@@ -3,6 +3,7 @@ package com.example.qsgruppe12.controller;
 import com.example.qsgruppe12.dto.QueueDto;
 import com.example.qsgruppe12.dto.userdtos.UserDto;
 import com.example.qsgruppe12.dto.userdtos.UserGetInQueueDto;
+import com.example.qsgruppe12.exception.CourseNotFoundException;
 import com.example.qsgruppe12.service.SecurityService;
 import com.example.qsgruppe12.service.queue.QueueService;
 import com.example.qsgruppe12.util.RequestResponse;
@@ -52,7 +53,7 @@ public class QueueController {
     @GetMapping("list")
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "Get all users in queue info", response = QueueDto.class)
-    public List<QueueDto> getUsersInQueue(@PathVariable Long courseId){
+    public List<QueueDto> getUsersInQueue(@PathVariable Long courseId) throws CourseNotFoundException {
         log.debug("[X] Request to get all users in queue for course with id = {}",courseId);
         return queueService.getUsersInQueue(courseId);
     }
@@ -61,7 +62,7 @@ public class QueueController {
     @SendTo("/queue/notify")
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "Get all users in queue info", response = QueueDto.class)
-    public List<QueueDto> sendUsersInQueue(@PathVariable Long courseId){
+    public List<QueueDto> sendUsersInQueue(@PathVariable Long courseId) throws CourseNotFoundException {
         log.debug("[X] Request to get all users in queue for course with id = {}",courseId);
         return queueService.getUsersInQueue(courseId);
     }
@@ -84,20 +85,20 @@ public class QueueController {
 
     //TODO go out of queue update in queue
 
-    @GetMapping("{studentId}/help")
+    @PostMapping("/help")
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "Sets that the student is being helped", response = RequestResponse.class)
-    public RequestResponse helpStudent(@PathVariable Long studentId){
-        log.debug("[X] Request to help user with id = {}", studentId);
-        return queueService.helpStudent(studentId);
+    public RequestResponse helpStudent(@RequestBody QueueDto queueDto, @PathVariable Long courseId){
+        log.debug("[X] Request to help user with name = {}", queueDto.getFullName());
+        return queueService.helpStudent(queueDto, courseId);
     }
 
     @PostMapping("{studentId}/update")
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "Updates User in queue.", response = RequestResponse.class)
-    public RequestResponse updateStudentInQueue(@PathVariable Long studentId){
+    public RequestResponse updateStudentInQueue(@PathVariable Long studentId, @PathVariable Long courseId){
         log.debug("[X] Request to update user with id = {}", studentId);
-        return null;
+        return queueService.updateStudentInQueue(studentId);
     }
 
 }

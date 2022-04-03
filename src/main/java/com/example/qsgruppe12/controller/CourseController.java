@@ -26,7 +26,6 @@ import java.util.List;
 public class CourseController {
 
     //TODO add authorization checks on calls
-    //TODO LOGG
 
     @Autowired
     CourseService courseService;

@@ -96,7 +96,7 @@ public class CourseServiceImpl implements CourseService {
      */
     @Override
     public CourseDto update(Long courseId, CourseDto courseDto) {
-        Course course = courseRepository.findById(courseId).get();
+        Course course = courseRepository.getById(courseId);
         course.setQueueActive(courseDto.isQueueActive());
         course.setRules(courseDto.getRules());
         return modelmapper.map(courseRepository.save(course),CourseDto.class);

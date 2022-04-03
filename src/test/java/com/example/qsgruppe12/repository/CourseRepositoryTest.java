@@ -23,7 +23,7 @@ class CourseRepositoryTest {
 
     @BeforeEach
     void setUp() {
-        Set<String> ruleList = new HashSet<>(List.of("6_1_6"));
+        List<String> ruleList = new ArrayList<>(List.of("6_1_6"));
 
         Course course =
                 Course.builder()

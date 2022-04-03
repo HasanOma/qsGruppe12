@@ -18,7 +18,7 @@ class UserInQueueRepositoryTest {
     @Autowired
     private TestEntityManager entityManager;
 
-    Set<String> ruleList = new HashSet<>(List.of("6_1_6"));
+    List<String> ruleList = new ArrayList<>(List.of("6_1_6"));
 
 
     @BeforeEach

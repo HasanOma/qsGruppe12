@@ -125,9 +125,9 @@ export default {
 
       let email = [
         {
-          email: this.state.userEmail
-        }
-      ]
+          email: this.state.userEmail,
+        },
+      ];
       // this.state.course = "";
       // this.state.userEmail = "";
 
@@ -136,7 +136,7 @@ export default {
       axios
         .post(url, email, {
           headers: {
-            "Authorization": "Bearer" + " " + this.$store.getters.jwtToken,
+            Authorization: "Bearer" + " " + this.$store.getters.jwtToken,
           },
         })
         .then((response) => {

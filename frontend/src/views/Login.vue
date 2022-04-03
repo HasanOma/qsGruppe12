@@ -84,7 +84,6 @@ export default {
     onSubmit() {
       this.v$.$validate();
       if (!this.v$.$error) {
-
         authenticationService
           .login(this.state.email, this.state.password)
           .then((user) => {
@@ -110,22 +109,20 @@ export default {
             this.$store.dispatch("setJwtToken", user.jwtResponse.jwtToken);
             this.$store.dispatch("setLoggedIn", true);
 
-            if(this.$store.getters.role === 'Admin') {
+            if (this.$store.getters.role === "Admin") {
               this.$router.push("/admin/overview");
             } else {
               this.$router.push("/course/active");
             }
-
           });
       } else {
         this.GStore.flashMessage =
-            "Alle feltene er ikke fylt ut eller gyldige..";
+          "Alle feltene er ikke fylt ut eller gyldige..";
 
         setTimeout(() => {
           this.GStore.flashMessage = "";
         }, 3500);
       }
-
     },
     onPasswordReset() {
       if (this.state.email !== "") {
@@ -144,20 +141,20 @@ export default {
           .then((response) => {
             if (response.status === 200) {
               this.GStore.flashMessage =
-                  "Nytt passord ble sendt til mailen du skrev inn!";
+                "Nytt passord ble sendt til mailen du skrev inn!";
             }
-          }).catch((error) => {
-            console.log(error)
-            this.GStore.flashMessage =
-                "Noe galt skjedde..";
           })
+          .catch((error) => {
+            console.log(error);
+            this.GStore.flashMessage = "Noe galt skjedde..";
+          });
 
         setTimeout(() => {
           this.GStore.flashMessage = "";
         }, 3500);
       } else {
         this.GStore.flashMessage =
-            "Skriv inn en mail i boksen for e-post for å få tilsendt nytt passord";
+          "Skriv inn en mail i boksen for e-post for å få tilsendt nytt passord";
 
         setTimeout(() => {
           this.GStore.flashMessage = "";

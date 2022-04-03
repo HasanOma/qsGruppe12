@@ -7,6 +7,7 @@ import com.example.qsgruppe12.exception.FileNotSupportedException;
 import com.example.qsgruppe12.model.Course;
 import com.example.qsgruppe12.model.User;
 import com.example.qsgruppe12.model.UserInQueue;
+import com.example.qsgruppe12.model.Work;
 import com.example.qsgruppe12.model.relationship.User_Course;
 import com.example.qsgruppe12.model.relationshipkey.UserCourseKey;
 import com.example.qsgruppe12.repository.*;
@@ -273,8 +274,7 @@ public class UserServiceImpl implements UserService {
      * @param user user to create relationship with.
      */
     private void addUserRelationship(List<UserDto> savedUsers, Course course, User user) {
-        User userSaved = userRepository.save(user);
-        UserDto studentAdded = modelMapper.map(userSaved, UserDto.class);
+        UserDto studentAdded = modelMapper.map(user, UserDto.class);
         savedUsers.add(studentAdded);
         course.setNrOfStudents(course.getNrOfStudents()+1);
 
@@ -282,9 +282,23 @@ public class UserServiceImpl implements UserService {
         UserCourseKey userCourseKey = new UserCourseKey();
         userCourseKey.setUserId(nrOfStudents);
         userCourseKey.setCourseId(course.getId());
-        User_Course userCourse = User_Course.builder().userCourseKey(userCourseKey).course(course).user(user).workApproved("").build();
+        User_Course userCourse = User_Course.builder()
+                .userCourseKey(userCourseKey)
+                .course(course)
+                .user(user)
+                .workApproved("")
+                .build();
+        for (int i = 0; i < course.getTotalWork(); i++) {
+            userCourse.getWorkList().add(Work.builder()
+                    .id((long)i)
+                    .user_course(userCourse)
+                    .courseId(course.getId())
+                    .userId(user.getId())
+                    .build());
+        }
         user.getCourses().add(userCourse);
         userCourseRepository.save(userCourse);
+        userRepository.save(user);
     }
 
     /**

@@ -1,6 +1,7 @@
 package com.example.qsgruppe12.service.course;
 
 import com.example.qsgruppe12.dto.StudentCourseDto;
+import com.example.qsgruppe12.dto.WorkApprovedDto;
 import com.example.qsgruppe12.dto.course.CourseDto;
 import com.example.qsgruppe12.dto.course.CourseRegisterDto;
 import com.example.qsgruppe12.dto.userdtos.UserEmailsDto;
@@ -25,5 +26,7 @@ public interface CourseService {
     List<CourseDto> getActiveCourses(UserEmailsDto emailsDto);
 
     List<CourseDto> getArchivedCourses(UserEmailsDto emailsDto);
+
+    WorkApprovedDto getWorkCompleted(UserEmailsDto emailsDto, Long courseId);
 
 }

@@ -1,10 +1,7 @@
 package com.example.qsgruppe12.model;
 
 import com.example.qsgruppe12.model.relationship.User_Course;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
@@ -16,22 +13,15 @@ import javax.persistence.*;
 @SuperBuilder
 @Entity
 public class Work {
-
     @Id
-    @SequenceGenerator(
-            name = "work_sequence",
-            sequenceName = "work_sequence",
-            allocationSize = 1
-    )
-    @GeneratedValue(
-            generator = "work_sequence",
-            strategy = GenerationType.SEQUENCE)
-    @Column(name = "work_id")
+    @Column(name = "id", nullable = false)
     private Long id;
 
-    private int Nr;
-
     private boolean completed;
+
+    private Long courseId;
+
+    private Long userId;
 
     @ManyToOne
     private User_Course user_course;

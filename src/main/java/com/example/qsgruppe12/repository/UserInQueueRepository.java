@@ -20,6 +20,6 @@ public interface UserInQueueRepository extends JpaRepository<UserInQueue,Long> {
     void deleteByCourseId(Long courseId);
 
 
-    UserInQueue getByIdAndCourseId(Long userId, String courseId);
+    UserInQueue getByIdAndCourseId(Long id, Long courseId);
 
 }

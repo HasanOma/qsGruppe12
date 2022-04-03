@@ -2,6 +2,7 @@ package com.example.qsgruppe12.service.course;
 
 
 import com.example.qsgruppe12.dto.StudentCourseDto;
+import com.example.qsgruppe12.dto.WorkApprovedDto;
 import com.example.qsgruppe12.dto.course.CourseDto;
 import com.example.qsgruppe12.dto.course.CourseRegisterDto;
 import com.example.qsgruppe12.dto.userdtos.UserEmailsDto;
@@ -9,6 +10,7 @@ import com.example.qsgruppe12.exception.CourseNotFoundException;
 import com.example.qsgruppe12.model.Course;
 import com.example.qsgruppe12.model.Queue;
 import com.example.qsgruppe12.model.User;
+import com.example.qsgruppe12.model.Work;
 import com.example.qsgruppe12.model.relationship.User_Course;
 import com.example.qsgruppe12.repository.*;
 import com.example.qsgruppe12.util.RequestResponse;
@@ -218,13 +220,41 @@ public class CourseServiceImpl implements CourseService {
     }
 
     /**
+     *
+     * @param emailsDto
+     * @param courseId
+     * @return
+     */
+    @Override
+    public WorkApprovedDto getWorkCompleted(UserEmailsDto emailsDto, Long courseId) {
+        User user = userRepository.findByEmail(emailsDto.getEmail()).get();
+        Course course = courseRepository.getById(courseId);
+        User_Course userCourses = userCourseRepository.findByUserAndCourse(user, course);
+        List<Work> work = userCourses.getWorkList();
+        WorkApprovedDto workApprovedDto = new WorkApprovedDto();
+        workApprovedDto.setWork(work);
+        workApprovedDto.setCourseName(courseRepository.getById(courseId).getName() + courseRepository.getById(courseId).getName());
+        int nrOfWorkApproved = 0;
+        for (Work w:work){
+            if (w.isCompleted()){
+                nrOfWorkApproved++;
+            }
+        }
+        if (0.5 < (Math.floorDiv(work.size(), nrOfWorkApproved))) {
+            workApprovedDto.setExamReady(true);
+        }
+        workApprovedDto.setRules(courseRepository.getById(courseId).getRules());
+        return workApprovedDto;
+    }
+
+    /**
      * Method to return all courses either archived or active.
      * @param email email of the user.
      * @param activeOrArchived archived or not.
      * @return list of all courses.
      */
     public List<CourseDto> courses(String email, boolean activeOrArchived){
-        List<User_Course> userCourses = userRepository.getAll();
+        List<User_Course> userCourses = userCourseRepository.findAll();
         List<Course> courses = new ArrayList<>();
         for (User_Course userCourse : userCourses) {
             if (userCourse.getUser().getEmail().equalsIgnoreCase(email)) {

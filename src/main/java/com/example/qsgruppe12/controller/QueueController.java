@@ -1,6 +1,7 @@
 package com.example.qsgruppe12.controller;
 
 import com.example.qsgruppe12.dto.QueueDto;
+import com.example.qsgruppe12.dto.QueueUserIdDto;
 import com.example.qsgruppe12.dto.userdtos.UserDto;
 import com.example.qsgruppe12.dto.userdtos.UserGetInQueueDto;
 import com.example.qsgruppe12.exception.CourseNotFoundException;
@@ -88,8 +89,8 @@ public class QueueController {
     @PostMapping("/help")
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "Sets that the student is being helped", response = RequestResponse.class)
-    public RequestResponse helpStudent(@RequestBody QueueDto queueDto, @PathVariable Long courseId){
-        log.debug("[X] Request to help user with name = {}", queueDto.getFullName());
+    public RequestResponse helpStudent(@RequestBody QueueUserIdDto queueDto, @PathVariable Long courseId){
+        log.debug("[X] Request to help user with id = {}", queueDto.getId());
         return queueService.helpStudent(queueDto, courseId);
     }
 

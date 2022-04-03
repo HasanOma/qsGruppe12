@@ -1,6 +1,7 @@
 package com.example.qsgruppe12.service.queue;
 
 import com.example.qsgruppe12.dto.QueueDto;
+import com.example.qsgruppe12.dto.QueueUserIdDto;
 import com.example.qsgruppe12.dto.userdtos.UserDto;
 import com.example.qsgruppe12.dto.userdtos.UserGetInQueueDto;
 import com.example.qsgruppe12.exception.CourseNotFoundException;
@@ -20,7 +21,7 @@ public interface QueueService {
 
     boolean isQueueActive(Long courseId);
 
-    RequestResponse helpStudent(QueueDto queueDto, Long courseId);
+    RequestResponse helpStudent(QueueUserIdDto queueDto, Long courseId);
 
     RequestResponse updateStudentInQueue(Long studentId);
 }

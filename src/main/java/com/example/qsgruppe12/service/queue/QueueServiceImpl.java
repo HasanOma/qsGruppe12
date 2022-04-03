@@ -1,6 +1,7 @@
 package com.example.qsgruppe12.service.queue;
 
 import com.example.qsgruppe12.dto.QueueDto;
+import com.example.qsgruppe12.dto.QueueUserIdDto;
 import com.example.qsgruppe12.dto.userdtos.UserDto;
 import com.example.qsgruppe12.dto.userdtos.UserGetInQueueDto;
 import com.example.qsgruppe12.exception.CourseNotFoundException;
@@ -136,13 +137,15 @@ public class QueueServiceImpl implements QueueService{
      * @return
      */
     @Override
-    public RequestResponse helpStudent(QueueDto queueDto, Long courseId){
-        UserInQueue userInQueue = userInQueueRepository.getByIdAndCourseId(queueDto.getUserId(), courseId);
+    public RequestResponse helpStudent(QueueUserIdDto queueDto, Long courseId){
+        UserInQueue userInQueue = userInQueueRepository.getByIdAndCourseId(queueDto.getId(), courseId);
         if (!userInQueue.isHelped()){
             userInQueue.setHelped(true);
+            userInQueueRepository.save(userInQueue);
             return new RequestResponse("Helped");
         } else {
             userInQueue.setHelped(false);
+            userInQueueRepository.save(userInQueue);
             return new RequestResponse("Not helped");
         }
     }

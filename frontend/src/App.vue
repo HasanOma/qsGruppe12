@@ -1,11 +1,9 @@
 <template>
   <Navbar v-if="this.isAuthenticated" />
-  <div
-    id="flashMessage"
-    class="alert alert-primary mt-5 w-10"
-    v-if="GStore.flashMessage !== ''"
-  >
-    {{ GStore.flashMessage }}
+  <div class="d-flex justify-content-center" v-if="GStore.flashMessage !== ''">
+    <div id="flashMessage" class="alert alert-primary mt-5">
+      {{ GStore.flashMessage }}
+    </div>
   </div>
   <div id="main">
     <router-view />
@@ -66,5 +64,9 @@ export default {
 
 #main {
   min-height: 80vh;
+}
+
+#flashMessage {
+  width: max-content;
 }
 </style>

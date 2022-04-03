@@ -21,10 +21,12 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * Implementation of {@link CourseService}
@@ -133,9 +135,8 @@ public class CourseServiceImpl implements CourseService {
 //            throw new CourseException();
         }
         Course course = courseRepository.findById(courseId).get();
-        String rules = course.getRules();
+        List<String> rules = course.getRules();
 
-        String[] ruleArray =  rules.split("[.]");
 
         for(int i=0;i<course.getNrOfStudents();i++){
             //gjør om stringen til integers som skal sjekkes
@@ -147,9 +148,9 @@ public class CourseServiceImpl implements CourseService {
                 workInt[x] = Integer.parseInt(String.valueOf(chars[x]));
             }
 
-            for(int j = 0;j<ruleArray.length;j++){
+            for(String rule: rules){
                 //splitter opp regelen til integers
-                String[] ovingArray = ruleArray[j].split("[_]");
+                String[] ovingArray = rule.split("[_]");
                 int nrOfNeeded = Integer.parseInt(ovingArray[0]);
                 int from = Integer.parseInt(ovingArray[1])-1;
                 int to = Integer.parseInt(ovingArray[2])-1;

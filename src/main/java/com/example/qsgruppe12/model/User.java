@@ -36,8 +36,7 @@ public class User {
     @Column(nullable = false)
     public String lastName;
     @Email
-    @Column(unique = true,
-            nullable = false)
+    @Column(unique = true)
     public String email;
     @Email
     public String altEmail;

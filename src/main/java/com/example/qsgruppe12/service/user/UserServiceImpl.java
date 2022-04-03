@@ -311,16 +311,18 @@ public class UserServiceImpl implements UserService {
                 .workApproved("")
                 .build();
         for (int i = 0; i < course.getTotalWork(); i++) {
-            userCourse.getWorkList().add(Work.builder()
+            Work work = Work.builder()
                     .id((long)i)
                     .user_course(userCourse)
                     .courseId(course.getId())
                     .userId(user.getId())
-                    .build());
+                    .build();
+            userCourse.getWorkList().add(work);
         }
         user.setCourses(new ArrayList<>());
         user.getCourses().add(userCourse);
         userCourseRepository.save(userCourse);
+        System.out.println(user.getEmail());
         userRepository.save(user);
     }
 

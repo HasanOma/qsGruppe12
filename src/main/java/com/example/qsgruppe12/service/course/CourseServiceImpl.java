@@ -206,8 +206,8 @@ public class CourseServiceImpl implements CourseService {
      * @return returns arraylist of all active courses.
      */
     @Override
-    public List<CourseDto> getActiveCourses(UserEmailsDto emailsDto) {
-        return courses(emailsDto.getEmail(), false);
+    public List<CourseDto> getActiveCourses(String emailsDto) {
+        return courses(emailsDto, false);
     }
 
     /**
@@ -216,8 +216,8 @@ public class CourseServiceImpl implements CourseService {
      * @return returns all archived courses.
      */
     @Override
-    public List<CourseDto> getArchivedCourses(UserEmailsDto emailsDto) {
-        return courses(emailsDto.getEmail(), true);
+    public List<CourseDto> getArchivedCourses(String emailsDto) {
+        return courses(emailsDto, true);
     }
 
     /**

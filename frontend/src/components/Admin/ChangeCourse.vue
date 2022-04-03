@@ -101,7 +101,9 @@ export default {
     async deleteCourse() {
       this.v$.$validate()
       if(!this.v$.$error) {
+
         let courseID;
+
         for(let i = 0; i < this.courses.length; i++) {
           if(this.courses[i] === this.state.course) {
             courseID = this.courseIds[i]

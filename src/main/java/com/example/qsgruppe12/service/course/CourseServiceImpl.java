@@ -4,6 +4,7 @@ package com.example.qsgruppe12.service.course;
 import com.example.qsgruppe12.dto.StudentCourseDto;
 import com.example.qsgruppe12.dto.course.CourseDto;
 import com.example.qsgruppe12.dto.course.CourseRegisterDto;
+import com.example.qsgruppe12.dto.userdtos.UserEmailsDto;
 import com.example.qsgruppe12.exception.CourseNotFoundException;
 import com.example.qsgruppe12.model.Course;
 import com.example.qsgruppe12.model.Queue;
@@ -196,4 +197,46 @@ public class CourseServiceImpl implements CourseService {
         return student;
     }
 
+    /**
+     * Method to retract all active courses
+     * @param emailsDto email DTO.
+     * @return returns arraylist of all active courses.
+     */
+    @Override
+    public List<CourseDto> getActiveCourses(UserEmailsDto emailsDto) {
+        return courses(emailsDto.getEmail(), false);
+    }
+
+    /**
+     * Method to retract all archived courses.
+     * @param emailsDto email DTO.
+     * @return returns all archived courses.
+     */
+    @Override
+    public List<CourseDto> getArchivedCourses(UserEmailsDto emailsDto) {
+        return courses(emailsDto.getEmail(), false);
+    }
+
+    /**
+     * Method to return all courses either archived or active.
+     * @param email email of the user.
+     * @param activeOrArchived archived or not.
+     * @return list of all courses.
+     */
+    public List<CourseDto> courses(String email, boolean activeOrArchived){
+        List<User_Course> userCourses = userRepository.getAll();
+        List<Course> courses = new ArrayList<>();
+        for (User_Course userCourse : userCourses) {
+            if (userCourse.getUser().getEmail().equalsIgnoreCase(email)) {
+                courses.add(userCourse.getCourse());
+            }
+        }
+        List<CourseDto> listToReturn = new ArrayList<>();
+        for (Course course : courses) {
+            if (course.isArchived() == activeOrArchived) {
+                listToReturn.add(modelmapper.map(course, CourseDto.class));
+            }
+        }
+        return listToReturn;
+    }
 }

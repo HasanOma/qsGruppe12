@@ -3,9 +3,12 @@ package com.example.qsgruppe12.service.course;
 import com.example.qsgruppe12.dto.StudentCourseDto;
 import com.example.qsgruppe12.dto.course.CourseDto;
 import com.example.qsgruppe12.dto.course.CourseRegisterDto;
+import com.example.qsgruppe12.dto.userdtos.UserEmailsDto;
 import com.example.qsgruppe12.exception.CourseNotFoundException;
 import com.example.qsgruppe12.util.RequestResponse;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public interface CourseService {
@@ -18,5 +21,9 @@ public interface CourseService {
     int checkExamStatus(Long courseId);
 
     StudentCourseDto getVariables();
+
+    List<CourseDto> getActiveCourses(UserEmailsDto emailsDto);
+
+    List<CourseDto> getArchivedCourses(UserEmailsDto emailsDto);
 
 }

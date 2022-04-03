@@ -4,6 +4,7 @@ import com.example.qsgruppe12.dto.StudentCourseDto;
 import com.example.qsgruppe12.dto.course.CourseDto;
 import com.example.qsgruppe12.dto.course.CourseExamReadyDto;
 import com.example.qsgruppe12.dto.course.CourseRegisterDto;
+import com.example.qsgruppe12.dto.userdtos.UserEmailsDto;
 import com.example.qsgruppe12.exception.CourseNotFoundException;
 import com.example.qsgruppe12.service.course.CourseService;
 import com.example.qsgruppe12.util.RequestResponse;
@@ -36,6 +37,22 @@ public class CourseController {
     public StudentCourseDto getVariables(){
         log.debug("[X] Request to get all emails of users and all courses ");
         return courseService.getVariables();
+    }
+
+    @GetMapping("active")
+    @ResponseStatus(HttpStatus.OK)
+    @ApiOperation(value = "Returns all active courses the client participates in", response = CourseDto.class)
+    public List<CourseDto> getActiveCourses(@RequestBody UserEmailsDto emailsDto){
+        log.debug("[X] Request to get all active courses of users with email {}", emailsDto.getEmail());
+        return courseService.getActiveCourses(emailsDto);
+    }
+
+    @GetMapping("archived")
+    @ResponseStatus(HttpStatus.OK)
+    @ApiOperation(value = "Returns all archived courses the client has participated in", response = CourseDto.class)
+    public List<CourseDto> getArchivedCourses(@RequestBody UserEmailsDto emailsDto){
+        log.debug("[X] Request to get all archived courses of users with email {}", emailsDto.getEmail());
+        return courseService.getArchivedCourses(emailsDto);
     }
 
     @PostMapping("add")

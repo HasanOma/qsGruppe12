@@ -6,8 +6,8 @@
         <img src="../assets/qS-logos.jpeg" class="icon ion-ios-locked-outline icon-size" />
       </div>
       <div class="mb-3">
-        <BaseInputNoLabel
-            cssClass="form-control"
+        <input
+            class="form-control"
             type="email"
             name="email"
             placeholder="Epost"
@@ -18,8 +18,8 @@
         </span>
       </div>
       <div class="mb-3">
-        <BaseInputNoLabel
-            cssClass="form-control"
+        <input
+            class="form-control"
             type="password"
             name="password"
             placeholder="Passord"
@@ -37,25 +37,22 @@
           Logg inn
         </Basebutton>
       </div>
-      <a class="forgot" @click="onPasswordReset">Glemt passord?</a>
+      <a class="forgot cursor-pointer" @click="onPasswordReset">Glemt passord?</a>
     </form>
   </section>
 </template>
 
 <script>
-import BaseInputNoLabel from "@/components/BaseComponents/BaseInputNoLabel";
 import BaseButton from "@/components/BaseComponents/BaseButton";
-// import axios from "axios";
+import useValidate from "@vuelidate/core";
+import axios from "axios";
 import {computed, reactive} from "vue";
 import {email, required } from "@vuelidate/validators";
-import useValidate from "@vuelidate/core";
 import {authenticationService} from "@/services/authentication.service";
-import axios from "axios";
 
 export default {
   name: "LoginView",
   components: {
-    BaseInputNoLabel,
     BaseButton
   },
   setup() {
@@ -119,6 +116,7 @@ export default {
             }
             )
 
+        console.log("Inside login view: " + JSON.parse(localStorage.getItem('currentUser')).id)
         // axios.post("http://localhost:8080/auth/login", data, {
         //   'Content-Type': 'application/json',
         //   'Authorization': 'Bearer'
@@ -186,7 +184,7 @@ export default {
 @import "../assets/fonts/ionicons.min.css";
 
 .login-dark {
-  height: 1000px;
+  height: 100vh;
   background: #475d62 url(../assets/star-sky.jpg);
   background-size: cover;
   position: relative;
@@ -261,5 +259,9 @@ export default {
 
 .icon-size {
   height: 200px;
+}
+
+.cursor-pointer {
+  cursor: pointer;
 }
 </style>

@@ -1,21 +1,22 @@
 <template>
   <div id="file-drag-drop-instant">
     <label class="form-label">
-      <strong>
-        Velg emne
-      </strong>
+      <strong> Velg emne </strong>
     </label>
-    <BaseSelect
-      :options="options"
-      v-model="this.course"
-    />
-    <form id="drop-form-instant" @drop="handleFileDrop( $event )">
+    <BaseSelect :options="options" v-model="this.course" />
+    <form id="drop-form-instant" @drop="handleFileDrop($event)">
       <span class="drop-files">Slipp fila her!</span>
     </form>
 
-    <progress max="100" :value.prop="uploadPercentage" v-if="uploadPercentage !== 0"></progress>
+    <progress
+      max="100"
+      :value.prop="uploadPercentage"
+      v-if="uploadPercentage !== 0"
+    ></progress>
 
-    <span v-show="uploadPercentage > 0">Uploading {{ uploadPercentage }}%...</span>
+    <span v-show="uploadPercentage > 0"
+      >Uploading {{ uploadPercentage }}%...</span
+    >
   </div>
 </template>
 
@@ -25,26 +26,26 @@ import BaseSelect from "@/components/BaseComponents/BaseSelect";
 
 export default {
   name: "DragNDrop",
-  components: {BaseSelect},
+  components: { BaseSelect },
   props: {
     options: {
       type: [],
-      required: true
+      required: true,
     },
     courseIDs: {
       type: [],
-      required: true
-    }
+      required: true,
+    },
   },
-  data(){
+  data() {
     return {
       dragAndDropCapable: false,
       files: [],
       uploadPercentage: 0,
-      course: ''
-    }
+      course: "",
+    };
   },
-  mounted(){
+  mounted() {
     /*
       Determine if drag and drop functionality is capable in the browser
     */
@@ -53,44 +54,58 @@ export default {
     /*
       If drag and drop capable, then we continue to bind events to our elements.
     */
-    if( this.dragAndDropCapable ){
+    if (this.dragAndDropCapable) {
       this.bindEvents();
     }
   },
 
   methods: {
-    bindEvents(){
+    bindEvents() {
       /*
         Listen to all of the drag events and bind an event listener to each
         for the fileform.
       */
-      ['drag', 'dragstart', 'dragend', 'dragover', 'dragenter', 'dragleave', 'drop'].forEach( function( evt ) {
-        /*
+      [
+        "drag",
+        "dragstart",
+        "dragend",
+        "dragover",
+        "dragenter",
+        "dragleave",
+        "drop",
+      ].forEach(
+        function (evt) {
+          /*
           For each event add an event listener that prevents the default action
           (opening the file in the browser) and stop the propagation of the event (so
           no other elements open the file in the browser)
         */
-        document.getElementById('drop-form-instant').addEventListener(evt, function(e){
-          e.preventDefault();
-          e.stopPropagation();
-        }.bind(this), false);
-      }.bind(this));
+          document.getElementById("drop-form-instant").addEventListener(
+            evt,
+            function (e) {
+              e.preventDefault();
+              e.stopPropagation();
+            }.bind(this),
+            false
+          );
+        }.bind(this)
+      );
     },
 
-    handleFileDrop( event ){
-      for( let i = 0; i < event.dataTransfer.files.length; i++ ){
-        this.files.push( event.dataTransfer.files[i] );
+    handleFileDrop(event) {
+      for (let i = 0; i < event.dataTransfer.files.length; i++) {
+        this.files.push(event.dataTransfer.files[i]);
       }
 
       this.submitFiles();
     },
 
-    determineDragAndDropCapable(){
+    determineDragAndDropCapable() {
       /*
         Create a test element to see if certain events
         are present that let us do drag and drop.
       */
-      var div = document.createElement('div');
+      var div = document.createElement("div");
 
       /*
         Check to see if the `draggable` event is in the element
@@ -100,48 +115,52 @@ export default {
         We also check to see if the window has `FormData` and `FileReader` objects
         present so we can do our AJAX uploading
       */
-      return ( ( 'draggable' in div )
-              || ( 'ondragstart' in div && 'ondrop' in div ) )
-          && 'FormData' in window
-          && 'FileReader' in window;
+      return (
+        ("draggable" in div || ("ondragstart" in div && "ondrop" in div)) &&
+        "FormData" in window &&
+        "FileReader" in window
+      );
     },
 
-    submitFiles(){
+    submitFiles() {
       let courseID;
-      for(let i = 0; i < this.$props.courseIDs.length; i++) {
-        if(this.$props.options[i] === this.course) {
-          courseID = this.$props.courseIDs[i]
+      for (let i = 0; i < this.$props.courseIDs.length; i++) {
+        if (this.$props.options[i] === this.course) {
+          courseID = this.$props.courseIDs[i];
         }
       }
 
-
       const form = new FormData();
       form.append("file", this.files[0]);
-      form.append('course', this.course);
+      form.append("course", this.course);
 
-      let url = 'http://localhost:8080/users/' + courseID + '/add/file'
+      let url = "http://localhost:8080/users/" + courseID + "/add/file";
 
       const options = {
-        method: 'POST',
+        method: "POST",
         url: url,
-        headers: {'Content-Type': 'multipart/form-data; boundary=---011000010111000001101001'},
-        data: form
+        headers: {
+          "Content-Type":
+            "multipart/form-data; boundary=---011000010111000001101001",
+        },
+        data: form,
       };
 
-      axios.request(options).then( response => {
-        console.log(response.data);
-      }).catch( error => {
-        console.error(error);
-      });
-
-    }
-  }
-}
+      axios
+        .request(options)
+        .then((response) => {
+          console.log(response.data);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    },
+  },
+};
 </script>
 
 <style scoped>
-
-form{
+form {
   display: block;
   height: 400px;
   width: 400px;
@@ -155,7 +174,7 @@ form{
   border-radius: 4px;
 }
 
-progress{
+progress {
   width: 400px;
   margin: auto;
   display: block;

@@ -1,5 +1,10 @@
 <template>
-  <button :type="type" :class="cssClass" :style="style" @click="$emit('clicked')">
+  <button
+    :type="type"
+    :class="cssClass"
+    :style="style"
+    @click="$emit('clicked')"
+  >
     <i :class="icss" />
     <slot />
   </button>
@@ -24,5 +29,4 @@ export default {
 };
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

@@ -18,9 +18,9 @@ export default {
   name: "Footer",
   data() {
     return {
-      isLoggedIn: this.$store.getters.isLoggedIn
-    }
-  }
+      isLoggedIn: this.$store.getters.isLoggedIn,
+    };
+  },
 };
 </script>
 

@@ -8,11 +8,9 @@ import AdminPanel from "@/components/Admin/AdminPanel";
 export default {
   name: "AdminOverview",
   components: {
-    AdminPanel
-  }
-}
+    AdminPanel,
+  },
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

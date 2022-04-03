@@ -26,7 +26,7 @@ import BaseErrorMessage from "@/components/BaseComponents/BaseErrorMessage";
 
 export default {
   components: {
-    BaseErrorMessage
+    BaseErrorMessage,
   },
   props: {
     multiples: {

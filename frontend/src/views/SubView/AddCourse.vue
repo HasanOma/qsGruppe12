@@ -8,11 +8,9 @@ import CreateCourse from "@/components/Admin/CreateCourse";
 export default {
   name: "AddCourse",
   components: {
-    CreateCourse
-  }
-}
+    CreateCourse,
+  },
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

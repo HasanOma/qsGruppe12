@@ -8,37 +8,27 @@
         <form>
           <div class="row">
             <div class="col div-padding">
-              <label class="form-label">Velg emne:
-              </label>
-              <BaseSelect
-
-              />
+              <label class="form-label">Velg emne: </label>
+              <BaseSelect />
               <select class="form-select">
-              <optgroup label="This is a group">
-                <option value="12" selected="">This is item 1
-                </option>
-                <option value="13">This is item 2
-                </option>
-                <option value="14">This is item 3
-                </option>
-              </optgroup>
-            </select>
+                <optgroup label="This is a group">
+                  <option value="12" selected="">This is item 1</option>
+                  <option value="13">This is item 2</option>
+                  <option value="14">This is item 3</option>
+                </optgroup>
+              </select>
             </div>
           </div>
           <div class="row">
             <div class="col div-padding">
-              <BaseButton
-                  cssClass="btn btn-primary"
-                  type="button"
-              >
+              <BaseButton cssClass="btn btn-primary" type="button">
                 Slett emne
               </BaseButton>
-              </div>
+            </div>
           </div>
           <div class="row">
             <div class="col div-padding">
-              <h5>Endre/slett regler
-              </h5>
+              <h5>Endre/slett regler</h5>
             </div>
           </div>
           <div class="row">
@@ -47,40 +37,28 @@
                 <ul class="list-unstyled">
                   <li>
                     <div class="d-flex flex-row justify-content-between">
-                      <label class="form-label">
-                        Regel nr 1
-                      </label>
+                      <label class="form-label"> Regel nr 1 </label>
                       <div>
-                        <i class="fa fa-pencil margin-right-10px">
-                        </i>
-                        <i class="fa fa-times">
-                        </i>
+                        <i class="fa fa-pencil margin-right-10px"> </i>
+                        <i class="fa fa-times"> </i>
                       </div>
                     </div>
                   </li>
                   <li>
                     <div class="d-flex flex-row justify-content-between">
-                      <label class="form-label">
-                        Regel nr 1
-                      </label>
+                      <label class="form-label"> Regel nr 1 </label>
                       <div>
-                        <i class="fa fa-pencil margin-right-10px">
-                        </i>
-                        <i class="fa fa-times">
-                        </i>
+                        <i class="fa fa-pencil margin-right-10px"> </i>
+                        <i class="fa fa-times"> </i>
                       </div>
                     </div>
                   </li>
                   <li>
                     <div class="d-flex flex-row justify-content-between">
-                      <label class="form-label">
-                      Regel nr 1
-                    </label>
+                      <label class="form-label"> Regel nr 1 </label>
                       <div>
-                        <i class="fa fa-pencil margin-right-10px">
-                        </i>
-                        <i class="fa fa-times">
-                        </i>
+                        <i class="fa fa-pencil margin-right-10px"> </i>
+                        <i class="fa fa-times"> </i>
                       </div>
                     </div>
                   </li>
@@ -89,12 +67,11 @@
             </div>
           </div>
         </form>
-        <div>
-        </div>
+        <div></div>
         <BaseButton
-            cssClass="btn btn-primary btn-sm btn-style"
-            type="submit"
-            id="ruleBtn"
+          cssClass="btn btn-primary btn-sm btn-style"
+          type="submit"
+          id="ruleBtn"
         >
           Lagre
         </BaseButton>
@@ -109,9 +86,9 @@ import BaseButton from "@/components/BaseComponents/BaseButton";
 export default {
   name: "ChangeCourse",
   components: {
-    BaseButton
-  }
-}
+    BaseButton,
+  },
+};
 </script>
 
 <style scoped>

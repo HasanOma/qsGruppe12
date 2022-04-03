@@ -1,5 +1,5 @@
 <template>
-  <div id="wrapper" style="padding-top: 50px;padding-bottom: 50px;">
+  <div id="wrapper" style="padding-top: 50px; padding-bottom: 50px">
     <div class="d-flex flex-column w-100">
       <div id="content">
         <div class="container-fluid">
@@ -9,22 +9,30 @@
                 <div class="card-header text-center py-3">
                   <p class="text-primary m-0 fw-bold">Øvinger</p>
                 </div>
-                <div class="card-body" style="height: auto;">
+                <div class="card-body" style="height: auto">
                   <form>
                     <div class="row">
                       <div class="col text-center">
                         <div class="mb-3">
                           <h3>{{ courseName }}</h3>
-                          <h5 style="opacity: 0.60;">{{ courseID }}</h5>
+                          <h5 style="opacity: 0.6">{{ courseID }}</h5>
                         </div>
                       </div>
                     </div>
                     <div class="row row-padding" v-for="w in work" :key="w">
                       <div class="col">
-                        <div class="d-flex flex-row justify-content-evenly align-items-center">
+                        <div
+                          class="d-flex flex-row justify-content-evenly align-items-center"
+                        >
                           <h3>Øving {{ w.nr }}</h3>
-                          <i v-if="w.approved" class="fa fa-check-circle list-icon approved"></i>
-                          <i v-else class="fa fa-times-circle list-icon disapproved"></i>
+                          <i
+                            v-if="w.approved"
+                            class="fa fa-check-circle list-icon approved"
+                          ></i>
+                          <i
+                            v-else
+                            class="fa fa-times-circle list-icon disapproved"
+                          ></i>
                         </div>
                       </div>
                     </div>
@@ -56,9 +64,9 @@ export default {
     work: [],
     rules: [],
     courseName: String,
-    courseID: String
-  }
-}
+    courseID: String,
+  },
+};
 </script>
 
 <style scoped>

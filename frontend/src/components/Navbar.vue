@@ -10,49 +10,49 @@
 
       <!-- Toggle button -->
       <button
-          @click="toggle"
-          class="navbar-toggler"
-          type="button"
-          data-mdb-toggle="collapse"
-          data-mdb-target="#navbarButtonsExample"
-          aria-controls="navbarButtonsExample"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
+        @click="toggle"
+        class="navbar-toggler"
+        type="button"
+        data-mdb-toggle="collapse"
+        data-mdb-target="#navbarButtonsExample"
+        aria-controls="navbarButtonsExample"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
       >
         <i class="fas fa-bars"></i>
       </button>
 
       <!-- Collapsible wrapper -->
       <div
-          class="collapse navbar-collapse justify-content-end"
-          id="navbarButtonsExample"
+        class="collapse navbar-collapse justify-content-end"
+        id="navbarButtonsExample"
       >
         <div class="d-flex flex-sm-column flex-lg-row align-items-center">
           <router-link
-              to="/course/active"
-              class="nav-item nav-link d-flex align-items-center"
-              v-if="this.$store.getters.role !== 'Admin'"
+            to="/course/active"
+            class="nav-item nav-link d-flex align-items-center"
+            v-if="this.$store.getters.role !== 'Admin'"
           >
             <i class="material-icons icon-size">school</i>&nbsp;Emner
           </router-link>
           <router-link
-              to="/admin/overview"
-              class="nav-link d-flex align-items-center"
-              v-if="this.$store.getters.role === 'Admin'"
+            to="/admin/overview"
+            class="nav-link d-flex align-items-center"
+            v-if="this.$store.getters.role === 'Admin'"
           >
             <i class="material-icons icon-size">home</i>&nbsp;Admin
           </router-link>
           <router-link
-              to="/settings"
-              class="nav-link d-flex align-items-center"
+            to="/settings"
+            class="nav-link d-flex align-items-center"
           >
             <i class="icon ion-android-settings icon-size"></i
             >&nbsp;Instillinger
           </router-link>
           <router-link
-              to="/"
-              class="nav-link d-flex align-items-center"
-              @Click="logout()"
+            to="/"
+            class="nav-link d-flex align-items-center"
+            @Click="logout()"
           >
             <i class="fa fa-sign-in icon-size"></i>Logg ut
           </router-link>
@@ -67,8 +67,8 @@
 
 <script>
 import $ from "jquery";
-import { authComp } from '@/store/helpers'
-import {authenticationService} from "@/services/authentication.service";
+import { authComp } from "@/store/helpers";
+import { authenticationService } from "@/services/authentication.service";
 
 export default {
   name: "Navbar",
@@ -85,13 +85,13 @@ export default {
     logout() {
       authenticationService.logout();
       sessionStorage.clear();
-      this.$store.dispatch("setLoggedIn", false)
-      this.$router.push('/');
-    }
+      this.$store.dispatch("setLoggedIn", false);
+      this.$router.push("/");
+    },
   },
   computed: {
-    ...authComp
-  }
+    ...authComp,
+  },
 };
 </script>
 

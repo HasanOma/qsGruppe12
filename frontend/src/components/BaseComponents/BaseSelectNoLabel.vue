@@ -1,20 +1,22 @@
 <template>
   <select
-      :class="cssClass"
-      v-bind="{
+    :class="cssClass"
+    v-bind="{
       ...$attrs,
-      onChange: ($event) => { $emit('update:modelValue', $event.target.value) },
+      onChange: ($event) => {
+        $emit('update:modelValue', $event.target.value);
+      },
     }"
-      :value="modelValue"
-      :id="uuid"
-      :aria-describedby="error ? `${uuid}-error` : null"
-      :aria-invalid="error ? true : false"
+    :value="modelValue"
+    :id="uuid"
+    :aria-describedby="error ? `${uuid}-error` : null"
+    :aria-invalid="error ? true : false"
   >
     <option
-        v-for="option in options"
-        :value="option"
-        :key="option"
-        :selected="option === modelValue"
+      v-for="option in options"
+      :value="option"
+      :key="option"
+      :selected="option === modelValue"
     >
       {{ option }}
     </option>
@@ -31,7 +33,7 @@ import UniqueID from "@/feature/UniqueID";
 
 export default {
   components: {
-    BaseErrorMessage
+    BaseErrorMessage,
   },
   props: {
     options: {
@@ -46,8 +48,8 @@ export default {
       type: [String, Number],
     },
     cssClass: {
-      type: String
-    }
+      type: String,
+    },
   },
   setup(props, context) {
     const { updateValue } = SetupForm(props, context);

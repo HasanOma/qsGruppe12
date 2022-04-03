@@ -395,8 +395,10 @@ public class UserServiceImpl implements UserService {
      * @throws IOException Filereader throws exception.
      */
     public List<User> handleFile(Long courseId, MultipartFile file) throws IOException {
-        String fileType = Objects.requireNonNull(file.getOriginalFilename()).split("\\.")[1];
-        if (!fileType.equalsIgnoreCase("csv")){
+        File convFile = new File(System.getProperty("java.io.tmpdir")+".csv");
+        file.transferTo(convFile);
+        String fileType = convFile.getName().split("\\.")[1];
+        if (!fileType.equalsIgnoreCase("csv" )){
 //            throw new FileNotSupportedException("File is not a csv file");
             List<User> userss = null;
             return userss;

@@ -133,9 +133,10 @@ public class QueueServiceImpl implements QueueService{
     }
 
     /**
-     *
-     * @param
-     * @return
+     * Method for a TA to help student
+     * @param queueDto DTOof student in queue
+     * @param courseId course id
+     * @return Responds with Helped or not helped
      */
     @Override
     public RequestResponse helpStudent(QueueUserIdDto queueDto, Long courseId){
@@ -153,7 +154,7 @@ public class QueueServiceImpl implements QueueService{
     }
 
     /**
-     *
+     * Method to update user in queue
      * @param studentId
      * @return
      */

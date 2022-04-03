@@ -33,7 +33,7 @@ public class QueueController {
     @Autowired
     SecurityService securityService;
 
-    @GetMapping("activate")
+    @PostMapping("activate")
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "Activate queue for a course", response = RequestResponse.class)
     public RequestResponse activateCourse(@PathVariable Long courseId){

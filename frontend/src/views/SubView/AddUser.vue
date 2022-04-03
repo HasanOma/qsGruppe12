@@ -3,16 +3,14 @@
 </template>
 
 <script>
-import CreateUser from "@/components/Admin/CreateUser"
+import CreateUser from "@/components/Admin/CreateUser";
 
 export default {
   name: "AddUser",
   components: {
-    CreateUser
-  }
-}
+    CreateUser,
+  },
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

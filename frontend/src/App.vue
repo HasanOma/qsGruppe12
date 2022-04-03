@@ -1,12 +1,16 @@
 <template>
-  <Navbar v-if="this.isAuthenticated"/>
-  <div id="flashMessage" class="alert alert-primary mt-5 w-10" v-if="GStore.flashMessage !== ''">
+  <Navbar v-if="this.isAuthenticated" />
+  <div
+    id="flashMessage"
+    class="alert alert-primary mt-5 w-10"
+    v-if="GStore.flashMessage !== ''"
+  >
     {{ GStore.flashMessage }}
   </div>
   <div id="main">
     <router-view />
   </div>
-  <Footer v-if="this.isAuthenticated"/>
+  <Footer v-if="this.isAuthenticated" />
 </template>
 
 <script>
@@ -15,32 +19,35 @@ import Navbar from "@/components/Navbar.vue";
 import { authComp } from "@/store/helpers";
 
 export default {
-  inject: ['GStore'],
+  inject: ["GStore"],
   name: "App",
   components: {
     Navbar,
     Footer,
   },
   computed: {
-    ...authComp
+    ...authComp,
   },
   watch: {
-    '$route': 'checkLoggedIn'
+    $route: "checkLoggedIn",
   },
   methods: {
     checkLoggedIn() {
-      if(localStorage.getItem('currentUser') !== null) {
-        this.isAuthenticated = true
-      } else if(localStorage.getItem('currentUser') === null && this.$route.path === '/') {
-        this.isAuthenticated = false
+      if (localStorage.getItem("currentUser") !== null) {
+        this.isAuthenticated = true;
+      } else if (
+        localStorage.getItem("currentUser") === null &&
+        this.$route.path === "/"
+      ) {
+        this.isAuthenticated = false;
       }
-    }
+    },
   },
   data() {
     return {
-      isAuthenticated: false
-    }
-  }
+      isAuthenticated: false,
+    };
+  },
 };
 </script>
 

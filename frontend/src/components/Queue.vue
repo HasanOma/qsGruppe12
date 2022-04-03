@@ -12,23 +12,25 @@
               </p>
               <div class="d-flex justify-content-between">
                 <BaseButton
-                    css-class="btn btn-outline-primary btn-sm rounded-pill"
-                    @clicked="toAddToQueue(courseID, courseName)"
-                    :disabled="!isActive"
+                  css-class="btn btn-outline-primary btn-sm rounded-pill"
+                  @clicked="toAddToQueue(courseID, courseName)"
+                  :disabled="!isActive"
                 >
                   Still i kø
                 </BaseButton>
                 <BaseButton
-                    css-class="btn btn-outline-primary btn-sm rounded-pill"
-                    @clicked="activate()"
-                    v-if="this.$store.getters.role !== 'Student' && !this.isActive"
+                  css-class="btn btn-outline-primary btn-sm rounded-pill"
+                  @clicked="activate()"
+                  v-if="
+                    this.$store.getters.role !== 'Student' && !this.isActive
+                  "
                 >
                   Aktivér kø
                 </BaseButton>
                 <BaseButton
-                    css-class="btn btn-outline-primary btn-sm rounded-pill"
-                    @clicked="deactivate()"
-                    v-if="this.$store.getters.role !== 'Student' && this.isActive"
+                  css-class="btn btn-outline-primary btn-sm rounded-pill"
+                  @clicked="deactivate()"
+                  v-if="this.$store.getters.role !== 'Student' && this.isActive"
                 >
                   Deaktivér kø
                 </BaseButton>
@@ -49,9 +51,7 @@
                       <th>Øving/Type</th>
                       <th>Tid i kø</th>
                       <th>Melding</th>
-                      <th>
-                        <strong>Rediger</strong><br />
-                      </th>
+                      <th><strong>Rediger</strong><br /></th>
                     </tr>
                   </thead>
                   <tbody>
@@ -59,7 +59,6 @@
                       v-for="person in this.inQueue"
                       :key="person"
                       :person="person"
-                      @click="helpUser()"
                     />
                   </tbody>
                   <tfoot>
@@ -84,7 +83,7 @@ export default {
   name: "Queue",
   components: {
     UserInQueue,
-    BaseButton
+    BaseButton,
   },
   props: {
     courseID: String,
@@ -96,20 +95,20 @@ export default {
       courseCode: 1,
       inQueue: [],
       connection: null,
-      showHelp: false
-    }
+      showHelp: false,
+    };
   },
   methods: {
     toAddToQueue(courseID, courseName) {
-      this.$router.push({ name: "Add to queue", query: { redirect: "/course/:id/addToQueue", courseName: courseName, courseID: courseID }, params: { id: courseID } });
-    },
-    helpUser() {
-      if(this.$store.getters.role === "TA"){
-        if(this.showHelp === false){
-          this.showHelp = true;
-        }
-        this.showHelp = false;
-      }
+      this.$router.push({
+        name: "Add to queue",
+        query: {
+          redirect: "/course/:id/addToQueue",
+          courseName: courseName,
+          courseID: courseID,
+        },
+        params: { id: courseID },
+      });
     },
     activate() {
       //TODO: Make sure to recieve courses, else courseCode is empty
@@ -119,81 +118,92 @@ export default {
       //   }
       // }
 
-      let url = "http://localhost:8080/queue/" + this.courseCode + "/activate"
+      let url = "http://localhost:8080/queue/" + this.courseCode + "/activate";
 
-      axios.get(url, {
-        headers: {
-          'Authorization': 'Bearer' + " " + this.$store.getters.jwtToken
-        }
-      }).then(response => {
-        if(response.data.requestResponse === "active") {
-          this.isActive = true
-        } else {
-          //TODO: Do something if error from server
-        }
-      })
+      axios
+        .get(url, {
+          headers: {
+            Authorization: "Bearer" + " " + this.$store.getters.jwtToken,
+          },
+        })
+        .then((response) => {
+          if (response.data.requestResponse === "active") {
+            this.isActive = true;
+          } else {
+            //TODO: Do something if error from server
+          }
+        });
     },
     deactivate() {
-      let url = "http://localhost:8080/queue/" + this.courseCode + "/close"
+      let url = "http://localhost:8080/queue/" + this.courseCode + "/close";
 
-      axios.get(url, {
-        headers: {
-          'Authorization': 'Bearer' + " " + this.$store.getters.jwtToken
-        }
-      }).then(response => {
-        console.log(response.data)
-        if(response.data.requestResponse === "closed") {
-          this.isActive = false
-          this.inQueue = []
-        } else {
-          //TODO: Do something if error from server
-        }
+      axios
+        .get(url, {
+          headers: {
+            Authorization: "Bearer" + " " + this.$store.getters.jwtToken,
+          },
+        })
+        .then((response) => {
+          console.log(response.data);
+          if (response.data.requestResponse === "closed") {
+            this.isActive = false;
+            this.inQueue = [];
+          } else {
+            //TODO: Do something if error from server
+          }
+        }).catch((error) => {
+          console.log(error)
       })
     },
     edit(obj) {
-      console.log(obj)
+      console.log(obj);
       // this.$router.push({ name: "Add to queue", query: { redirect: "/course/:id/add_to_queue", courseName: courseName, courseID: courseID }, params: { id: courseID } });
     },
     async updateQueue() {
-      let url = "http://localhost:8080/queue/" + this.courseCode + "/list"
-      await axios.get(url, {
-        headers: {
-          'Authorization': 'Bearer' + " " + this.$store.getters.jwtToken
-        }
-      }).then(res => {
-        this.inQueue = res.data
-        console.log(res.data)
-      })
-    }
+      let url = "http://localhost:8080/queue/" + this.courseCode + "/list";
+      await axios
+        .get(url, {
+          headers: {
+            Authorization: "Bearer" + " " + this.$store.getters.jwtToken,
+          },
+        })
+        .then((res) => {
+          this.inQueue = res.data;
+          console.log(res.data);
+        });
+    },
   },
   created() {
     // setInterval(this.updateQueue, 100000000)
 
-    let url = "http://localhost:8080/queue/" + this.courseCode + "/isActive"
+    let url = "http://localhost:8080/queue/" + this.courseCode + "/isActive";
 
-    axios.get(url, {
-      headers: {
-        'Authorization': 'Bearer' + " " + this.$store.getters.jwtToken
-      }
-    }).then(response => {
-      if(response.data) {
-        this.isActive = true
+    axios
+      .get(url, {
+        headers: {
+          Authorization: "Bearer" + " " + this.$store.getters.jwtToken,
+        },
+      })
+      .then((response) => {
+        if (response.data) {
+          this.isActive = true;
 
-        let url = "http://localhost:8080/queue/" + this.courseCode + "/list"
-        axios.get(url, {
-          headers: {
-            'Authorization': 'Bearer' + " " + this.$store.getters.jwtToken
-          }
-        }).then(res => {
-          console.log(res.data)
-          this.inQueue = res.data
-        })
-      } else {
-        //TODO: Do something if error from server
-      }
-    })
-
-  }
+          let url = "http://localhost:8080/queue/" + this.courseCode + "/list";
+          axios
+            .get(url, {
+              headers: {
+                Authorization: "Bearer" + " " + this.$store.getters.jwtToken,
+              },
+            })
+            .then((res) => {
+              console.log(res.data);
+              this.inQueue = res.data;
+            });
+        } else {
+          //TODO: Do something if error from server
+        }
+      });
+  },
 };
 </script>
 

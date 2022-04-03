@@ -1,5 +1,5 @@
-import { mapGetters } from 'vuex'
+import { mapGetters } from "vuex";
 
 export const authComp = {
-    ...mapGetters(['loggedIn'])
-}
+  ...mapGetters(["loggedIn"]),
+};

@@ -11,11 +11,9 @@ export default {
   name: "Admin",
   components: {
     //AdminPanel,
-    AdminButton
-  }
-}
+    AdminButton,
+  },
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

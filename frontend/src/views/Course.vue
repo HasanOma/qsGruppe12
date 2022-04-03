@@ -1,24 +1,24 @@
 <template>
-    <div
-      class="container d-flex flex-row justify-content-center container-margin"
-    >
-      <ul class="nav nav-style">
-        <li class="nav-item">
-          <router-link to="/course/active" class="nav-link active link-style">
-            Dine emner
-          </router-link>
-        </li>
-        <li class="nav-item">
-          <router-link
-            to="/course/archived"
-            class="nav-link right-link-style link-style"
-          >
-            Arkiverte emner
-          </router-link>
-        </li>
-      </ul>
-    </div>
-    <router-view></router-view>
+  <div
+    class="container d-flex flex-row justify-content-center container-margin"
+  >
+    <ul class="nav nav-style">
+      <li class="nav-item">
+        <router-link to="/course/active" class="nav-link active link-style">
+          Dine emner
+        </router-link>
+      </li>
+      <li class="nav-item">
+        <router-link
+          to="/course/archived"
+          class="nav-link right-link-style link-style"
+        >
+          Arkiverte emner
+        </router-link>
+      </li>
+    </ul>
+  </div>
+  <router-view></router-view>
 </template>
 
 <script>

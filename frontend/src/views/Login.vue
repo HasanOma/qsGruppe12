@@ -3,15 +3,18 @@
     <form method="post" @submit.prevent="onSubmit">
       <h2 class="visually-hidden">Login Form</h2>
       <div class="illustration">
-        <img src="../assets/qS-logos.jpeg" class="icon ion-ios-locked-outline icon-size" />
+        <img
+          src="../assets/qS-logos.jpeg"
+          class="icon ion-ios-locked-outline icon-size"
+        />
       </div>
       <div class="mb-3">
         <input
-            class="form-control"
-            type="email"
-            name="email"
-            placeholder="Epost"
-            v-model="state.email"
+          class="form-control"
+          type="email"
+          name="email"
+          placeholder="Epost"
+          v-model="state.email"
         />
         <span class="text-danger" v-if="v$.email.$error">
           {{ v$.email.$errors[0].$message }}
@@ -19,25 +22,24 @@
       </div>
       <div class="mb-3">
         <input
-            class="form-control"
-            type="password"
-            name="password"
-            placeholder="Passord"
-            v-model="state.password"
+          class="form-control"
+          type="password"
+          name="password"
+          placeholder="Passord"
+          v-model="state.password"
         />
         <span class="text-danger" v-if="v$.password.$error">
           {{ v$.password.$errors[0].$message }}
         </span>
       </div>
       <div class="mb-3">
-        <BaseButton
-            class="btn btn-primary d-block w-100"
-            type="submit"
-        >
+        <BaseButton class="btn btn-primary d-block w-100" type="submit">
           Logg inn
-        </Basebutton>
+        </BaseButton>
       </div>
-      <a class="forgot cursor-pointer" @click="onPasswordReset">Glemt passord?</a>
+      <a class="forgot cursor-pointer" @click="onPasswordReset"
+        >Glemt passord?</a
+      >
     </form>
   </section>
 </template>
@@ -46,136 +48,122 @@
 import BaseButton from "@/components/BaseComponents/BaseButton";
 import useValidate from "@vuelidate/core";
 import axios from "axios";
-import {computed, reactive} from "vue";
-import {email, required } from "@vuelidate/validators";
-import {authenticationService} from "@/services/authentication.service";
+import { computed, reactive } from "vue";
+import { email, required } from "@vuelidate/validators";
+import { authenticationService } from "@/services/authentication.service";
 
 export default {
+  inject: ["GStore"],
   name: "LoginView",
   components: {
-    BaseButton
+    BaseButton,
   },
   setup() {
     const state = reactive({
-      email: '',
-      password: ''
-    })
+      email: "",
+      password: "",
+    });
 
     const rules = computed(() => {
       return {
         email: { required, email },
-        password: { required }
-      }
-    })
+        password: { required },
+      };
+    });
 
-    const v$ = useValidate(rules, state)
+    const v$ = useValidate(rules, state);
 
-    return { state, v$ }
+    return { state, v$ };
   },
   created() {
-
     if (authenticationService.currentUserValue) {
-      return this.$router.push('/course/active');
+      return this.$router.push("/course/active");
     }
   },
   methods: {
     onSubmit() {
-      this.v$.$validate()
-      if(!this.v$.$error) {
-        const data = {
-          email: this.state.email,
-          password: this.state.password
-        }
+      this.v$.$validate();
+      if (!this.v$.$error) {
 
-        console.log(data)
+        authenticationService
+          .login(this.state.email, this.state.password)
+          .then((user) => {
+            let activeCourses = [];
+            let archivedCourses = [];
 
-        authenticationService.login(this.state.email, this.state.password)
-            .then(user => {
-                let activeCourses = []
-                let archivedCourses = []
-
-                for(let i = 0; i < user.courses.length; i++) {
-                  if(!user.courses[i].archived) {
-                    activeCourses.append(user.courses[i])
-                  } else {
-                    archivedCourses.append(user.courses[i])
-                  }
-                }
-
-                this.$store.dispatch("setID", user.id)
-                this.$store.dispatch("setFirstName", user.firstName)
-                this.$store.dispatch("setLastName", user.lastName)
-                this.$store.dispatch("setEmail", user.email)
-                this.$store.dispatch("setAltEmail", user.altEmail)
-                this.$store.dispatch("setRole", user.userRole.name)
-                this.$store.dispatch("addCourses", activeCourses)
-                this.$store.dispatch("addArchived", archivedCourses)
-                this.$store.dispatch("setJwtToken", user.jwtResponse.jwtToken)
-                this.$store.dispatch("setLoggedIn", true)
-                this.$router.push("/course/active")
+            for (let i = 0; i < user.courses.length; i++) {
+              if (!user.courses[i].archived) {
+                activeCourses.append(user.courses[i]);
+              } else {
+                archivedCourses.append(user.courses[i]);
+              }
             }
-            )
 
-        console.log("Inside login view: " + JSON.parse(localStorage.getItem('currentUser')).id)
-        // axios.post("http://localhost:8080/auth/login", data, {
-        //   'Content-Type': 'application/json',
-        //   'Authorization': 'Bearer'
-        // }).then(response => {
-        //   let activeCourses = []
-        //   let archivedCourses = []
-        //
-        //   for(let i = 0; i < response.data.courses.length; i++) {
-        //     if(!response.data.courses[i].archived) {
-        //       activeCourses.append(response.data.courses[i])
-        //     } else {
-        //       archivedCourses.append(response.data.courses[i])
-        //     }
-        //   }
-        //
-        //   this.$store.dispatch("setID", response.data.id)
-        //   this.$store.dispatch("setFirstName", response.data.firstName)
-        //   this.$store.dispatch("setLastName", response.data.lastName)
-        //   this.$store.dispatch("setEmail", response.data.email)
-        //   this.$store.dispatch("setAltEmail", response.data.altEmail)
-        //   this.$store.dispatch("setRole", response.data.userRole.name)
-        //   this.$store.dispatch("addCourses", activeCourses)
-        //   this.$store.dispatch("addArchived", archivedCourses)
-        //   this.$store.dispatch("setJwtToken", response.data.jwtResponse.jwtToken)
-        //
-        //
-        // })
-        //
-        // this.$router.push({
-        //   name: "Active",
-        //   query: { redirect: "/course/active" },
-        // });
+            this.$store.dispatch("setID", user.id);
+            this.$store.dispatch("setFirstName", user.firstName);
+            this.$store.dispatch("setLastName", user.lastName);
+            this.$store.dispatch("setEmail", user.email);
+            this.$store.dispatch("setAltEmail", user.altEmail);
+            this.$store.dispatch("setRole", user.userRole.name);
+            this.$store.dispatch("addCourses", activeCourses);
+            this.$store.dispatch("addArchived", archivedCourses);
+            this.$store.dispatch("setJwtToken", user.jwtResponse.jwtToken);
+            this.$store.dispatch("setLoggedIn", true);
+
+            if(this.$store.getters.role === 'Admin') {
+              this.$router.push("/admin/overview");
+            } else {
+              this.$router.push("/course/active");
+            }
+
+          });
+      } else {
+        this.GStore.flashMessage =
+            "Alle feltene er ikke fylt ut eller gyldige..";
+
+        setTimeout(() => {
+          this.GStore.flashMessage = "";
+        }, 3500);
       }
-      //TODO error handling plus check first what auth the user has
 
     },
     onPasswordReset() {
-      if(this.state.email !== '') {
-        let url = "http://localhost:8080/auth/reset"
-
+      if (this.state.email !== "") {
+        let url = "http://localhost:8080/auth/reset";
 
         let data = {
-          email: this.state.email
-        }
+          email: this.state.email,
+        };
 
-        axios.put(url, data, {
-          headers: {
-            'Authorization': 'Bearer' + " " + this.$store.getters.jwtToken
-          }
-        }).then(response => {
-          if(response.status === 200) {
-            // this.$router.push({ name: "Queue", query: { redirect: "/course/:id", courseName: courseName, courseID: courseID }, params: { id: courseID } });
-          } else {
-            //TODO: Do something if error
-            console.log(response.data)
-          }
-        })
+        axios
+          .put(url, data, {
+            headers: {
+              Authorization: "Bearer" + " " + this.$store.getters.jwtToken,
+            },
+          })
+          .then((response) => {
+            if (response.status === 200) {
+              this.GStore.flashMessage =
+                  "Nytt passord ble sendt til mailen du skrev inn!";
+            }
+          }).catch((error) => {
+            console.log(error)
+            this.GStore.flashMessage =
+                "Noe galt skjedde..";
+          })
+
+        setTimeout(() => {
+          this.GStore.flashMessage = "";
+        }, 3500);
+      } else {
+        this.GStore.flashMessage =
+            "Skriv inn en mail i boksen for e-post for å få tilsendt nytt passord";
+
+        setTimeout(() => {
+          this.GStore.flashMessage = "";
+        }, 3500);
       }
-    }
+    },
   },
 };
 </script>

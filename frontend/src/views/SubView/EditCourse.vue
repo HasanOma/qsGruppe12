@@ -3,16 +3,14 @@
 </template>
 
 <script>
-import ChangeCourse from "@/components/Admin/ChangeCourse"
+import ChangeCourse from "@/components/Admin/ChangeCourse";
 
 export default {
   name: "EditCourse",
   components: {
-    ChangeCourse
-  }
-}
+    ChangeCourse,
+  },
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

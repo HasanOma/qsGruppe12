@@ -10,16 +10,14 @@
             <div class="col">
               <div class="mb-3">
                 <label class="form-label">
-                  <strong>
-                    Emnekode
-                  </strong>
+                  <strong> Emnekode </strong>
                 </label>
                 <BaseInputNoLabel
-                    cssClass="form-control"
-                    type="text"
-                    placeholder="IDATTxxxx"
-                    name="emnekode"
-                    v-model="state.courseCode"
+                  cssClass="form-control"
+                  type="text"
+                  placeholder="IDATTxxxx"
+                  name="emnekode"
+                  v-model="state.courseCode"
                 />
                 <span class="text-danger" v-if="v$.courseCode.$error">
                   {{ v$.courseCode.$errors[0].$message }}
@@ -29,16 +27,14 @@
             <div class="col">
               <div class="mb-3">
                 <label class="form-label">
-                  <strong>
-                    Emnenavn
-                  </strong>
+                  <strong> Emnenavn </strong>
                 </label>
                 <BaseInputNoLabel
-                    cssClass="form-control"
-                    type="text"
-                    placeholder="Emnenavn"
-                    name="emnenavn"
-                    v-model="state.courseName"
+                  cssClass="form-control"
+                  type="text"
+                  placeholder="Emnenavn"
+                  name="emnenavn"
+                  v-model="state.courseName"
                 />
                 <span class="text-danger" v-if="v$.courseName.$error">
                   {{ v$.courseName.$errors[0].$message }}
@@ -50,16 +46,14 @@
             <div class="col">
               <div class="mb-3">
                 <label class="form-label">
-                  <strong>
-                    Antall øvinger
-                  </strong>
+                  <strong> Antall øvinger </strong>
                 </label>
                 <BaseInputNoLabel
-                    cssClass="form-control"
-                    type="number"
-                    placeholder="0"
-                    name="antall"
-                    v-model="state.totalWork"
+                  cssClass="form-control"
+                  type="number"
+                  placeholder="0"
+                  name="antall"
+                  v-model="state.totalWork"
                 />
                 <span class="text-danger" v-if="v$.totalWork.$error">
                   {{ v$.totalWork.$errors[0].$message }}
@@ -69,16 +63,14 @@
             <div class="col">
               <div class="mb-3">
                 <label class="form-label">
-                  <strong>
-                    Minste antall godkjente øvinger
-                  </strong>
+                  <strong> Minste antall godkjente øvinger </strong>
                 </label>
                 <BaseInputNoLabel
-                    cssClass="form-control"
-                    type="number"
-                    placeholder="1"
-                    name="godkjente"
-                    v-model="state.workApproved"
+                  cssClass="form-control"
+                  type="number"
+                  placeholder="1"
+                  name="godkjente"
+                  v-model="state.workApproved"
                 />
                 <span class="text-danger" v-if="v$.workApproved.$error">
                   {{ v$.workApproved.$errors[0].$message }}
@@ -86,77 +78,72 @@
               </div>
             </div>
           </div>
-        <div></div>
-        <div class="card shadow w-100 div-padding-rem" id="remove-text-inputs">
-          <div class="mb-3 w-100 div-height-vh">
-            <label class="form-label">&nbsp;
-              Lag egne grupperingsregler:&nbsp;
-              <br>
-            </label>
-          </div>
-          <div class="mb-3">
-            <BaseInputNoLabel
+          <div></div>
+          <div
+            class="card shadow w-100 div-padding-rem"
+            id="remove-text-inputs"
+          >
+            <div class="mb-3 w-100 div-height-vh">
+              <label class="form-label"
+                >&nbsp; Lag egne grupperingsregler:&nbsp;
+                <br />
+              </label>
+            </div>
+            <div class="mb-3">
+              <BaseInputNoLabel
                 cssClass="form-control"
                 type="number"
                 placeholder="0"
                 name="antall"
                 id="antall-1"
                 v-model="this.ruleTotal"
-            />
-            <label class="form-label">
-              <strong>&nbsp;
-                av øvingene&nbsp;
-              </strong>
-            </label>
-            <BaseInputNoLabel
+              />
+              <label class="form-label">
+                <strong>&nbsp; av øvingene&nbsp; </strong>
+              </label>
+              <BaseInputNoLabel
                 cssClass="form-control"
                 type="number"
                 placeholder="0"
                 name="antall"
                 id="antall-2"
                 v-model="this.ruleFrom"
-            />
-            <label class="form-label">
-              <strong>&nbsp;
-                til&nbsp;
-              </strong>
-            </label>
-            <BaseInputNoLabel
+              />
+              <label class="form-label">
+                <strong>&nbsp; til&nbsp; </strong>
+              </label>
+              <BaseInputNoLabel
                 cssClass="form-control"
                 type="text"
                 placeholder="0"
                 name="antall"
                 id="antall-3"
                 v-model="this.ruleTo"
-            />
-            <label class="form-label">
-              <strong>&nbsp;
-                må være godkjent
-              </strong>
-            </label>
-          </div>
-          <BaseButton
+              />
+              <label class="form-label">
+                <strong>&nbsp; må være godkjent </strong>
+              </label>
+            </div>
+            <BaseButton
               cssClass="btn btn-primary btn-sm btn-style"
               type="button"
               @click="addRule"
-          >
-            Lag regel
-          </BaseButton>
-          <label class="form-label">
-            Grupperingsreglene for emnet vil dukke opp her:&nbsp;
-            <br>
-          </label>
-          <div id="regelDiv" class="regelDiv">
-
+            >
+              Lag regel
+            </BaseButton>
+            <label class="form-label">
+              Grupperingsreglene for emnet vil dukke opp her:&nbsp;
+              <br />
+            </label>
+            <div id="regelDiv" class="regelDiv"></div>
           </div>
-        </div>
-        <BaseButton
+          <BaseButton
             cssClass="btn btn-primary btn-sm btn-style"
             type="submit"
             id="ruleBtn"
-        >
-          Lagre
-        </BaseButton>
+          >
+            Lagre
+          </BaseButton>
         </form>
       </div>
     </div>
@@ -167,7 +154,7 @@
 import BaseInputNoLabel from "@/components/BaseComponents/BaseInputNoLabel";
 import BaseButton from "@/components/BaseComponents/BaseButton";
 import $ from "jquery";
-import {computed, reactive} from "vue";
+import { computed, reactive } from "vue";
 import { required } from "@vuelidate/validators";
 import useValidate from "@vuelidate/core";
 import axios from "axios";
@@ -176,23 +163,23 @@ export default {
   name: "CreateCourse",
   components: {
     BaseInputNoLabel,
-    BaseButton
+    BaseButton,
   },
   data() {
     return {
-      ruleTotal: '',
-      ruleFrom: '',
-      ruleTo: '',
-      rules: []
-    }
+      ruleTotal: "",
+      ruleFrom: "",
+      ruleTo: "",
+      rules: [],
+    };
   },
   setup() {
     const state = reactive({
-      courseCode: '',
-      courseName: '',
-      totalWork: '',
-      workApproved: ''
-    })
+      courseCode: "",
+      courseName: "",
+      totalWork: "",
+      workApproved: "",
+    });
 
     const rules = computed(() => {
       return {
@@ -200,58 +187,60 @@ export default {
         courseName: { required },
         totalWork: { required },
         workApproved: { required },
-      }
-    })
+      };
+    });
 
-    const v$ = useValidate(rules, state)
+    const v$ = useValidate(rules, state);
 
-    return { state, v$ }
+    return { state, v$ };
   },
   methods: {
     addRule() {
-      let p = document.createElement('p')
-      p.innerHTML = `${this.ruleTotal} av øvingene ${this.ruleFrom} til ${this.ruleTo} må være godkjent`
+      let p = document.createElement("p");
+      p.innerHTML = `${this.ruleTotal} av øvingene ${this.ruleFrom} til ${this.ruleTo} må være godkjent`;
 
-      this.rules.push(p.innerHTML)
+      this.rules.push(p.innerHTML);
 
-      $('#regelDiv').append(p)
-      this.ruleTotal = ''
-      this.ruleFrom = ''
-      this.ruleTo = ''
+      $("#regelDiv").append(p);
+      this.ruleTotal = "";
+      this.ruleFrom = "";
+      this.ruleTo = "";
     },
-    onSubmit() {
-      this.v$.$validate()
-      if(!this.v$.$error) {
+    async onSubmit() {
+      this.v$.$validate();
+      if (!this.v$.$error) {
         let data = {
           name: this.state.courseName,
           code: this.state.courseCode,
-          semester: '',
+          semester: "",
           totalWork: this.state.totalWork,
-          rules: this.rules
-        }
+          rules: this.rules,
+        };
 
-        this.state.courseName = ''
-        this.state.courseCode = ''
-        this.state.totalWork = ''
-        this.rules = ''
-        this.workApproved = ''
+        this.state.courseName = "";
+        this.state.courseCode = "";
+        this.state.totalWork = "";
+        this.rules = "";
+        this.workApproved = "";
 
-
-        axios.post('http://localhost:8080/courses/add', data, {
-          headers: {
-            'Authorization': 'Bearer' + " " + this.$store.getters.jwtToken
-          }
-        }).then(response => {
-          if(response.status === 200) {
-            console.log(response)
-          }
-        }).catch(error => {
-          console.log(error)
-        })
+        await axios
+          .post("http://localhost:8080/courses/add", data, {
+            headers: {
+              Authorization: "Bearer" + " " + this.$store.getters.jwtToken,
+            },
+          })
+          .then((response) => {
+            if (response.status === 200) {
+              console.log(response);
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
       }
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style scoped>

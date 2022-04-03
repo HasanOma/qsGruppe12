@@ -79,12 +79,13 @@ public class UserController {
         return userService.addUsersForCourse(courseId, file);
     }
 
-    @PutMapping("/{courseId}/")
+    @PostMapping("/{courseId}")
     @ResponseStatus(HttpStatus.ACCEPTED)
     @ApiOperation(value = "Adds existing users to a course", response = RequestResponse.class)
     public RequestResponse addExistingUserToCourse(@PathVariable Long courseId,
                                                    @RequestBody List<UserEmailsDto> userEmailsDto){
         log.debug("[X] Request to add existing users for course with id = {}",courseId);
+        System.out.println(userEmailsDto.get(0).getEmail());
         return userService.addExistingUserToCourse(courseId, userEmailsDto);
     }
 

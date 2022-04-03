@@ -11,6 +11,8 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -51,6 +53,15 @@ public class QueueController {
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "Get all users in queue info", response = QueueDto.class)
     public List<QueueDto> getUsersInQueue(@PathVariable Long courseId){
+        log.debug("[X] Request to get all users in queue for course with id = {}",courseId);
+        return queueService.getUsersInQueue(courseId);
+    }
+
+    @MessageMapping("list")
+    @SendTo("/queue/notify")
+    @ResponseStatus(HttpStatus.OK)
+    @ApiOperation(value = "Get all users in queue info", response = QueueDto.class)
+    public List<QueueDto> sendUsersInQueue(@PathVariable Long courseId){
         log.debug("[X] Request to get all users in queue for course with id = {}",courseId);
         return queueService.getUsersInQueue(courseId);
     }

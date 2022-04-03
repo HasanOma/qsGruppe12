@@ -20,17 +20,17 @@ export default {
   async created() {
     let url = "http://localhost:8080/courses/active"
 
-    console.log(this.$store.getters.email)
+    console.log("Active courses " + this.$store.getters.email)
 
     await axios
-        .post(
+        .get(
             url,{
             params: {
               email: this.$store.getters.email
             }
         })
         .then(response => {
-          console.log(response.data)
+          console.log("Active courses" + response.data)
         })
         .catch(error => {
           console.log(error)

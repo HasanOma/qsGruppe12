@@ -11,17 +11,15 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 
-//QuerydslPredicateExecutor<UserInQueue>
-
-
 @Repository
-public interface UserInQueueRepository extends JpaRepository<UserInQueue,Long> {
+public interface UserInQueueRepository extends JpaRepository<UserInQueue,Long>, QuerydslPredicateExecutor<UserInQueue> {
     List<UserInQueue> getByCourseId(Long courseId);
+
 //    @Modifying
 //    @Query("delete from UserInQueue u where u.courseId = ?1")
     void deleteByCourseId(Long courseId);
 
 
-    UserInQueue getByIdAndCourseId(Long id, Long courseId);
+    UserInQueue getByIdAndCourseId(Long userId, String courseId);
 
 }

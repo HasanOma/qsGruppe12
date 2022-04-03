@@ -337,9 +337,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public RequestResponse forgotPassword(UserForgotPassword userForgotPassword){
         if (userRepository.findByEmail(userForgotPassword.getEmail()).isPresent()){
+            User user = userRepository.findByEmail(userForgotPassword.getEmail()).get();
             String message = "Nytt passord er lagd for deg. \n";
             String password = randomStringGenerator();
             sendMailOnCreation(password,userForgotPassword.getEmail(), message);
+            user.setEmail(password);
+            userRepository.save(user);
             return new RequestResponse("Your new password is now sent to your email!");
         }
         return new RequestResponse("Your email is not registered in our database!");

@@ -3,9 +3,14 @@ package com.example.qsgruppe12.model;
 import com.example.qsgruppe12.model.relationship.User_Course;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -39,7 +44,8 @@ public class Course {
     @NotNull
     private int totalWork;
     @NotNull
-    private String rules;
+    @ElementCollection
+    private List<String> rules;
     @Builder.Default
     private boolean archived = false;
     @NotNull

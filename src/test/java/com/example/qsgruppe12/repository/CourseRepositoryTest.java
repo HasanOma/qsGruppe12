@@ -9,7 +9,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.dao.EmptyResultDataAccessException;
 
-import java.util.Optional;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -23,6 +23,8 @@ class CourseRepositoryTest {
 
     @BeforeEach
     void setUp() {
+        Set<String> ruleList = new HashSet<>(List.of("6_1_6"));
+
         Course course =
                 Course.builder()
                 .id(1L)
@@ -31,7 +33,7 @@ class CourseRepositoryTest {
                 .semester("V22")
                 .queueActive(false)
                 .totalWork(6)
-                .rules("6_1_6")
+                .rules(ruleList)
                 .nrOfStudents(100)
                 .build();
         entityManager.persist(entityManager.merge(course));

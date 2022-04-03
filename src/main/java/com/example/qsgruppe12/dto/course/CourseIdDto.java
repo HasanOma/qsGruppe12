@@ -2,6 +2,9 @@ package com.example.qsgruppe12.dto.course;
 
 import lombok.Data;
 
+import java.util.List;
+import java.util.Set;
+
 @Data
 public class CourseIdDto {
 
@@ -13,7 +16,7 @@ public class CourseIdDto {
 
     public boolean archived;
 
-    public String rules;
+    public List<String> rules;
 
     public int examReady;
 

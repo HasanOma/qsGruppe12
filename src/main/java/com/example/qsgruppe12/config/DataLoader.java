@@ -8,6 +8,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 
 /**
  * Loads the database with data on application initiation
@@ -107,6 +110,7 @@ public class DataLoader implements ApplicationRunner {
         course = Course.builder()
                 .id(2L)
                 .code("IDATT2105")
+                .rules(new ArrayList<>(Arrays.asList("6_1_6","2_7_10")))
                 .name("Full-Stack Applikasjonsutvikling")
                 .semester("V2022")
                 .build();

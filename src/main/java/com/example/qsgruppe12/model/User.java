@@ -51,7 +51,7 @@ public class User {
     @JoinColumn(name = "role_id", referencedColumnName = "role_id")
     private Role role;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     @ToString.Exclude
     private List<User_Course> courses;
 

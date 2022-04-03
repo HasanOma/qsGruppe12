@@ -8,6 +8,7 @@ import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -24,5 +25,5 @@ public class WorkApprovedDto {
     private boolean examReady;
 
     @ApiModelProperty(notes = "Rules of the course")
-    private String rules;
+    private List<String> rules;
 }

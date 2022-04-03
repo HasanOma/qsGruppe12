@@ -4,6 +4,7 @@ package com.example.qsgruppe12.service.course;
 import com.example.qsgruppe12.dto.StudentCourseDto;
 import com.example.qsgruppe12.dto.course.CourseDto;
 import com.example.qsgruppe12.dto.course.CourseRegisterDto;
+import com.example.qsgruppe12.exception.CourseNotFoundException;
 import com.example.qsgruppe12.model.Course;
 import com.example.qsgruppe12.model.Queue;
 import com.example.qsgruppe12.model.User;
@@ -62,16 +63,15 @@ public class CourseServiceImpl implements CourseService {
     /**
      * Course registration method
      * @param courseRegisterDto Dto user to register a course
-     * @param email
+     * @param email email to authenticate user
      * @return returns a course Dto object to client
      */
     @Override
-    public CourseDto createCourse(CourseRegisterDto courseRegisterDto, String email) {
+    public CourseDto createCourse(CourseRegisterDto courseRegisterDto, String email) throws CourseNotFoundException {
         CourseDto courseDto = modelmapper.map(courseRegisterDto, CourseDto.class);
         if (courseExists(courseDto)) {
             System.out.println("exists");
-//            throw new CourseExistsException();
-            return null;
+            throw new CourseNotFoundException("Course Already exists!");
         }
         System.out.println("before mapper");
         Course course = modelmapper.map(courseRegisterDto, Course.class);
@@ -107,17 +107,18 @@ public class CourseServiceImpl implements CourseService {
      * @param courseId course id of method to delete
      */
     @Override
-    public void deleteCourse(Long courseId) {
+    public RequestResponse deleteCourse(Long courseId) {
         if (courseRepository.findById(courseId).isEmpty()){
-//            throw new CourseException();
+            return new RequestResponse(new CourseNotFoundException());
         }
         courseRepository.deleteById(courseId);
+        return new RequestResponse("Course with id = " + courseId + " has been deleted.");
     }
 
     /**
-     * Method to check wether students cualify to participate in taking the exam
-     * @param courseId
-     * @return
+     * Method to check whether students qualify to participate in taking the exam.
+     * @param courseId course id to check exam status on.
+     * @return returns how many students can take the exam.
      */
     @Override
     public int checkExamStatus(Long courseId) {

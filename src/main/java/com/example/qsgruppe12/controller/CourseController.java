@@ -4,6 +4,7 @@ import com.example.qsgruppe12.dto.StudentCourseDto;
 import com.example.qsgruppe12.dto.course.CourseDto;
 import com.example.qsgruppe12.dto.course.CourseExamReadyDto;
 import com.example.qsgruppe12.dto.course.CourseRegisterDto;
+import com.example.qsgruppe12.exception.CourseNotFoundException;
 import com.example.qsgruppe12.service.course.CourseService;
 import com.example.qsgruppe12.util.RequestResponse;
 import io.swagger.annotations.Api;
@@ -41,7 +42,8 @@ public class CourseController {
     @PostMapping("add")
     @ResponseStatus(HttpStatus.CREATED)
     @ApiOperation(value = "Creates a course", response = CourseDto.class)
-    public CourseDto createCourse(Authentication authentication, @RequestBody CourseRegisterDto courseDto){
+    public CourseDto createCourse(Authentication authentication, @RequestBody CourseRegisterDto courseDto)
+            throws CourseNotFoundException {
         log.debug("[X] Request to course course with code = {}", courseDto.getCode());
         return courseService.createCourse(courseDto, authentication.getName());
     }
@@ -51,8 +53,7 @@ public class CourseController {
     @ApiOperation(value = "Deletes a course", response = CourseDto.class)
     public RequestResponse deleteCourse(Authentication authentication, @PathVariable Long courseId){
         log.debug("[X] Request to delete a course with id = {}",courseId);
-        courseService.deleteCourse(courseId);
-        return new RequestResponse("Course has been deleted.");
+        return courseService.deleteCourse(courseId);
     }
 
     @PutMapping("{courseId}/")

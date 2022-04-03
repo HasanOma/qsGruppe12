@@ -1,5 +1,5 @@
 <template>
-  <tr>
+  <tr @click="chosenStudent">
     <th>{{ person.fullName }}</th>
     <th>{{ person.room }} / {{ person.spot }}</th>
     <th>{{ person.workNr }} / {{ person.workType }}</th>
@@ -12,6 +12,9 @@
 </template>
 
 <script>
+import axios from "axios";
+import $ from "jquery";
+
 export default {
   name: "UserInQueue",
   props: {
@@ -44,10 +47,40 @@ export default {
       diffInMilliSeconds -= seconds * 1000;
 
       this.time = hours + ":" + minutes + ":" + seconds
+    },
+    chosenStudent(evt) {
+      if(this.$store.getters.role === 'TA') {
+        evt.currentTarget.style.backgroundColor = "#49be25"
+        evt.currentTarget.style.color = "white"
+
+        let url = "http://localhost:8080/queue/" + this.$route.params.id + "/help"
+
+        console.log(this.$props.person.userId)
+
+        let data = {
+          id: this.$props.person.userId
+        }
+
+        axios.post(url, data, {
+          headers: {
+            'Authorization': 'Bearer' + " " + this.$store.getters.jwtToken
+          }
+        }).then(response => {
+          console.log(response)
+        }).catch(error => {
+          console.log(error)
+        })
+      }
     }
   },
   created() {
     setInterval(this.updateTime, 1000)
+  },
+  mounted() {
+    console.log(this.$props.person.helped)
+    if(this.$props.person.helped) {
+      $('tr').css('background-color', "#49be25")
+    }
   }
 }
 </script>

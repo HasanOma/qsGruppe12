@@ -17,6 +17,31 @@
         <java.version>11</java.version>
     </properties>
     <dependencies>
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.data</groupId>-->
+<!--            <artifactId>spring-data-commons</artifactId>-->
+<!--        </dependency>-->
+
+<!--        <dependency>-->
+<!--            <groupId>com.querydsl</groupId>-->
+<!--            <artifactId>querydsl-apt</artifactId>-->
+<!--            <version>${querydsl.version}</version>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>com.querydsl</groupId>-->
+<!--            <artifactId>querydsl-jpa</artifactId>-->
+<!--            <version>${querydsl.version}</version>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>com.querydsl</groupId>-->
+<!--            <artifactId>querydsl-sql-spatial</artifactId>-->
+<!--            <version>${querydsl.version}</version>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>com.querydsl</groupId>-->
+<!--            <artifactId>querydsl-sql-spring</artifactId>-->
+<!--            <version>${querydsl.version}</version>-->
+<!--        </dependency>-->
         <!-- Validations -->
         <dependency>
             <groupId>javax.validation</groupId>

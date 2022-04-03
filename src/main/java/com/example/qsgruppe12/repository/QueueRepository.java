@@ -7,7 +7,9 @@ import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 
 import java.util.Optional;
 
-public interface QueueRepository extends JpaRepository<Queue, Long>, QuerydslPredicateExecutor<User_Course> {
+//QuerydslPredicateExecutor<User_Course>
+
+public interface QueueRepository extends JpaRepository<Queue, Long> {
     Optional<Queue> getByCourseId(Long course_id);
 
     void deleteByCourseId(Long courseId);

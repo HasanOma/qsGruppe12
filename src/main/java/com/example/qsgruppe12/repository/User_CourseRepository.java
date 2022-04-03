@@ -14,8 +14,10 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+//QuerydslPredicateExecutor<User_Course>
+
 @Repository
-public interface User_CourseRepository extends JpaRepository<User_Course, UserCourseKey> , QuerydslPredicateExecutor<User_Course> {
+public interface User_CourseRepository extends JpaRepository<User_Course, UserCourseKey> {
     Iterable<Long> findAllByUserId(Long user_id);
 
     Iterable<Long> findAllByCourseId(Long course_id);

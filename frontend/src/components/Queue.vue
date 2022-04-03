@@ -54,7 +54,6 @@
                       </th>
                     </tr>
                   </thead>
-
                   <tbody>
                     <UserInQueue
                       v-for="person in this.inQueue"
@@ -67,29 +66,6 @@
                     <tr></tr>
                   </tfoot>
                 </table>
-<!--                <BaseModal-->
-<!--                    :model-value="true"-->
-<!--                    :close="helpStudent() || dontHelpStudent()"-->
-<!--                    :disabled="!showHelp"-->
-<!--                >-->
-<!--                  <div class="modal">-->
-<!--                    <p>-->
-<!--                      Do you want to help this student?-->
-<!--                    </p>-->
-<!--                    <button-->
-<!--                        :class="style.button"-->
-<!--                        @click="helpStudent()"-->
-<!--                    >-->
-<!--                      close-->
-<!--                    </button>-->
-<!--                    <button-->
-<!--                        :class="style.button"-->
-<!--                        @click="dontHelpStudent()"-->
-<!--                    >-->
-<!--                      close-->
-<!--                    </button>-->
-<!--                  </div>-->
-<!--                </BaseModal>-->
               </div>
             </div>
           </div>
@@ -103,24 +79,31 @@
 import BaseButton from "@/components/BaseComponents/BaseButton.vue";
 import axios from "axios";
 import UserInQueue from "@/components/BaseComponents/UserInQueue";
-// import BaseModal from "@/components/BaseComponents/BaseModal"
 
 export default {
   name: "Queue",
   components: {
     UserInQueue,
-    BaseButton,
-    // BaseModal
+    BaseButton
   },
   props: {
     courseID: String,
     courseName: String,
   },
+  data() {
+    return {
+      isActive: false,
+      courseCode: 1,
+      inQueue: [],
+      connection: null,
+      showHelp: false
+    }
+  },
   methods: {
     toAddToQueue(courseID, courseName) {
       this.$router.push({ name: "Add to queue", query: { redirect: "/course/:id/addToQueue", courseName: courseName, courseID: courseID }, params: { id: courseID } });
-      },
-    helpUser(){
+    },
+    helpUser() {
       if(this.$store.getters.role === "TA"){
         if(this.showHelp === false){
           this.showHelp = true;
@@ -183,21 +166,8 @@ export default {
       })
     }
   },
-  data() {
-    return {
-      isActive: false,
-      courseCode: 1,
-      inQueue: [],
-      connection: null,
-      showHelp: false
-    }
-  },
-  mounted() {
-    if(this.isActive) {
-      setInterval(this.updateQueue, 1000)
-    }
-  },
   created() {
+    setInterval(this.updateQueue, 1000)
 
     let url = "http://localhost:8080/queue/" + this.courseCode + "/isActive"
 

@@ -10,8 +10,10 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
 
+//QuerydslPredicateExecutor<User_Course
+
 @Repository
-public interface CourseRepository extends JpaRepository<Course, Long>, QuerydslPredicateExecutor<User_Course> {
+public interface CourseRepository extends JpaRepository<Course, Long> {
     Optional<Course> findByCodeAndSemester(@NotNull String code, @NotNull String semester);
 
     Optional<Course> findById(@NotNull Long id);

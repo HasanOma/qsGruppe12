@@ -7,5 +7,5 @@ import lombok.Setter;
 @Setter
 public class QueueUserIdDto {
 
-    private Long id;
+    private Long userId;
 }

@@ -59,8 +59,8 @@ public class QueueController {
         return queueService.getUsersInQueue(courseId);
     }
 
-    @MessageMapping("list")
-    @SendTo("/queue/notify")
+    @MessageMapping("list/update")
+    @SendTo("queue/notify")
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "Get all users in queue info", response = QueueDto.class)
     public List<QueueDto> sendUsersInQueue(@PathVariable Long courseId) throws CourseNotFoundException {
@@ -90,7 +90,7 @@ public class QueueController {
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "Sets that the student is being helped", response = RequestResponse.class)
     public RequestResponse helpStudent(@RequestBody QueueUserIdDto queueDto, @PathVariable String courseId){
-        log.debug("[X] Request to help user with id = {}", queueDto.getId());
+        log.debug("[X] Request to help user with id = {}", queueDto.getUserId());
         return queueService.helpStudent(queueDto, courseId);
     }
 

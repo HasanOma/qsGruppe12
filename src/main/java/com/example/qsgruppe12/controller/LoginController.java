@@ -36,9 +36,6 @@ public class LoginController {
     @Autowired
     private JWTUtil jwtUtil;
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
-
     private ModelMapper modelMapper = new ModelMapper();
 
     @Autowired
@@ -57,6 +54,7 @@ public class LoginController {
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "Authenticates, logs in user and createsJWT token", response = UserLoginReturnDto.class)
     public UserLoginReturnDto authenticate(@Valid @RequestBody JWTRequest jwtRequest) throws Exception{
+        log.debug("[X] Request to login User");
         UserLoginReturnDto user;
         System.out.println(jwtRequest.getEmail() + " " + jwtRequest.getPassword());
 
@@ -78,10 +76,11 @@ public class LoginController {
         return  user;
     }
 
-    @PutMapping
+    @PutMapping("/reset")
     @ResponseStatus(HttpStatus.ACCEPTED)
     @ApiOperation(value = "Sends user a new Password to their email", response = RequestResponse.class)
     public RequestResponse forgotPassword(@Valid @RequestBody UserForgotPassword userForgotPassword){
+        log.debug("[X] Request to reset password by user with email = {}",userForgotPassword.getEmail());
         return userService.forgotPassword(userForgotPassword);
     }
 }

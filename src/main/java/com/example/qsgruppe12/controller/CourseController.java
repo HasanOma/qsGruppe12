@@ -34,23 +34,23 @@ public class CourseController {
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "Returns variables client can choose from", response = StudentCourseDto.class)
     public StudentCourseDto getVariables(){
+        log.debug("[X] Request to get all emails of users and all courses ");
         return courseService.getVariables();
     }
 
     @PostMapping("add")
     @ResponseStatus(HttpStatus.CREATED)
     @ApiOperation(value = "Creates a course", response = CourseDto.class)
-    public CourseDto createCourse( @RequestBody CourseRegisterDto courseDto){
-//        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        System.out.println("here");
-        return courseService.createCourse(courseDto, "min email");
+    public CourseDto createCourse(Authentication authentication, @RequestBody CourseRegisterDto courseDto){
+        log.debug("[X] Request to course course with code = {}", courseDto.getCode());
+        return courseService.createCourse(courseDto, authentication.getName());
     }
 
     @DeleteMapping("{courseId}/")
     @ResponseStatus(HttpStatus.ACCEPTED)
     @ApiOperation(value = "Deletes a course", response = CourseDto.class)
     public RequestResponse deleteCourse(Authentication authentication, @PathVariable Long courseId){
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        log.debug("[X] Request to delete a course with id = {}",courseId);
         courseService.deleteCourse(courseId);
         return new RequestResponse("Course has been deleted.");
     }
@@ -60,6 +60,7 @@ public class CourseController {
     @ApiOperation(value = "Update a course's info", response = CourseDto.class)
     public CourseDto updateCourse(Authentication authentication, @PathVariable Long courseId,
                                   @RequestBody CourseDto courseDto){
+        log.debug("[X] Request to update a course with id = {}",courseId);
         return courseService.update(courseId, courseDto);
     }
 
@@ -67,6 +68,7 @@ public class CourseController {
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "Checks the exam status of the course", response = CourseExamReadyDto.class)
     public List<CourseExamReadyDto> checkExamStatus(@RequestBody List<Long> courseIds){
+        log.debug("[X] Request to check exam status for courses");
         List<CourseExamReadyDto> courseRegisterDtos = new ArrayList<>();
         for (Long courseId : courseIds) {
             CourseExamReadyDto.builder()

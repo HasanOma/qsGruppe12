@@ -39,6 +39,7 @@ public class UserController {
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "Update a users info", response = RequestResponse.class)
     public UserDto updateUser(@PathVariable Long userId, @RequestBody UserUpdateDto user){
+        log.debug("[X] Request to update a user with id = {}",userId);
         return userService.updateUser(userId, user);
     }
 
@@ -46,13 +47,15 @@ public class UserController {
     @ResponseStatus(HttpStatus.CREATED)
     @ApiOperation(value = "Adds new users to the database", response = RequestResponse.class)
     public RequestResponse createUsers(@RequestBody List<UserRegistrationDto> users){
+        log.debug("[X] Request to create users");
         return userService.createUser(users);
     }
 
     @RequestMapping(value = "add/file" , method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
-    @ApiOperation(value = "Adds new users to the database", response = RequestResponse.class)
+    @ApiOperation(value = "Adds new users to the database from a file", response = RequestResponse.class)
     public RequestResponse createUsers(@RequestPart("file") MultipartFile file) throws IOException {
+        log.debug("[X] Request to create users from a file");
 
         return userService.createUser(file);
     }
@@ -60,14 +63,18 @@ public class UserController {
     @PostMapping("{courseId}/add")
     @ResponseStatus(HttpStatus.CREATED)
     @ApiOperation(value = "Adds new users to a course", response = RequestResponse.class)
-    public List<UserDto> createUsers(@PathVariable Long courseId, @RequestBody List<UserRegistrationDto> userRegisterDto){
+    public List<UserDto> createUsers(@PathVariable Long courseId,
+                                     @RequestBody List<UserRegistrationDto> userRegisterDto){
+        log.debug("[X] Request to create users for course with id = {}",courseId);
         return userService.addUsersForCourse(courseId, userRegisterDto);
     }
 
     @RequestMapping(value = "{courseId}/add/file" , method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
     @ApiOperation(value = "Adds new users to the database", response = RequestResponse.class)
-    public RequestResponse addUsersToCourse(@PathVariable Long courseId, @RequestPart("file") MultipartFile file){
+    public RequestResponse addUsersToCourse(@PathVariable Long courseId, @RequestPart("file") MultipartFile file)
+            throws IOException {
+        log.debug("[X] Request to create users from file for course with id = {}",courseId);
 
         return userService.addUsersForCourse(courseId, file);
     }
@@ -75,7 +82,9 @@ public class UserController {
     @PutMapping("/{courseId}/")
     @ResponseStatus(HttpStatus.ACCEPTED)
     @ApiOperation(value = "Adds existing users to a course", response = RequestResponse.class)
-    public RequestResponse addExistingUserToCourse(@PathVariable Long courseId, @RequestBody List<UserEmailsDto> userEmailsDto){
+    public RequestResponse addExistingUserToCourse(@PathVariable Long courseId,
+                                                   @RequestBody List<UserEmailsDto> userEmailsDto){
+        log.debug("[X] Request to add existing users for course with id = {}",courseId);
         return userService.addExistingUserToCourse(courseId, userEmailsDto);
     }
 

@@ -35,7 +35,7 @@ public class UserController {
     @Autowired
     SecurityService securityService;
 
-    @PutMapping("{userId}/")
+    @PutMapping("{userId}")
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "Update a users info", response = RequestResponse.class)
     public UserDto updateUser(@PathVariable Long userId, @RequestBody UserUpdateDto user){

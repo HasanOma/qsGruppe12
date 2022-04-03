@@ -105,7 +105,7 @@
               </div>
             </div>
             <div class="form-group mb-3">
-              <button class="btn btn-primary btn-sm" type="submit" :disabled="formIsValid">
+              <button class="btn btn-primary btn-sm" type="submit">
                 Lagre
               </button>
             </div>
@@ -121,6 +121,7 @@ import useValidate from "@vuelidate/core";
 import { required, email, minLength, sameAs } from "@vuelidate/validators";
 import { reactive, computed } from "vue";
 import BaseInputNoLabel from "@/components/BaseComponents/BaseInputNoLabel";
+import axios from "axios";
 
 export default {
   inject: ["GStore"],
@@ -156,23 +157,44 @@ export default {
       email: this.$store.getters.email,
       alternativeEmail: this.$store.getters.altEmail,
       firstName: this.$store.getters.firstName,
-      lastName: this.$store.getters.lastName,
-      formIsValid: false,
+      lastName: this.$store.getters.lastName
     }
   },
   methods: {
     onSubmit() {
       this.v$.$validate()
       if(!this.v$.$error) {
-        this.GStore.flashMessage = "Thank you very much for your feedback: "
+        let url = "http://localhost:8080/users/" + this.$store.getters.id
+
+        let data = {
+          firstName: this.firstName,
+          lastName: this.lastName,
+          altEmail: this.state.email,
+          password: this.state.password
+        }
+
+        axios.put(url, data, {
+          headers: {
+            'Authorization': 'Bearer' + " " + this.$store.getters.jwtToken
+          }
+        }).then(response => {
+          if(response.status === 200) {
+            this.GStore.flashMessage = "Dine instillinger er nå oppdatert!"
+          }
+        }).catch(error => {
+          console.log(error)
+          this.GStore.flashMessage = "Noe gikk dessverre galt.."
+        })
 
         setTimeout(() => {
-          this.GStore.flashMessage = ' '
+          this.GStore.flashMessage = ''
         }, 3500)
-        console.log("Form is sent")
       } else {
-        console.log(this.v$.$error)
-        console.log("checkpoint")
+        this.GStore.flashMessage = "Alle feltene er ikke fylt ut eller gyldige.."
+
+        setTimeout(() => {
+          this.GStore.flashMessage = ''
+        }, 3500)
       }
     }
   },

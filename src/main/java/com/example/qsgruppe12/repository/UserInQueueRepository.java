@@ -12,7 +12,7 @@ import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @Repository
-public interface UserInQueueRepository extends JpaRepository<UserInQueue,Long>, QuerydslPredicateExecutor<UserInQueue> {
+public interface UserInQueueRepository extends JpaRepository<UserInQueue,Long> {
     List<UserInQueue> getByCourseId(Long courseId);
 
 //    @Modifying

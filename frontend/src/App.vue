@@ -1,6 +1,6 @@
 <template>
   <Navbar v-if="this.isAuthenticated"/>
-  <div id="flashMessage" v-if="GStore.flashMessage">
+  <div id="flashMessage" class="alert alert-primary mt-5 w-10" v-if="GStore.flashMessage !== ''">
     {{ GStore.flashMessage }}
   </div>
   <div id="main">

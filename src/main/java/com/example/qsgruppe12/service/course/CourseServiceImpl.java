@@ -217,7 +217,7 @@ public class CourseServiceImpl implements CourseService {
      */
     @Override
     public List<CourseDto> getArchivedCourses(UserEmailsDto emailsDto) {
-        return courses(emailsDto.getEmail(), false);
+        return courses(emailsDto.getEmail(), true);
     }
 
     /**
@@ -257,17 +257,21 @@ public class CourseServiceImpl implements CourseService {
     public List<CourseDto> courses(String email, boolean activeOrArchived){
         List<User_Course> userCourses = userCourseRepository.findAll();
         List<Course> courses = new ArrayList<>();
+        System.out.println(email);
+        User userFromDb = userRepository.findByEmail(email).get();
         for (User_Course userCourse : userCourses) {
-            if (userCourse.getUser().getEmail().equalsIgnoreCase(email)) {
+            if (userCourse.getUser().getId() == userFromDb.getId()) {
                 courses.add(userCourse.getCourse());
             }
         }
+        System.out.println(courses.size());
         List<CourseDto> listToReturn = new ArrayList<>();
         for (Course course : courses) {
             if (course.isArchived() == activeOrArchived) {
                 listToReturn.add(modelmapper.map(course, CourseDto.class));
             }
         }
+        System.out.println();
         return listToReturn;
     }
 }

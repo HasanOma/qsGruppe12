@@ -14,6 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@ToString
 @ApiModel(description = "DTO sent back to user when creating or updating a course")
 public class CourseDto {
 

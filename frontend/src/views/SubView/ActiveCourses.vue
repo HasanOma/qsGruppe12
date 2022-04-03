@@ -23,7 +23,7 @@ export default {
     console.log(this.$store.getters.email)
 
     await axios
-        .get(
+        .post(
             url,{
             params: {
               email: this.$store.getters.email

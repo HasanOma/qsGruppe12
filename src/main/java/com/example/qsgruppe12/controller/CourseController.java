@@ -45,7 +45,9 @@ public class CourseController {
     @ApiOperation(value = "Returns all active courses the client participates in", response = CourseDto.class)
     public List<CourseDto> getActiveCourses(@RequestBody UserEmailsDto emailsDto){
         log.debug("[X] Request to get all active courses of users with email {}", emailsDto.getEmail());
-        return courseService.getActiveCourses(emailsDto);
+        List<CourseDto> courses = courseService.getActiveCourses(emailsDto);
+        System.out.println(courses.toString());
+        return courses;
     }
 
     @PostMapping("archived")

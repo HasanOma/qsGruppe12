@@ -218,12 +218,33 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public RequestResponse addExistingUserToCourse(Long courseId, List<UserEmailsDto> userEmailsDto) {
-        List<UserDto> savedUsers = new ArrayList<>();
         Course course = courseRepository.getById(courseId);
         for (int i = 0; i < userEmailsDto.size(); i++) {
-            User user = modelMapper.map(userEmailsDto.get(i), User.class);
-            addUserRelationship(savedUsers, course, user);
-            savedUsers.get(i).setUserRoleName(user.getUserRoleName());
+            User user = userRepository.findByEmail(userEmailsDto.get(i).getEmail()).get();
+            course.setNrOfStudents(course.getNrOfStudents()+1);
+
+            long nrOfStudents = userRepository.findAll().size();
+            UserCourseKey userCourseKey = new UserCourseKey();
+            userCourseKey.setUserId(nrOfStudents);
+            userCourseKey.setCourseId(course.getId());
+            User_Course userCourse = User_Course.builder()
+                    .userCourseKey(userCourseKey)
+                    .course(course)
+                    .user(user)
+                    .workApproved("")
+                    .build();
+            for (int j = 0; j < course.getTotalWork(); j++) {
+                userCourse.getWorkList().add(Work.builder()
+                        .id((long)j)
+                        .user_course(userCourse)
+                        .courseId(course.getId())
+                        .userId(user.getId())
+                        .build());
+            }
+            user.setCourses(new ArrayList<>());
+            user.getCourses().add(userCourse);
+            userCourseRepository.save(userCourse);
+            userRepository.save(user);
             String message = "You are now added in the Course " +
                     course.getCode() + " " + course.getName() + "\n";
             sendMailOnCreation("your old one ",user.getEmail(), message);
@@ -326,7 +347,7 @@ public class UserServiceImpl implements UserService {
         System.out.println(userFromDB.getRole().getId());
         List<User_Course> userCourseList = userCourseRepository.findAll();
         for (int i = 0; i < userCourseList.size(); i++) {
-            if(userCourseList.get(i).getUser().getEmail().equalsIgnoreCase(returnUser.getEmail())){
+            if(userCourseList.get(i).getUser().getId() == userFromDB.getId()){
 
                 returnUser.getCourses().get(i).setCode(userCourseList.get(i).getCourse().getCode());
                 returnUser.getCourses().get(i).setId(userCourseList.get(i).getCourse().getId());
@@ -334,7 +355,7 @@ public class UserServiceImpl implements UserService {
                 returnUser.getCourses().get(i).setRules(userCourseList.get(i).getCourse().getRules());
                 returnUser.getCourses().get(i).setName(userCourseList.get(i).getCourse().getName());
 
-                if (userFromDB.getUserRoleName().equalsIgnoreCase("Admin")){
+                if (userFromDB.getRole().getName().equalsIgnoreCase("Admin")){
                     returnUser.getCourses().get(i).setNrOfStudents(userCourseList.get(i).getCourse().getNrOfStudents());
                     returnUser.getCourses().get(i).setExamReady(courseService
                             .checkExamStatus(userCourseList.get(i).getCourse().getId()));

@@ -167,7 +167,7 @@ export default {
     }
   },
   created() {
-    setInterval(this.updateQueue, 1000)
+    // setInterval(this.updateQueue, 100000000)
 
     let url = "http://localhost:8080/queue/" + this.courseCode + "/isActive"
 

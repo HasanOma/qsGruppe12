@@ -37,7 +37,7 @@
           Logg inn
         </Basebutton>
       </div>
-      <a class="forgot" href="#">Glemt passord?</a>
+      <a class="forgot" @click="onPasswordReset">Glemt passord?</a>
     </form>
   </section>
 </template>
@@ -50,6 +50,7 @@ import {computed, reactive} from "vue";
 import {email, required } from "@vuelidate/validators";
 import useValidate from "@vuelidate/core";
 import {authenticationService} from "@/services/authentication.service";
+import axios from "axios";
 
 export default {
   name: "LoginView",
@@ -154,6 +155,29 @@ export default {
       //TODO error handling plus check first what auth the user has
 
     },
+    onPasswordReset() {
+      if(this.state.email !== '') {
+        let url = "http://localhost:8080/auth/reset"
+
+
+        let data = {
+          email: this.state.email
+        }
+
+        axios.put(url, data, {
+          headers: {
+            'Authorization': 'Bearer' + " " + this.$store.getters.jwtToken
+          }
+        }).then(response => {
+          if(response.status === 200) {
+            // this.$router.push({ name: "Queue", query: { redirect: "/course/:id", courseName: courseName, courseID: courseID }, params: { id: courseID } });
+          } else {
+            //TODO: Do something if error
+            console.log(response.data)
+          }
+        })
+      }
+    }
   },
 };
 </script>

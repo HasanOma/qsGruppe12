@@ -4,10 +4,10 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
+
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Getter
 @Setter
@@ -49,5 +49,5 @@ public class CourseDto {
     private boolean archived;
 
     @ApiModelProperty(notes = "Rules of the course")
-    private String rules;
+    private List<String> rules;
 }

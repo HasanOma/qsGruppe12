@@ -1,6 +1,5 @@
 package com.example.qsgruppe12.service.user;
 
-import com.example.qsgruppe12.dto.QueueDto;
 import com.example.qsgruppe12.dto.userdtos.*;
 import com.example.qsgruppe12.util.RequestResponse;
 import org.springframework.stereotype.Service;

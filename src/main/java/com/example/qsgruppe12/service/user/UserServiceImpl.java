@@ -274,7 +274,7 @@ public class UserServiceImpl implements UserService {
      * @param course course to create relationship with.
      * @param user user to create relationship with.
      */
-    private void addUserRelationship(List<UserDto> savedUsers, Course course, User user) {
+    public void addUserRelationship(List<UserDto> savedUsers, Course course, User user) {
         UserDto studentAdded = modelMapper.map(user, UserDto.class);
         savedUsers.add(studentAdded);
         course.setNrOfStudents(course.getNrOfStudents()+1);

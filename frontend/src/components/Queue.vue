@@ -59,7 +59,6 @@
                       v-for="person in this.inQueue"
                       :key="person"
                       :person="person"
-                      @click="helpUser()"
                     />
                   </tbody>
                   <tfoot>
@@ -111,14 +110,6 @@ export default {
         params: { id: courseID },
       });
     },
-    helpUser() {
-      if (this.$store.getters.role === "TA") {
-        if (this.showHelp === false) {
-          this.showHelp = true;
-        }
-        this.showHelp = false;
-      }
-    },
     activate() {
       //TODO: Make sure to recieve courses, else courseCode is empty
       // for(let i = 0; i < this.$store.getters.courses.length; i++) {
@@ -160,7 +151,9 @@ export default {
           } else {
             //TODO: Do something if error from server
           }
-        });
+        }).catch((error) => {
+          console.log(error)
+      })
     },
     edit(obj) {
       console.log(obj);

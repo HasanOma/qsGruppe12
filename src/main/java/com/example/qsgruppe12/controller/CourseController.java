@@ -47,7 +47,7 @@ public class CourseController {
         return courseService.createCourse(courseDto, authentication.getName());
     }
 
-    @DeleteMapping("{courseId}/")
+    @DeleteMapping("{courseId}")
     @ResponseStatus(HttpStatus.ACCEPTED)
     @ApiOperation(value = "Deletes a course", response = CourseDto.class)
     public RequestResponse deleteCourse(Authentication authentication, @PathVariable Long courseId){
@@ -55,7 +55,7 @@ public class CourseController {
         return courseService.deleteCourse(courseId);
     }
 
-    @PutMapping("{courseId}/")
+    @PutMapping("{courseId}")
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "Update a course's info", response = CourseDto.class)
     public CourseDto updateCourse(Authentication authentication, @PathVariable Long courseId,

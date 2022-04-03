@@ -13,6 +13,7 @@ import AddCourse from "@/views/SubView/AddCourse";
 import AdminOverview from "@/views/SubView/AdminOverview";
 import AddUserCourse from "@/views/SubView/AddUserCourse";
 import EditCourse from "@/views/SubView/EditCourse";
+import WorkApproval from "@/components/WorkApproval";
 import NProgress from "nprogress";
 import { authenticationService } from "@/services/authentication.service";
 import { Role } from "@/helpers/role";
@@ -49,6 +50,14 @@ const routes = [
     component: CourseQueue,
     meta: {
       authorize: [],
+    },
+  },
+  {
+    path: "/:id/work_approval",
+    name: "Work Approval",
+    component: WorkApproval,
+    meta: {
+      authorize: [Role.TA],
     },
   },
   {

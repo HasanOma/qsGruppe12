@@ -206,7 +206,7 @@ export default {
       this.ruleFrom = "";
       this.ruleTo = "";
     },
-    onSubmit() {
+    async onSubmit() {
       this.v$.$validate();
       if (!this.v$.$error) {
         let data = {
@@ -223,7 +223,7 @@ export default {
         this.rules = "";
         this.workApproved = "";
 
-        axios
+        await axios
           .post("http://localhost:8080/courses/add", data, {
             headers: {
               Authorization: "Bearer" + " " + this.$store.getters.jwtToken,

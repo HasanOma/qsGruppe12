@@ -9,19 +9,22 @@
           <div class="row">
             <div class="col div-padding">
               <label class="form-label">Velg emne: </label>
-              <BaseSelect />
-              <select class="form-select">
-                <optgroup label="This is a group">
-                  <option value="12" selected="">This is item 1</option>
-                  <option value="13">This is item 2</option>
-                  <option value="14">This is item 3</option>
-                </optgroup>
-              </select>
+              <BaseSelect
+                  :options="this.courses"
+                  v-model="state.course"
+              />
+<!--              <select class="form-select">-->
+<!--                <optgroup label="This is a group">-->
+<!--                  <option value="12" selected="">This is item 1</option>-->
+<!--                  <option value="13">This is item 2</option>-->
+<!--                  <option value="14">This is item 3</option>-->
+<!--                </optgroup>-->
+<!--              </select>-->
             </div>
           </div>
           <div class="row">
             <div class="col div-padding">
-              <BaseButton cssClass="btn btn-primary" type="button">
+              <BaseButton cssClass="btn btn-primary" type="button" @click="deleteCourse">
                 Slett emne
               </BaseButton>
             </div>
@@ -82,12 +85,84 @@
 
 <script>
 import BaseButton from "@/components/BaseComponents/BaseButton";
+import BaseSelect from "@/components/BaseComponents/BaseSelect";
+import axios from "axios";
+import {computed, reactive} from "vue";
+import {required} from "@vuelidate/validators";
+import useValidate from "@vuelidate/core";
 
 export default {
   name: "ChangeCourse",
   components: {
     BaseButton,
+    BaseSelect
   },
+  methods: {
+    async deleteCourse() {
+      this.v$.$validate()
+      if(!this.v$.$error) {
+        let courseID;
+        for(let i = 0; i < this.courses.length; i++) {
+          if(this.courses[i] === this.state.course) {
+            courseID = this.courseIds[i]
+          }
+        }
+
+        let url = "http://localhost:8080/courses/" + courseID
+
+        await axios
+            .delete(url, {
+              headers: {
+                Authorization: "Bearer" + " " + this.$store.getters.jwtToken,
+              },
+            })
+            .then((response) => {
+              console.log(response.data)
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+      }
+    }
+  },
+  data() {
+    return {
+      courses: [],
+      courseIds: []
+    }
+  },
+  setup() {
+    const state = reactive({
+      course: "",
+    });
+
+    const rules = computed(() => {
+      return {
+        course: { required }
+      };
+    });
+
+    const v$ = useValidate(rules, state);
+
+    return { state, v$ };
+  },
+  async created() {
+    await axios
+        .get("http://localhost:8080/courses/student_courses", {
+          headers: {
+            Authorization: "Bearer" + " " + this.$store.getters.jwtToken,
+          },
+        })
+        .then((response) => {
+          if (response.status === 200) {
+            this.courseIds = response.data.courseIds;
+            this.courses = response.data.course;
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+  }
 };
 </script>
 

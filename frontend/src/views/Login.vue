@@ -53,6 +53,7 @@ import { email, required } from "@vuelidate/validators";
 import { authenticationService } from "@/services/authentication.service";
 
 export default {
+  inject: ["GStore"],
   name: "LoginView",
   components: {
     BaseButton,
@@ -83,12 +84,6 @@ export default {
     onSubmit() {
       this.v$.$validate();
       if (!this.v$.$error) {
-        const data = {
-          email: this.state.email,
-          password: this.state.password,
-        };
-
-        console.log(data);
 
         authenticationService
           .login(this.state.email, this.state.password)
@@ -114,47 +109,23 @@ export default {
             this.$store.dispatch("addArchived", archivedCourses);
             this.$store.dispatch("setJwtToken", user.jwtResponse.jwtToken);
             this.$store.dispatch("setLoggedIn", true);
-            this.$router.push("/course/active");
-          });
 
-        console.log(
-          "Inside login view: " +
-            JSON.parse(localStorage.getItem("currentUser")).id
-        );
-        // axios.post("http://localhost:8080/auth/login", data, {
-        //   'Content-Type': 'application/json',
-        //   'Authorization': 'Bearer'
-        // }).then(response => {
-        //   let activeCourses = []
-        //   let archivedCourses = []
-        //
-        //   for(let i = 0; i < response.data.courses.length; i++) {
-        //     if(!response.data.courses[i].archived) {
-        //       activeCourses.append(response.data.courses[i])
-        //     } else {
-        //       archivedCourses.append(response.data.courses[i])
-        //     }
-        //   }
-        //
-        //   this.$store.dispatch("setID", response.data.id)
-        //   this.$store.dispatch("setFirstName", response.data.firstName)
-        //   this.$store.dispatch("setLastName", response.data.lastName)
-        //   this.$store.dispatch("setEmail", response.data.email)
-        //   this.$store.dispatch("setAltEmail", response.data.altEmail)
-        //   this.$store.dispatch("setRole", response.data.userRole.name)
-        //   this.$store.dispatch("addCourses", activeCourses)
-        //   this.$store.dispatch("addArchived", archivedCourses)
-        //   this.$store.dispatch("setJwtToken", response.data.jwtResponse.jwtToken)
-        //
-        //
-        // })
-        //
-        // this.$router.push({
-        //   name: "Active",
-        //   query: { redirect: "/course/active" },
-        // });
+            if(this.$store.getters.role === 'Admin') {
+              this.$router.push("/admin/overview");
+            } else {
+              this.$router.push("/course/active");
+            }
+
+          });
+      } else {
+        this.GStore.flashMessage =
+            "Alle feltene er ikke fylt ut eller gyldige..";
+
+        setTimeout(() => {
+          this.GStore.flashMessage = "";
+        }, 3500);
       }
-      //TODO error handling plus check first what auth the user has
+
     },
     onPasswordReset() {
       if (this.state.email !== "") {
@@ -172,12 +143,25 @@ export default {
           })
           .then((response) => {
             if (response.status === 200) {
-              // this.$router.push({ name: "Queue", query: { redirect: "/course/:id", courseName: courseName, courseID: courseID }, params: { id: courseID } });
-            } else {
-              //TODO: Do something if error
-              console.log(response.data);
+              this.GStore.flashMessage =
+                  "Nytt passord ble sendt til mailen du skrev inn!";
             }
-          });
+          }).catch((error) => {
+            console.log(error)
+            this.GStore.flashMessage =
+                "Noe galt skjedde..";
+          })
+
+        setTimeout(() => {
+          this.GStore.flashMessage = "";
+        }, 3500);
+      } else {
+        this.GStore.flashMessage =
+            "Skriv inn en mail i boksen for e-post for å få tilsendt nytt passord";
+
+        setTimeout(() => {
+          this.GStore.flashMessage = "";
+        }, 3500);
       }
     },
   },

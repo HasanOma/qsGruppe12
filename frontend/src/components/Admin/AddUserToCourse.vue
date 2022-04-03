@@ -95,8 +95,8 @@ export default {
 
     return { state, v$ };
   },
-  created() {
-    axios
+  async created() {
+    await axios
       .get("http://localhost:8080/courses/student_courses", {
         headers: {
           Authorization: "Bearer" + " " + this.$store.getters.jwtToken,
@@ -104,7 +104,6 @@ export default {
       })
       .then((response) => {
         if (response.status === 200) {
-          console.log(response.data);
           this.courseIds = response.data.courseIds;
           this.courses = response.data.course;
           this.userEmails = response.data.email;

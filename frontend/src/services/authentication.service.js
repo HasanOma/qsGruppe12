@@ -17,7 +17,6 @@ export const authenticationService = {
 };
 
 function login(email, password) {
-  console.log(email + " " + password);
   return fetch(
     `http://localhost:8080/auth/login`,
     requestOptions.post({ email, password })

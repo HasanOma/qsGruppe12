@@ -169,14 +169,6 @@ export default {
           },
         ];
 
-        console.log({
-          email: this.state.email,
-          firstName: this.state.firstName,
-          lastName: this.state.lastName,
-          password: "",
-          userRoleName: this.state.role,
-        })
-
         axios
           .post("http://localhost:8080/users/add", data, {
             headers: {

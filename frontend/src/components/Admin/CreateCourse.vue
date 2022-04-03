@@ -160,6 +160,7 @@ import useValidate from "@vuelidate/core";
 import axios from "axios";
 
 export default {
+  inject: ["GStore"],
   name: "CreateCourse",
   components: {
     BaseInputNoLabel,
@@ -217,12 +218,6 @@ export default {
           rules: this.rules,
         };
 
-        this.state.courseName = "";
-        this.state.courseCode = "";
-        this.state.totalWork = "";
-        this.rules = "";
-        this.workApproved = "";
-
         await axios
           .post("http://localhost:8080/courses/add", data, {
             headers: {
@@ -230,13 +225,35 @@ export default {
             },
           })
           .then((response) => {
-            if (response.status === 200) {
-              console.log(response);
+            if (response.status === 201) {
+              console.log(response)
+              this.GStore.flashMessage = "Emnet ble lagt til!";
+
+              setTimeout(() => {
+                this.GStore.flashMessage = "";
+              }, 3500);
             }
           })
           .catch((error) => {
             console.log(error);
+            this.GStore.flashMessage = "Noe galt skjedde..";
+
+            setTimeout(() => {
+              this.GStore.flashMessage = "";
+            }, 3500);
           });
+
+        this.state.courseName = "";
+        this.state.courseCode = "";
+        this.state.totalWork = "";
+        this.rules = "";
+        this.state.workApproved = "";
+      } else {
+        this.GStore.flashMessage = "Noen av feltene er ikke gyldige..";
+
+        setTimeout(() => {
+          this.GStore.flashMessage = "";
+        }, 3500);
       }
     },
   },

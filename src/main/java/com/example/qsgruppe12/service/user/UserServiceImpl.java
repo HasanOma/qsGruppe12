@@ -297,6 +297,7 @@ public class UserServiceImpl implements UserService {
                     .userId(user.getId())
                     .build());
         }
+        user.setCourses(new ArrayList<>());
         user.getCourses().add(userCourse);
         userCourseRepository.save(userCourse);
         userRepository.save(user);

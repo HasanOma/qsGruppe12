@@ -35,6 +35,9 @@
               </div>
             </div>
           </div>
+          <BaseButton cssClass="btn btn-primary btn-sm mt-4" type="submit">
+            Legg til
+          </BaseButton>
         </form>
       </div>
       <div class="card-header py-3">
@@ -47,9 +50,6 @@
             :courseIDs="this.courseIds"
           />
         </div>
-        <BaseButton cssClass="btn btn-primary btn-sm mt-4" type="submit">
-          Legg til
-        </BaseButton>
       </div>
     </div>
   </div>
@@ -65,6 +65,7 @@ import useValidate from "@vuelidate/core";
 import DragNDropWithSelect from "@/components/BaseComponents/DragNDropWithSelect";
 
 export default {
+  inject: ["GStore"],
   name: "AddUserToCourse",
   data() {
     return {
@@ -122,22 +123,37 @@ export default {
         }
       }
 
-      this.state.course = "";
-      this.state.userEmail = "";
+      let email = [
+        {
+          email: this.state.userEmail
+        }
+      ]
+      // this.state.course = "";
+      // this.state.userEmail = "";
 
-      let url = "http://localhost:8080/courses/" + chosenCourse + "/add";
+      let url = "http://localhost:8080/users/" + chosenCourse;
 
       axios
-        .get(url, {
+        .post(url, email, {
           headers: {
-            Authorization: "Bearer" + " " + this.$store.getters.jwtToken,
+            "Authorization": "Bearer" + " " + this.$store.getters.jwtToken,
           },
         })
         .then((response) => {
           console.log(response.status);
+          this.GStore.flashMessage = "Brukeren(e) ble lagt til!";
+
+          setTimeout(() => {
+            this.GStore.flashMessage = "";
+          }, 3500);
         })
         .catch((error) => {
           console.log(error);
+          this.GStore.flashMessage = "Noe galt skjedde..";
+
+          setTimeout(() => {
+            this.GStore.flashMessage = "";
+          }, 3500);
         });
     },
   },

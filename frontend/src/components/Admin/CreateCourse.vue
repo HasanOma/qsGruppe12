@@ -226,7 +226,7 @@ export default {
           })
           .then((response) => {
             if (response.status === 201) {
-              console.log(response)
+              console.log(response);
               this.GStore.flashMessage = "Emnet ble lagt til!";
 
               setTimeout(() => {

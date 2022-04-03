@@ -77,14 +77,14 @@ export default {
             },
           })
           .then((response) => {
-            if(response.status === 200) {
+            if (response.status === 200) {
               this.$router.push({
                 name: "Work Approval",
                 query: {
                   redirect: "/" + this.$route.params.id + "/work_approval",
                   userName: this.$props.person.fullName,
-                  workNr: this.$props.person.workNr
-                }
+                  workNr: this.$props.person.workNr,
+                },
               });
             }
           })

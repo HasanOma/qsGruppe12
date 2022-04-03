@@ -151,9 +151,10 @@ export default {
           } else {
             //TODO: Do something if error from server
           }
-        }).catch((error) => {
-          console.log(error)
-      })
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
     edit(obj) {
       console.log(obj);

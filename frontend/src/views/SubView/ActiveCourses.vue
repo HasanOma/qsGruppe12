@@ -18,23 +18,22 @@ export default {
     };
   },
   async created() {
-    let url = "http://localhost:8080/courses/active"
+    let url = "http://localhost:8080/courses/active";
 
-    console.log(this.$store.getters.email)
+    console.log(this.$store.getters.email);
 
     await axios
-        .get(
-            url,{
-            params: {
-              email: this.$store.getters.email
-            }
-        })
-        .then(response => {
-          console.log(response.data)
-        })
-        .catch(error => {
-          console.log(error)
-        })
+      .get(url, {
+        params: {
+          email: this.$store.getters.email,
+        },
+      })
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   },
 };
 </script>

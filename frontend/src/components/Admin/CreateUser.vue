@@ -176,7 +176,7 @@ export default {
             },
           })
           .then((response) => {
-            console.log(response)
+            console.log(response);
             if (response.status === 201) {
               this.GStore.flashMessage = "Bruker(ene) ble opprettet!";
 

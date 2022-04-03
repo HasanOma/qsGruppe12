@@ -2,9 +2,7 @@
   <div class="container-fluid d-flex justify-content-center">
     <div class="card shadow mb-3">
       <div class="card-header py-3">
-        <p class="text-primary m-0 fw-bold">
-          Godkjenn eller fjern fra køen
-        </p>
+        <p class="text-primary m-0 fw-bold">Godkjenn eller fjern fra køen</p>
       </div>
       <div class="card-body h-auto">
         <form>
@@ -14,7 +12,7 @@
                 <label class="form-label">
                   <strong>Navn</strong>
                 </label>
-                <input class="form-control" type="text">
+                <input class="form-control" type="text" />
               </div>
             </div>
             <div class="col">
@@ -22,7 +20,7 @@
                 <label class="form-label">
                   <strong>Øvingsnr</strong>
                 </label>
-                <input class="form-control" type="text">
+                <input class="form-control" type="text" />
               </div>
             </div>
           </div>
@@ -43,15 +41,11 @@ export default {
   props: {
     student: {
       type: Object,
-      required: true
+      required: true,
     },
-    work: {
-
-    }
-  }
-}
+    work: {},
+  },
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

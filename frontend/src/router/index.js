@@ -13,9 +13,10 @@ import AddCourse from "@/views/SubView/AddCourse";
 import AdminOverview from "@/views/SubView/AdminOverview";
 import AddUserCourse from "@/views/SubView/AddUserCourse";
 import EditCourse from "@/views/SubView/EditCourse";
-import NProgress from 'nprogress';
-import {authenticationService} from "@/services/authentication.service";
-import {Role} from "@/helpers/role"
+import WorkApproval from "@/components/WorkApproval";
+import NProgress from "nprogress";
+import { authenticationService } from "@/services/authentication.service";
+import { Role } from "@/helpers/role";
 
 const routes = [
   {
@@ -27,7 +28,7 @@ const routes = [
     path: "/course/",
     component: Course,
     meta: {
-      authorize: []
+      authorize: [],
     },
     children: [
       {
@@ -48,38 +49,46 @@ const routes = [
     name: "Queue",
     component: CourseQueue,
     meta: {
-      authorize: []
-    }
+      authorize: [],
+    },
+  },
+  {
+    path: "/:id/work_approval",
+    name: "Work Approval",
+    component: WorkApproval,
+    meta: {
+      authorize: [Role.TA],
+    },
   },
   {
     path: "/course/:id/add_to_queue",
     name: "Add to queue",
     component: AddToQueue,
     meta: {
-      authorize: []
-    }
+      authorize: [],
+    },
   },
   {
     path: "/course/:id/work",
     name: "Work",
     component: WorkStatus,
     meta: {
-      authorize: []
-    }
+      authorize: [],
+    },
   },
   {
     path: "/settings",
     name: "Settings",
     component: Settings,
     meta: {
-      authorize: []
-    }
+      authorize: [],
+    },
   },
   {
     path: "/admin/",
     component: Admin,
     meta: {
-      authorize: [Role.Admin]
+      authorize: [Role.Admin],
     },
     children: [
       {
@@ -90,24 +99,24 @@ const routes = [
       {
         path: "add_user",
         name: "Add_user",
-        component: AddUser
+        component: AddUser,
       },
       {
         path: "add_user_course",
         name: "Add_user_course",
-        component: AddUserCourse
+        component: AddUserCourse,
       },
       {
         path: "new_course",
         name: "New_course",
-        component: AddCourse
+        component: AddCourse,
       },
       {
         path: "edit_course",
         name: "Edit_course",
-        component: EditCourse
-      }
-    ]
+        component: EditCourse,
+      },
+    ],
   },
 ];
 
@@ -117,31 +126,31 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  NProgress.start()
+  NProgress.start();
 
   // redirect to login page if not logged in and trying to access a restricted page
   const { authorize } = to.meta;
-  console.log(to.meta)
+  console.log(to.meta);
   const currentUser = authenticationService.currentUserValue;
 
   if (authorize) {
     if (!currentUser) {
       // not logged in so redirect to login page with the return url
-      return next({ path: '/', query: { returnUrl: to.path } });
+      return next({ path: "/", query: { returnUrl: to.path } });
     }
 
     // check if route is restricted by role
     if (authorize.length && !authorize.includes(currentUser.userRole.name)) {
       // role not authorised so redirect to home page
-      return next({ path: '/course/active' });
+      return next({ path: "/course/active" });
     }
   }
 
   next();
-})
+});
 
 router.afterEach(() => {
-  NProgress.done()
-})
+  NProgress.done();
+});
 
 export default router;

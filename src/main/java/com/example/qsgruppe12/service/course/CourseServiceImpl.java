@@ -116,7 +116,7 @@ public class CourseServiceImpl implements CourseService {
         if (courseRepository.findById(courseId).isEmpty()){
             return new RequestResponse(new CourseNotFoundException());
         }
-        userInQueueRepository.deleteById(courseId);
+        userInQueueRepository.deleteByCourseId(courseId);
         queueRepository.deleteByCourseId(courseId);
         userCourseRepository.deleteByCourse(courseRepository.getById(courseId));
         courseRepository.deleteById(courseId);

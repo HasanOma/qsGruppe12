@@ -61,12 +61,28 @@ export default {
   },
   methods: {
     toQueue(courseID, courseName) {
-      this.$router.push({ name: "Queue", query: { redirect: "/course/:id", courseName: courseName, courseID: courseID }, params: { id: courseID } });
+      this.$router.push({
+        name: "Queue",
+        query: {
+          redirect: "/course/:id",
+          courseName: courseName,
+          courseID: courseID,
+        },
+        params: { id: courseID },
+      });
     },
     toWorkStatus(courseID, courseName) {
-      this.$router.push({ name: "Work", query: { redirect: "/course/:id/work", courseName: courseName, courseID: courseID }, params: { id: courseID } });
-    }
-  }
+      this.$router.push({
+        name: "Work",
+        query: {
+          redirect: "/course/:id/work",
+          courseName: courseName,
+          courseID: courseID,
+        },
+        params: { id: courseID },
+      });
+    },
+  },
 };
 </script>
 

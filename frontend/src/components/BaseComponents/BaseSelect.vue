@@ -6,7 +6,9 @@
     class="form-select"
     v-bind="{
       ...$attrs,
-      onChange: ($event) => { $emit('update:modelValue', $event.target.value) },
+      onChange: ($event) => {
+        $emit('update:modelValue', $event.target.value);
+      },
     }"
     :value="modelValue"
     :id="uuid"
@@ -31,7 +33,7 @@
 <script>
 import SetupForm from "@/feature/SetupForm";
 import UniqueID from "@/feature/UniqueID";
-import BaseErrorMessage from "@/components/BaseComponents/BaseErrorMessage"
+import BaseErrorMessage from "@/components/BaseComponents/BaseErrorMessage";
 
 export default {
   components: {
@@ -47,7 +49,7 @@ export default {
       default: "",
     },
     labelClass: {
-      type: String
+      type: String,
     },
     error: {
       type: String,

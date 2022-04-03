@@ -8,6 +8,7 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -35,7 +36,7 @@ public class User_Course {
     private String workApproved;
 
     @OneToMany
-    private List<Work> workList;
+    private List<Work> workList = new ArrayList<>();
 
     boolean canDoExam = false;
 

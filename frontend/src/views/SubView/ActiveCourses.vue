@@ -18,7 +18,23 @@ export default {
     };
   },
   async created() {
-    this.courses = (await axios.get("http://localhost:3000/courses")).data;
+    let url = "http://localhost:8080/courses/active"
+
+    console.log(this.$store.getters.email)
+
+    await axios
+        .get(
+            url,{
+            params: {
+              email: this.$store.getters.email
+            }
+        })
+        .then(response => {
+          console.log(response.data)
+        })
+        .catch(error => {
+          console.log(error)
+        })
   },
 };
 </script>

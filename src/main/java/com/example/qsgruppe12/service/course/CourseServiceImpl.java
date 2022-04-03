@@ -9,10 +9,7 @@ import com.example.qsgruppe12.model.Course;
 import com.example.qsgruppe12.model.Queue;
 import com.example.qsgruppe12.model.User;
 import com.example.qsgruppe12.model.relationship.User_Course;
-import com.example.qsgruppe12.repository.CourseRepository;
-import com.example.qsgruppe12.repository.QueueRepository;
-import com.example.qsgruppe12.repository.UserRepository;
-import com.example.qsgruppe12.repository.User_CourseRepository;
+import com.example.qsgruppe12.repository.*;
 import com.example.qsgruppe12.util.RequestResponse;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -48,6 +45,9 @@ public class CourseServiceImpl implements CourseService {
 
     @Autowired
     private QueueRepository queueRepository;
+
+    @Autowired
+    private UserInQueueRepository userInQueueRepository;
 
     private ModelMapper modelmapper = new ModelMapper();
 
@@ -111,6 +111,9 @@ public class CourseServiceImpl implements CourseService {
         if (courseRepository.findById(courseId).isEmpty()){
             return new RequestResponse(new CourseNotFoundException());
         }
+        userInQueueRepository.deleteById(courseId);
+        queueRepository.deleteByCourseId(courseId);
+        userCourseRepository.deleteByCourse(courseRepository.getById(courseId));
         courseRepository.deleteById(courseId);
         return new RequestResponse("Course with id = " + courseId + " has been deleted.");
     }

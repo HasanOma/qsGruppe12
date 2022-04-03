@@ -31,10 +31,15 @@
           <router-link
               to="/course/active"
               class="nav-item nav-link d-flex align-items-center"
+              v-if="this.$store.getters.role !== 'Admin'"
           >
             <i class="material-icons icon-size">school</i>&nbsp;Emner
           </router-link>
-          <router-link to="/admin/overview" class="nav-link d-flex align-items-center" v-if="this.$store.getters.role === 'Admin'">
+          <router-link
+              to="/admin/overview"
+              class="nav-link d-flex align-items-center"
+              v-if="this.$store.getters.role === 'Admin'"
+          >
             <i class="material-icons icon-size">home</i>&nbsp;Admin
           </router-link>
           <router-link

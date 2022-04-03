@@ -10,6 +10,9 @@
             <div class="col div-padding">
               <label class="form-label">Velg emne:
               </label>
+              <BaseSelect
+
+              />
               <select class="form-select">
               <optgroup label="This is a group">
                 <option value="12" selected="">This is item 1

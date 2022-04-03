@@ -21,7 +21,7 @@ public interface QueueService {
 
     boolean isQueueActive(Long courseId);
 
-    RequestResponse helpStudent(QueueUserIdDto queueDto, Long courseId);
+    RequestResponse helpStudent(QueueUserIdDto queueDto, String courseId);
 
     RequestResponse updateStudentInQueue(Long studentId);
 }

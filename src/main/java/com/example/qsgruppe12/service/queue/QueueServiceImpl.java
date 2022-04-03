@@ -137,7 +137,8 @@ public class QueueServiceImpl implements QueueService{
      * @return
      */
     @Override
-    public RequestResponse helpStudent(QueueUserIdDto queueDto, Long courseId){
+    public RequestResponse helpStudent(QueueUserIdDto queueDto, String courseId){
+        Course course = courseRepository.getByCode(courseId);
         UserInQueue userInQueue = userInQueueRepository.getByIdAndCourseId(queueDto.getId(), courseId);
         if (!userInQueue.isHelped()){
             userInQueue.setHelped(true);

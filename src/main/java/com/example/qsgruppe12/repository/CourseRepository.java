@@ -16,4 +16,7 @@ public interface CourseRepository extends JpaRepository<Course, Long>, QuerydslP
 
     Optional<Course> findById(@NotNull Long id);
     void deleteById(Long id);
+
+    Course getByCode(String courseId);
+
 }

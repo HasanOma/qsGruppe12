@@ -89,7 +89,7 @@ public class QueueController {
     @PostMapping("/help")
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "Sets that the student is being helped", response = RequestResponse.class)
-    public RequestResponse helpStudent(@RequestBody QueueUserIdDto queueDto, @PathVariable Long courseId){
+    public RequestResponse helpStudent(@RequestBody QueueUserIdDto queueDto, @PathVariable String courseId){
         log.debug("[X] Request to help user with id = {}", queueDto.getId());
         return queueService.helpStudent(queueDto, courseId);
     }

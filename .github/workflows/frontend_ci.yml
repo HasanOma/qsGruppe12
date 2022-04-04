@@ -36,9 +36,6 @@ jobs:
          npm install --save @popperjs/core
          npm install
 
-      - name: npm build
-        run: npm run build
-
       - name: npm test
         id: tests
         run: |

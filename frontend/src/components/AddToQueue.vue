@@ -10,7 +10,7 @@
                 <div class="card-header py-3">
                   <p class="text-primary m-0 fw-bold">Still deg i kø</p>
                 </div>
-                <form @submit.prevent="onSubmit(courseID, courseName)">
+                <form @submit.prevent="onSubmit">
                   <div class="card-body" style="height: auto">
                     <div class="row">
                       <div class="col">
@@ -123,8 +123,8 @@ export default {
   data() {
     return {
       courseName: String,
-      courseID: String,
-      courseCode: 1,
+      courseCode: String,
+      courseId: Number,
       room: ["Digitalt", "A4-112", "A4-110", "A3-106", "A3-107"],
       table: [1, 2, 3, 4, 5],
       work: ["Øving 1", "Øving 2", "Øving 3", "Øving 4"],
@@ -155,23 +155,16 @@ export default {
     return { state, v$ };
   },
   created() {
-    this.courseName = this.$route.query.courseName;
-    this.courseID = this.$route.query.courseID;
-
-    console.log(this.$route.query);
+    this.courseName = this.$route.query.courseName
+    this.courseCode = this.$route.query.courseCode
+    this.courseID = this.$route.params.id
   },
   methods: {
-    onSubmit(courseID, courseName) {
-      //TODO: Make sure to recieve courses, else courseCode is empty
-      // for(let i = 0; i < this.$store.getters.courses.length; i++) {
-      //   if(this.$store.getters.courses[i].code === this.courseID) {
-      //     this.courseCode = this.$store.getters.courses[i].code
-      //   }
-      // }
+    async onSubmit() {
 
       this.v$.$validate();
       if (!this.v$.$error) {
-        let url = "http://localhost:8080/queue/" + this.courseCode + "/add";
+        let url = "http://localhost:8080/queue/" + this.courseID + "/add";
 
         let data = {
           userId: this.$store.getters.id,
@@ -182,22 +175,23 @@ export default {
           message: this.state.message,
         };
 
-        axios
+        await axios
           .post(url, data, {
             headers: {
               Authorization: "Bearer" + " " + this.$store.getters.jwtToken,
             },
           })
           .then((response) => {
+            console.log(response.status)
             if (response.status === 200) {
               this.$router.push({
                 name: "Queue",
                 query: {
                   redirect: "/course/:id",
-                  courseName: courseName,
-                  courseID: courseID,
+                  courseName: this.courseName,
+                  courseCode: this.courseCode,
                 },
-                params: { id: courseID },
+                params: { id: this.courseId },
               });
             } else {
               //TODO: Do something if error

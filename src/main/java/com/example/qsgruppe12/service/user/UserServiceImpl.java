@@ -311,16 +311,18 @@ public class UserServiceImpl implements UserService {
                 .workApproved("")
                 .build();
         for (int i = 0; i < course.getTotalWork(); i++) {
-            userCourse.getWorkList().add(Work.builder()
+            Work work = Work.builder()
                     .id((long)i)
                     .user_course(userCourse)
                     .courseId(course.getId())
                     .userId(user.getId())
-                    .build());
+                    .build();
+            userCourse.getWorkList().add(work);
         }
         user.setCourses(new ArrayList<>());
         user.getCourses().add(userCourse);
         userCourseRepository.save(userCourse);
+        System.out.println(user.getEmail());
         userRepository.save(user);
     }
 
@@ -393,8 +395,10 @@ public class UserServiceImpl implements UserService {
      * @throws IOException Filereader throws exception.
      */
     public List<User> handleFile(Long courseId, MultipartFile file) throws IOException {
-        String fileType = Objects.requireNonNull(file.getOriginalFilename()).split("\\.")[1];
-        if (!fileType.equalsIgnoreCase("csv")){
+        File convFile = new File(System.getProperty("java.io.tmpdir")+".csv");
+        file.transferTo(convFile);
+        String fileType = convFile.getName().split("\\.")[1];
+        if (!fileType.equalsIgnoreCase("csv" )){
 //            throw new FileNotSupportedException("File is not a csv file");
             List<User> userss = null;
             return userss;

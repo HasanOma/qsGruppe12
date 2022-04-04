@@ -22,19 +22,19 @@ import java.util.List;
 @EnableSwagger2
 public class SwaggerConfig {
 
-    private ApiKey apiKey() {
-        return new ApiKey("Authorization", "Bearer", "header");
+    private List<SecurityReference> defaultAuth() {
+        AuthorizationScope authorizationScope = new AuthorizationScope("global", "accessEverything");
+        AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
+        authorizationScopes[0] = authorizationScope;
+        return Arrays.asList(new SecurityReference("Authorization", authorizationScopes));
     }
 
     private SecurityContext securityContext() {
         return SecurityContext.builder().securityReferences(defaultAuth()).build();
     }
 
-    private List<SecurityReference> defaultAuth() {
-        AuthorizationScope authorizationScope = new AuthorizationScope("global", "accessEverything");
-        AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
-        authorizationScopes[0] = authorizationScope;
-        return Arrays.asList(new SecurityReference("Authorization", authorizationScopes));
+    private ApiKey apiKey() {
+        return new ApiKey("Authorization", "Bearer", "header");
     }
 
     private String version = "1.0\n";

@@ -40,12 +40,12 @@ public class CourseController {
         return courseService.getVariables();
     }
 
-    @PostMapping("active")
+    @GetMapping("active")
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "Returns all active courses the client participates in", response = CourseDto.class)
-    public List<CourseDto> getActiveCourses(@RequestBody UserEmailsDto emailsDto){
-        log.debug("[X] Request to get all active courses of users with email {}", emailsDto.getEmail());
-        List<CourseDto> courses = courseService.getActiveCourses(emailsDto);
+    public List<CourseDto> getActiveCourses(@RequestParam String email){
+        log.debug("[X] Request to get all active courses of users with email {}", email);
+        List<CourseDto> courses = courseService.getActiveCourses(email);
         System.out.println(courses.toString());
         return courses;
     }
@@ -53,9 +53,9 @@ public class CourseController {
     @PostMapping("archived")
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "Returns all archived courses the client has participated in", response = CourseDto.class)
-    public List<CourseDto> getArchivedCourses(@RequestBody UserEmailsDto emailsDto){
-        log.debug("[X] Request to get all archived courses of users with email {}", emailsDto.getEmail());
-        return courseService.getArchivedCourses(emailsDto);
+    public List<CourseDto> getArchivedCourses(@RequestParam String email){
+        log.debug("[X] Request to get all archived courses of users with email {}", email);
+        return courseService.getArchivedCourses(email);
     }
 
     @PostMapping("{courseId}/work")

@@ -23,9 +23,9 @@ public interface CourseService {
 
     StudentCourseDto getVariables();
 
-    List<CourseDto> getActiveCourses(UserEmailsDto emailsDto);
+    List<CourseDto> getActiveCourses(String emailsDto);
 
-    List<CourseDto> getArchivedCourses(UserEmailsDto emailsDto);
+    List<CourseDto> getArchivedCourses(String emailsDto);
 
     WorkApprovedDto getWorkCompleted(UserEmailsDto emailsDto, Long courseId);
 

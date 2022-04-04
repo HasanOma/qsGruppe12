@@ -33,7 +33,7 @@ public class QueueController {
     @Autowired
     SecurityService securityService;
 
-    @GetMapping("activate")
+    @PostMapping("activate")
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "Activate queue for a course", response = RequestResponse.class)
     public RequestResponse activateCourse(@PathVariable Long courseId){
@@ -86,10 +86,10 @@ public class QueueController {
 
     //TODO go out of queue update in queue
 
-    @PostMapping("/help")
+    @PostMapping("help")
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "Sets that the student is being helped", response = RequestResponse.class)
-    public RequestResponse helpStudent(@RequestBody QueueUserIdDto queueDto, @PathVariable String courseId){
+    public RequestResponse helpStudent(@RequestBody QueueUserIdDto queueDto, @PathVariable Long courseId){
         log.debug("[X] Request to help user with id = {}", queueDto.getUserId());
         return queueService.helpStudent(queueDto, courseId);
     }

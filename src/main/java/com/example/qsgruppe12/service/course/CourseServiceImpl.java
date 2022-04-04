@@ -23,10 +23,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Implementation of {@link CourseService}
@@ -187,7 +184,6 @@ public class CourseServiceImpl implements CourseService {
 
         List<Course> courses = courseRepository.findAll();
         List<User> users = userRepository.findAll();
-
         for (Course course : courses) {
             student.getCourse().add(course.getName() + " " +
                     course.getCode());
@@ -206,8 +202,8 @@ public class CourseServiceImpl implements CourseService {
      * @return returns arraylist of all active courses.
      */
     @Override
-    public List<CourseDto> getActiveCourses(UserEmailsDto emailsDto) {
-        return courses(emailsDto.getEmail(), false);
+    public List<CourseDto> getActiveCourses(String emailsDto) {
+        return courses(emailsDto, false);
     }
 
     /**
@@ -216,8 +212,8 @@ public class CourseServiceImpl implements CourseService {
      * @return returns all archived courses.
      */
     @Override
-    public List<CourseDto> getArchivedCourses(UserEmailsDto emailsDto) {
-        return courses(emailsDto.getEmail(), true);
+    public List<CourseDto> getArchivedCourses(String emailsDto) {
+        return courses(emailsDto, true);
     }
 
     /**

@@ -4,6 +4,9 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
+/**
+ * A class representing a room where a student might sit
+ */
 @Entity
 public class Room {
 

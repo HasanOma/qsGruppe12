@@ -8,6 +8,9 @@ import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
 
+/**
+ * Class that describes the realationship between a {@link User} and a {@link Course}
+ */
 @Entity
 @Getter
 @Setter

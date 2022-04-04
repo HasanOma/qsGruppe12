@@ -7,10 +7,11 @@ import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.util.List;
-import java.util.Set;
 
+/**
+ * A class that represents a queue of students
+ */
 @Getter
 @Setter
 @NoArgsConstructor

@@ -1,10 +1,7 @@
 package com.example.qsgruppe12.model.relationshipkey;
 
-import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.experimental.SuperBuilder;
 import org.hibernate.Hibernate;
 
 import javax.persistence.Column;
@@ -12,6 +9,9 @@ import javax.persistence.Embeddable;
 import java.io.Serializable;
 import java.util.Objects;
 
+/**
+ * A class that represents the unique key used as an identifier in {@link com.example.qsgruppe12.model.relationship.User_Course}
+ */
 @Getter
 @Setter
 @Embeddable

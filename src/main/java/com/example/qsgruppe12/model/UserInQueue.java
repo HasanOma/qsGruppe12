@@ -9,6 +9,9 @@ import lombok.experimental.SuperBuilder;
 import javax.persistence.*;
 import java.time.LocalDate;
 
+/**
+ * A class representing a {@link User} in a {@link Queue}
+ */
 @Entity
 @Getter
 @Setter

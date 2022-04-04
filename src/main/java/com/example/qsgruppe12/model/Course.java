@@ -7,6 +7,9 @@ import lombok.*;
 import javax.persistence.*;
 import java.util.List;
 
+/**
+ * A class that represents a course
+ */
 @Getter
 @Setter
 @ToString

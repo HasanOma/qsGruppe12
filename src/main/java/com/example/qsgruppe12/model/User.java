@@ -3,14 +3,18 @@ package com.example.qsgruppe12.model;
 import com.example.qsgruppe12.model.relationship.User_Course;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
-import org.hibernate.annotations.NotFound;
-import org.hibernate.annotations.NotFoundAction;
 
 import javax.persistence.*;
 import java.util.List;
 
+/**
+ * A class representing a user
+ */
 @Entity
 @Getter
 @Setter

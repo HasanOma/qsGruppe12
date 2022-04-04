@@ -2,7 +2,7 @@
 QS alternativ presentert av gruppe 12
 
 QS er et program som enkelt lar studenter holde oversikt over øvingene sine, samt stå i godkjenningskø i sine respektive emner.  
-Studentassistenter og Undervisere/Emneanmsvarlige kan enkelt god- og underkjenne øvinger, og undervisere/emneansvarlig har og tilgang til flere administrative verktøy  
+Studentassistenter og undervisere/emneanmsvarlige kan enkelt god- og underkjenne øvinger, og undervisere/emneansvarlig har og tilgang til flere administrative verktøy  
 
 # Programvarekrav
 ## Backend

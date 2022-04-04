@@ -165,8 +165,18 @@ npm run serve
 ```
 Dette kan kjøres uavhengig av backenden
 
+Dummy brukere som allerede er tilstedet i databasen:
 
+Admin: 
+andetel@stud.ntnu.no
 
+TA(Læringsassistent):
+bragem"stud.ntnu.no
+
+Student:
+hasano@stud.ntnu.no
+
+Alle har passord: passord123
 
 ## CI/CD
 ### CI - Testing
@@ -177,8 +187,6 @@ Frontendtestene får vi ikke til å fungere med GitHub actions, selv om testene 
 
 ### CD
 Vi har ikke deployet QS noe sted, så dette punktet er ikke relevant
-
-
 
 ## Hjelp
 Lurer du på noe? Har du spørsmål eller funnet en bug? Lag et issue eller send en av oss en mail på enten andetel@stud.ntnu.no, hasanro@stud.ntnu.no eller bragemi@stud.ntnu.no

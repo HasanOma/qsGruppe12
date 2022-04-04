@@ -14,6 +14,7 @@ import com.example.qsgruppe12.service.email.EmailService;
 import com.example.qsgruppe12.util.RequestResponse;
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.exceptions.CsvValidationException;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,13 +25,15 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
 import static com.example.qsgruppe12.config.CsvToBean.createCSVToBean;
 
-//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 /**
  * Implimentation class of {@link UserService}
@@ -161,9 +164,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public RequestResponse addUsersForCourse(Long courseId, MultipartFile file) throws IOException, CsvValidationException {
         log.info("File {} received to add users from.",file.getContentType());
-        handleFile(courseId, file);
-        return new RequestResponse("Users added successfully for " +
-                courseRepository.getById(courseId).getCode() + courseRepository.getById(courseId).getCode());
+        List<User> users = handleFile(courseId,file);
+        if (users != null) {
+            userRepository.saveAll(users);
+            log.info("Saved {} users to the repository", users.size());
+            return new RequestResponse("Users added successfully for " +
+                    courseRepository.getById(courseId).getCode() + courseRepository.getById(courseId).getCode());
+        }
+        return new RequestResponse(new FileNotSupportedException());
     }
 
     /**
@@ -373,7 +381,7 @@ public class UserServiceImpl implements UserService {
             String message = "Nytt passord er lagd for deg. \n";
             String password = randomStringGenerator();
             sendMailOnCreation(password,userForgotPassword.getEmail(), message);
-            user.setEmail(password);
+            user.setPassword(cryptPasswordEncoder.encode(password));
             userRepository.save(user);
             return new RequestResponse("Your new password is now sent to your email!");
         }
@@ -388,14 +396,16 @@ public class UserServiceImpl implements UserService {
      * @throws IOException Filereader throws exception.
      */
     public List<User> handleFile(Long courseId, MultipartFile file) throws IOException, CsvValidationException {
-        BufferedReader br =  new BufferedReader(new InputStreamReader(file.getInputStream()));
-        CsvToBean list = createCSVToBean(br, UserRegistrationDto.class);
+        @NotNull CsvToBean<UserFileRegistration> list = createCSVToBean( new BufferedReader(new InputStreamReader(file.getInputStream())), UserFileRegistration.class);
         List<UserFileRegistration> listOfUsers = list.parse();
         List<User> users = new ArrayList<>();
+        System.out.println(listOfUsers.size());
         for (int j = 0; j < listOfUsers.size(); j++) {
-            users.get(j).setLastName(listOfUsers.get(j).getLastName());
-            users.get(j).setFirstName(listOfUsers.get(j).getFirstName());
-            users.get(j).setEmail(listOfUsers.get(j).getEmail());
+            System.out.println(listOfUsers.get(j).getFirstName());
+            User userBuildt = User.builder().lastName(listOfUsers.get(j)
+                    .getLastName()).firstName(listOfUsers.get(j).getFirstName())
+                    .email(listOfUsers.get(j).getEmail()).build();
+            users.add(userBuildt);
             if (courseId != 0) {
                 User user = users.get(j);
                 Course course = courseRepository.getById(courseId);
@@ -425,8 +435,20 @@ public class UserServiceImpl implements UserService {
                 courseRepository.save(course);
                 userCourseRepository.save(userCourse);
                 System.out.println(user.getEmail());
+
+                sendMailOnCreation("Your old one",user.getEmail(),
+                        "You are now added to the course " + course.getCode() + " " + course.getName()
+                                + " as a student");
+            } else {
+                String password = randomStringGenerator();
+
+                users.get(j).setPassword(password);
+                users.get(j).setPassword(cryptPasswordEncoder.encode(password));
+                users.get(j).setRole(roleRepository.getByName("Student"));
+                sendMailOnCreation(password, users.get(j).getEmail(), "You are now added to QS as " +
+                        "a student in the course " + courseRepository.getById(courseId).getCode() + " "
+                        + courseRepository.getById(courseId).getName());
             }
-            userRepository.saveAll(users);
         }
         return users;
     }

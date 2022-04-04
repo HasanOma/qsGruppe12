@@ -11,14 +11,15 @@ Swagger dokumentasjon finnes på /swagger-ui/
 1. [Medlemmer](#medlemmer)
 2. [Applikasjonen](#applikasjonen)
 3. [Databaseskjema](#databaseskjema)
-4. [Teknologier](#teknologier)
-5. [Applikasjonsstruktur](#applikasjonsstruktur)
-6. [Sikkerhet](#sikkerhet)
-7. [API-dokumentasjon](#api-dokumentasjon)
-8. [Programvarekrav](#programvarekrav)
-9. [Installasjon](#installasjon)
-10. [CI/CD](#cicd)
-11. [Hjelp](#hjelp)
+4. [Klassediagram](#klassediagram)
+5. [Teknologier](#teknologier)
+6. [Applikasjonsstruktur](#applikasjonsstruktur)
+7. [Sikkerhet](#sikkerhet)
+8. [API-dokumentasjon](#api-dokumentasjon)
+9. [Programvarekrav](#programvarekrav)
+10. [Installasjon](#installasjon)
+11. [CI/CD](#cicd)
+12. [Hjelp](#hjelp)
 
 ## Medlemmer
 Anders Tellefsen - andetel@stud.ntnu.no  
@@ -61,6 +62,9 @@ En _administrator_ kan:
 ## Databaseskjema
 TODO legg inn bilder av databasen
 
+## Klassediagram
+TODO legg inn autogenererte klassedigram
+
 ## Teknologier 
 - **Vuejs** - Javascript-rammeverk for å bygge brukergrensesnitt
 - **Spring Boot** - Server-side rammeverk
@@ -96,8 +100,6 @@ Modellene våre ligger i model-pakken og deres respektive DTOer (Data Transfer O
 
 ## Sikkerhet
 TODO skriv om sikkerhet
-
-
 
 
 

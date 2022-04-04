@@ -1,5 +1,10 @@
 <template>
-  <Queue :in-queue="queue" :course-code="courseCode" :course-name="courseName" :course-id="courseId"/>
+  <Queue
+    :in-queue="queue"
+    :course-code="courseCode"
+    :course-name="courseName"
+    :course-id="courseId"
+  />
 </template>
 
 <script>
@@ -16,7 +21,7 @@ export default {
       queue: [],
       courseCode: String,
       courseName: String,
-      courseId: 0
+      courseId: 0,
     };
   },
   async created() {
@@ -24,10 +29,9 @@ export default {
     this.courseName = this.$route.query.courseName;
     this.courseId = this.$route.params.id;
 
-    let url = "http://localhost:3000/queue" + this.courseId + "/list"
+    let url = "http://localhost:3000/queue" + this.courseId + "/list";
 
-    this.queue = (await axios
-        .get(url)).data;
+    this.queue = (await axios.get(url)).data;
   },
 };
 </script>

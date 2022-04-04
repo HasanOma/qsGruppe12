@@ -1,8 +1,5 @@
 <template>
-  <div
-    id="aboveContainer"
-    class="col-md-6 col-lg-6"
-  >
+  <div id="aboveContainer" class="col-md-6 col-lg-6">
     <div id="container" class="project-card-no-image">
       <h3 class="course-name">{{ course.name }}</h3>
       <h4 class="course-id">{{ course.code }}</h4>
@@ -57,7 +54,7 @@ export default {
           redirect: "/course/:id",
           courseName: courseName,
           courseCode: courseCode,
-          courseId: this.$props.course.id
+          courseId: this.$props.course.id,
         },
         params: { id: this.$props.course.id },
       });
@@ -69,7 +66,7 @@ export default {
           redirect: "/course/:id/work",
           courseName: courseName,
           courseCode: courseCode,
-          courseId: this.$props.course.id
+          courseId: this.$props.course.id,
         },
         params: { id: this.$props.course.id },
       });

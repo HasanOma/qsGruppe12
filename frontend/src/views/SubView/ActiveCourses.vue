@@ -1,12 +1,13 @@
-<template><main class="page projets-page">
-  <section class="portfolio-block project-no-images">
-    <div class="container">
-      <div class="row">
-        <CourseBox v-for="course in courses" :course="course" :key="course"/>
+<template>
+  <main class="page projets-page">
+    <section class="portfolio-block project-no-images">
+      <div class="container">
+        <div class="row">
+          <CourseBox v-for="course in courses" :course="course" :key="course" />
+        </div>
       </div>
-    </div>
-  </section>
-</main>
+    </section>
+  </main>
 </template>
 
 <script>
@@ -24,15 +25,15 @@ export default {
     };
   },
   async created() {
-    let url = "http://localhost:8080/courses/active"
+    let url = "http://localhost:8080/courses/active";
 
-    this.courses = (await axios
-        .get(
-            url,{
-            params: {
-              email: this.$store.getters.email
-            }
-        })).data
+    this.courses = (
+      await axios.get(url, {
+        params: {
+          email: this.$store.getters.email,
+        },
+      })
+    ).data;
   },
 };
 </script>

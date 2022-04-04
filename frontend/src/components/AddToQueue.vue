@@ -155,13 +155,12 @@ export default {
     return { state, v$ };
   },
   created() {
-    this.courseName = this.$route.query.courseName
-    this.courseCode = this.$route.query.courseCode
-    this.courseID = this.$route.params.id
+    this.courseName = this.$route.query.courseName;
+    this.courseCode = this.$route.query.courseCode;
+    this.courseID = this.$route.params.id;
   },
   methods: {
     async onSubmit() {
-
       this.v$.$validate();
       if (!this.v$.$error) {
         let url = "http://localhost:8080/queue/" + this.courseID + "/add";
@@ -182,7 +181,7 @@ export default {
             },
           })
           .then((response) => {
-            console.log(response.status)
+            console.log(response.status);
             if (response.status === 200) {
               this.$router.push({
                 name: "Queue",

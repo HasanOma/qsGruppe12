@@ -18,15 +18,15 @@ export default {
     };
   },
   async created() {
-    let url = "http://localhost:8080/courses/archived"
+    let url = "http://localhost:8080/courses/archived";
 
-    this.courses = (await axios
-        .get(
-            url,{
-              params: {
-                email: this.$store.getters.email
-              }
-            })).data
+    this.courses = (
+      await axios.get(url, {
+        params: {
+          email: this.$store.getters.email,
+        },
+      })
+    ).data;
   },
 };
 </script>

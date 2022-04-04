@@ -114,8 +114,7 @@ export default {
         method: "POST",
         url: "http://localhost:8080/users/add/file",
         headers: {
-          "Content-Type":
-            "multipart/form-data",
+          "Content-Type": "multipart/form-data",
         },
         data: form,
       };

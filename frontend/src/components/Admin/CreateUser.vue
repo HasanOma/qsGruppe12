@@ -80,9 +80,9 @@
               </div>
             </div>
             <BaseButton
-                cssClass="btn btn-primary btn-sm"
-                type="submit"
-                id="ruleBtn"
+              cssClass="btn btn-primary btn-sm"
+              type="submit"
+              id="ruleBtn"
             >
               Lagre
             </BaseButton>
@@ -102,8 +102,7 @@
           <div
             class="d-flex flex-row justify-content-start form-group mb-3"
             style="padding-left: 20px"
-          >
-          </div>
+          ></div>
         </form>
       </div>
     </div>

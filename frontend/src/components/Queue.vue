@@ -90,7 +90,7 @@ export default {
   props: {
     courseCode: String,
     courseName: String,
-    courseId: Number
+    courseId: Number,
   },
   data() {
     return {
@@ -107,14 +107,14 @@ export default {
         query: {
           redirect: "/course/:id/addToQueue",
           courseName: courseName,
-          courseCode: courseCode
+          courseCode: courseCode,
         },
         params: { id: courseId },
       });
     },
     activate() {
-
-      let url = "http://localhost:8080/queue/" + this.$props.courseId + "/activate";
+      let url =
+        "http://localhost:8080/queue/" + this.$props.courseId + "/activate";
 
       axios
         .get(url, {
@@ -127,12 +127,13 @@ export default {
             this.isActive = true;
           }
         })
-        .catch(error => {
-          console.log(error)
-      });
+        .catch((error) => {
+          console.log(error);
+        });
     },
     deactivate() {
-      let url = "http://localhost:8080/queue/" + this.$props.courseId + "/close";
+      let url =
+        "http://localhost:8080/queue/" + this.$props.courseId + "/close";
 
       axios
         .get(url, {
@@ -154,37 +155,38 @@ export default {
     edit(obj) {
       console.log(obj);
       // this.$router.push({ name: "Add to queue", query: { redirect: "/course/:id/add_to_queue", courseName: courseName, courseID: courseID }, params: { id: courseID } });
-    }
+    },
   },
   created() {
-      let url = "http://localhost:8080/queue/" + this.$props.courseId + "/isActive";
+    let url =
+      "http://localhost:8080/queue/" + this.$props.courseId + "/isActive";
 
-      axios
-          .get(url, {
-            headers: {
-              Authorization: "Bearer" + " " + this.$store.getters.jwtToken,
-            },
-          })
-          .then((response) => {
-            if (response.data) {
-              this.isActive = true;
+    axios
+      .get(url, {
+        headers: {
+          Authorization: "Bearer" + " " + this.$store.getters.jwtToken,
+        },
+      })
+      .then((response) => {
+        if (response.data) {
+          this.isActive = true;
 
-              let url = "http://localhost:8080/queue/" + this.$props.courseId + "/list";
-              axios
-                  .get(url, {
-                    headers: {
-                      Authorization: "Bearer" + " " + this.$store.getters.jwtToken,
-                    },
-                  })
-                  .then((res) => {
-                    console.log(res.data);
-                    this.inQueue = res.data;
-                  });
-            } else {
-              //TODO: Do something if error from server
-            }
-          });
-
+          let url =
+            "http://localhost:8080/queue/" + this.$props.courseId + "/list";
+          axios
+            .get(url, {
+              headers: {
+                Authorization: "Bearer" + " " + this.$store.getters.jwtToken,
+              },
+            })
+            .then((res) => {
+              console.log(res.data);
+              this.inQueue = res.data;
+            });
+        } else {
+          //TODO: Do something if error from server
+        }
+      });
   },
 };
 </script>

@@ -170,7 +170,9 @@ Dette kan kjøres uavhengig av backenden
 ### CI - Testing
 Vi har hele tiden kjørt tester fortløpende med CI for både frontend og backend ved hjelp av GitHub Actions
 Dette er noe vi kunne ha utnyttet oss bedre av, da vi iblant har pushet tester som feiler.  
-Generelt testing av backend har vi valgt å kommentere ut da det ikke har blitt undervist i og vi ikke har fått det til å fungere optimalt grunnet tidsbegrensningen på prosjektet. 
+Generelt testing av backend har vi valgt å kommentere ut da det ikke har blitt undervist i og vi ikke har fått det til å fungere optimalt grunnet tidsbegrensningen på prosjektet.  
+Frontendtestene får vi ikke til å fungere med GitHub actions, selv om testene kjører og bestås lokalt. Vi tror dette har med ES2015 kompatibilitet å gjøre, men fikk ikke til å fikse dette grunnet tidsbegrensingene som er satt på prosjektet. For mer info om dette kan man lese denne tråden: https://github.com/TypeStrong/ts-node/issues/922
+
 ### CD
 Vi har ikke deployet QS noe sted, så dette punktet er ikke relevant
 

@@ -1,6 +1,5 @@
 package com.example.qsgruppe12.model;
 
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -9,6 +8,11 @@ import lombok.experimental.SuperBuilder;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
+/**
+ * A class that represents the role a user has
+ * A role comes with its own permissions and restrictions, used mostly by the frontend,
+ * but its possible to implement more security in the backend using {@link Role}
+ */
 @Getter
 @Setter
 @Entity

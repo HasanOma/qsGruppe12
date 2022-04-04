@@ -2,8 +2,10 @@ package com.example.qsgruppe12.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.List;
 
+/**
+ * A class representing a spot in a {@link Room} where a student might sit
+ */
 @Entity
 public class Spot {
 

@@ -7,6 +7,9 @@ import lombok.Setter;
 
 import javax.validation.constraints.NotNull;
 
+/**
+ * A class that represents an Email object
+ */
 @Getter
 @Setter
 @AllArgsConstructor

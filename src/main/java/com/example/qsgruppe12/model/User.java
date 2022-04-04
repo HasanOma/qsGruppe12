@@ -3,14 +3,18 @@ package com.example.qsgruppe12.model;
 import com.example.qsgruppe12.model.relationship.User_Course;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
-import org.hibernate.annotations.NotFound;
-import org.hibernate.annotations.NotFoundAction;
 
 import javax.persistence.*;
 import java.util.List;
 
+/**
+ * A class representing a user
+ */
 @Entity
 @Getter
 @Setter
@@ -29,15 +33,13 @@ public class User {
             strategy = GenerationType.SEQUENCE)
     @Column(name = "user_id")
     private Long id;
-    @NotBlank
-    @Column(nullable = false)
+    @Column
     public String firstName;
     @NotBlank
     @Column(nullable = false)
     public String lastName;
     @Email
-    @Column(unique = true,
-            nullable = false)
+    @Column(unique = true)
     public String email;
     @Email
     public String altEmail;
@@ -51,7 +53,7 @@ public class User {
     @JoinColumn(name = "role_id", referencedColumnName = "role_id")
     private Role role;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     @ToString.Exclude
     private List<User_Course> courses;
 

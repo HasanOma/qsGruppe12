@@ -7,10 +7,11 @@ import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.util.List;
-import java.util.Set;
 
+/**
+ * A class that represents a queue of students
+ */
 @Getter
 @Setter
 @NoArgsConstructor
@@ -31,7 +32,7 @@ public class Queue {
     @Column(name = "queue_id")
     private Long id;
 
-//    private LocalDate localdate = LocalDate.now() - LocalDate.get;
+    private String message;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "course_id", referencedColumnName = "course_id")

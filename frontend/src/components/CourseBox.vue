@@ -1,39 +1,26 @@
 <template>
-  <main class="page projets-page">
-    <section class="portfolio-block project-no-images">
-      <div class="container">
-        <div class="row">
-          <div
-            id="aboveContainer"
-            class="col-md-6 col-lg-6"
-            v-for="course in courses"
-            :key="course"
-          >
-            <div id="container" class="project-card-no-image">
-              <h3 class="course-name">{{ course.course_name }}</h3>
-              <h4 class="course-id">{{ course.course_id }}</h4>
-              <div class="d-flex flex-row justify-content-between">
-                <BaseButton
-                  css-class="btn btn-outline-primary btn-sm rounded-pill"
-                  icss="fa fa-check-circle icon-margin"
-                  @clicked="toWorkStatus(course.course_id, course.course_name)"
-                >
-                  Øvinger
-                </BaseButton>
-                <BaseButton
-                  css-class="btn btn-outline-primary btn-sm rounded-pill"
-                  icss="fa fa-arrow-circle-right icon-margin"
-                  @clicked="toQueue(course.course_id, course.course_name)"
-                >
-                  Til kø
-                </BaseButton>
-              </div>
-            </div>
-          </div>
-        </div>
+  <div id="aboveContainer" class="col-md-6 col-lg-6">
+    <div id="container" class="project-card-no-image">
+      <h3 class="course-name">{{ course.name }}</h3>
+      <h4 class="course-id">{{ course.code }}</h4>
+      <div class="d-flex flex-row justify-content-between">
+        <BaseButton
+          css-class="btn btn-outline-primary btn-sm rounded-pill"
+          icss="fa fa-check-circle icon-margin"
+          @clicked="toWorkStatus(course.code, course.name)"
+        >
+          Øvinger
+        </BaseButton>
+        <BaseButton
+          css-class="btn btn-outline-primary btn-sm rounded-pill"
+          icss="fa fa-arrow-circle-right icon-margin"
+          @clicked="toQueue(course.code, course.name)"
+        >
+          Til kø
+        </BaseButton>
       </div>
-    </section>
-  </main>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -46,8 +33,8 @@ export default {
     BaseButton,
   },
   props: {
-    courses: {
-      type: Array,
+    course: {
+      type: Object,
     },
   },
   mounted() {
@@ -60,13 +47,31 @@ export default {
     document.head.appendChild(plugin);
   },
   methods: {
-    toQueue(courseID, courseName) {
-      this.$router.push({ name: "Queue", query: { redirect: "/course/:id", courseName: courseName, courseID: courseID }, params: { id: courseID } });
+    toQueue(courseCode, courseName) {
+      this.$router.push({
+        name: "Queue",
+        query: {
+          redirect: "/course/:id",
+          courseName: courseName,
+          courseCode: courseCode,
+          courseId: this.$props.course.id,
+        },
+        params: { id: this.$props.course.id },
+      });
     },
-    toWorkStatus(courseID, courseName) {
-      this.$router.push({ name: "Work", query: { redirect: "/course/:id/work", courseName: courseName, courseID: courseID }, params: { id: courseID } });
-    }
-  }
+    toWorkStatus(courseCode, courseName) {
+      this.$router.push({
+        name: "Work",
+        query: {
+          redirect: "/course/:id/work",
+          courseName: courseName,
+          courseCode: courseCode,
+          courseId: this.$props.course.id,
+        },
+        params: { id: this.$props.course.id },
+      });
+    },
+  },
 };
 </script>
 

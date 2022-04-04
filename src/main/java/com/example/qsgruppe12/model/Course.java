@@ -7,6 +7,9 @@ import lombok.*;
 import javax.persistence.*;
 import java.util.List;
 
+/**
+ * A class that represents a course
+ */
 @Getter
 @Setter
 @ToString
@@ -30,7 +33,7 @@ public class Course {
     @NotNull
     private String name;
     @NotNull
-    @Column(unique=true)
+    @Column
     private String code;
     @NotNull
     private String semester;
@@ -39,7 +42,8 @@ public class Course {
     @NotNull
     private int totalWork;
     @NotNull
-    private String rules;
+    @ElementCollection
+    private List<String> rules;
     @Builder.Default
     private boolean archived = false;
     @NotNull

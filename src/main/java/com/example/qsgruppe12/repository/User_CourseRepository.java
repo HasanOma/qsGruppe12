@@ -26,4 +26,5 @@ public interface User_CourseRepository extends JpaRepository<User_Course, UserCo
 
     User_Course findByUserAndCourse(User user, Course course);
 
+    User_Course findByUserIdAndCourseId(Long studentId, Long courseId);
 }

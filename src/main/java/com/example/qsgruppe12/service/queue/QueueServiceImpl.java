@@ -2,16 +2,16 @@ package com.example.qsgruppe12.service.queue;
 
 import com.example.qsgruppe12.dto.QueueDto;
 import com.example.qsgruppe12.dto.QueueUserIdDto;
+import com.example.qsgruppe12.dto.UpdateUserQueueDto;
 import com.example.qsgruppe12.dto.userdtos.UserDto;
 import com.example.qsgruppe12.dto.userdtos.UserGetInQueueDto;
 import com.example.qsgruppe12.exception.CourseNotFoundException;
 import com.example.qsgruppe12.model.Course;
 import com.example.qsgruppe12.model.User;
 import com.example.qsgruppe12.model.UserInQueue;
-import com.example.qsgruppe12.repository.CourseRepository;
-import com.example.qsgruppe12.repository.QueueRepository;
-import com.example.qsgruppe12.repository.UserInQueueRepository;
-import com.example.qsgruppe12.repository.UserRepository;
+import com.example.qsgruppe12.model.Work;
+import com.example.qsgruppe12.model.relationship.User_Course;
+import com.example.qsgruppe12.repository.*;
 import com.example.qsgruppe12.util.RequestResponse;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -43,6 +43,9 @@ public class QueueServiceImpl implements QueueService{
 
     @Autowired
     UserInQueueRepository userInQueueRepository;
+
+    @Autowired
+    User_CourseRepository userCourseRepository;
 
     ModelMapper modelMapper = new ModelMapper();
 
@@ -158,7 +161,23 @@ public class QueueServiceImpl implements QueueService{
      * @return
      */
     @Override
-    public RequestResponse updateStudentInQueue(Long studentId) {
-        return null;
+    public RequestResponse updateStudentInQueue(Long studentId, Long courseId, UpdateUserQueueDto action) {
+        Course course = courseRepository.findById(courseId).get();
+        UserInQueue userInQueue = userInQueueRepository.getByIdAndCourseId(studentId, course.getId());
+        if("remove".equals(action.getAction())) {
+            userInQueueRepository.deleteByCourseIdAndId(courseId, studentId);
+            return new RequestResponse("Removed");
+        } else if("approve".equals(action.getAction()) && action.getWorkNr() != 0) {
+            User_Course userCourse = userCourseRepository.findByUserIdAndCourseId(studentId, courseId);
+
+            for(Work work : userCourse.getWorkList()) {
+                if(work.getId() == action.getWorkNr()) {
+                    work.setCompleted(true);
+                    break;
+                }
+            }
+            return new RequestResponse("Approved");
+        }
+        return new RequestResponse("Null");
     }
 }

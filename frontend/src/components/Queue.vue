@@ -159,9 +159,6 @@ export default {
   created() {
       let url = "http://localhost:8080/queue/" + this.$props.courseId + "/isActive";
 
-      console.log("JWT Token (session storage): " + this.$store.getters.jwtToken)
-      console.log("JWT Token (local storage): " + localStorage.getItem('currentUser'))
-
       axios
           .get(url, {
             headers: {

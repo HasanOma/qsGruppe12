@@ -113,6 +113,17 @@ public class DataLoader implements ApplicationRunner {
                 .workType("Godkjenning")
                 .build();
         userInQueueRepository.save(userInQueue);
+        UserInQueue userInQueue2 = UserInQueue.builder()
+                .fullName("Daniel Danielsen")
+                .courseId(course.getId())
+                .localDate(LocalTime.now())
+                .message("Test 2")
+                .room("A4-112")
+                .spot("1")
+                .workNr("Øving 3")
+                .workType("Godkjenning")
+                .build();
+        userInQueueRepository.save(userInQueue2);
         queueRepository.save(queue);
         course = Course.builder()
                 .id(2L)

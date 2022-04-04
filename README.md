@@ -144,7 +144,7 @@ Er du interessert i å se mer på swagger så kan du kjøre applikasjonen og nav
 git clone https://github.com/HasanOma/qsGruppe12.git
 mvn clean install spring:boot-run
 ```
-Vi har lagt til dependencies i pom-fila vår som gjør at man kjører både frontend og backend med kommandoene over  
+Det er dependencies i pom-fila som gjør at man kjører både frontend og backend med kommandoene over  
 Er du interessert i å kjøre backenden for seg selv må du slette mappen som heter `static` i `target/classes/` og kjøre:
 
 ```

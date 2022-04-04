@@ -71,6 +71,7 @@ TODO legg inn bilder av databasen
 - **H2 Database Engine** - In-memory database til testing
 - **Swagger** - API dokumentasjon
 - **Bootstrap / Bootstrap Studio** - UI design
+- **opencsv** - CSV fil behandler for java
 
 
 
@@ -96,8 +97,9 @@ Modeller & DTOer
 Modellene våre ligger i model-pakken og deres respektive DTOer (Data Transfer Objects) ligger i dto-pakken. Dette er gjort for å decouple/dekople modell-laget fra view-laget slik at de kan utvikle seg så uavhenig av hverandre som nødvendig
 
 ## Sikkerhet
-TODO skriv om sikkerhet
-
+Sikkerhet er kanskje det viktigste i ett product. Det å bruke ett program der man vet at brukerinformasjonen
+er trygg gir en god følelse. Sikkerhet er derfor noe vi har tatt på fokusert mye på under prosjektet. På frontend bruker vi restiktiv routing og authentisering av rolle for å vise fram komponenter. Når frontend og backend kommuniserer bruker vi JWT token for å authentisere bruker rollen. Tokenet til brukeren fornyes hvert 2.time, da køen til godkjenning kan bli litt langvarig til tider. 
+Vi holder fast på at sikkerhet er viktig og har authentikasjon og restriktiv tilgang på mange av endepunktene våre. Passordene i databasen blir kryptert og saltet med Bcrypt passwod encoder import som er en del av spring security. 
 
 
 ## API-dokumentasjon

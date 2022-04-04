@@ -59,7 +59,9 @@ En _administrator_ kan:
   
 
 ## Databaseskjema
-TODO legg inn bilder av databasen
+
+![QSgruppe12](https://user-images.githubusercontent.com/56249709/161622542-4112a858-2a83-4e07-9dfa-7690d952d5f2.jpg)  
+Dette er en enkel oversikt over hvordan vi har valgt å legge opp databasen vår
 
 
 ## Teknologier 
@@ -129,8 +131,6 @@ Er du interessert i å se mer på swagger så kan du kjøre applikasjonen og nav
 
 
 
-
-
 ## Programvarekrav
 ### Backend
 - Java
@@ -141,21 +141,16 @@ Er du interessert i å se mer på swagger så kan du kjøre applikasjonen og nav
 - nodejs med npm
 
 ## Installasjon
+
 ### Backend
 ```
 git clone https://github.com/HasanOma/qsGruppe12.git
 docker compose up
 mvn clean install spring:boot-run
 ```
-Det er dependencies i pom-fila som gjør at man kjører både frontend og backend med kommandoene over  
-Er du interessert i å kjøre backenden for seg selv må du slette mappen som heter `static` i `target/classes/` og kjøre:
 
-```
-mvn clean spring:boot-run
-```
 Evt kan man bare trykke på 'play'-ikonet inne i `src/main/java/com/example/qsgruppe12/QsGruppe12Application.java` om du jobber i en IDE
 
-Vi anbefaler å starte backenden først om man er interessert i å kjøre dem hver for seg, da denne kun fungerer på port 8080, mens frontend velger en annen ledig port om 8080 er opptatt
 
 ### Frontend
 ```
@@ -164,7 +159,10 @@ cd frontend
 npm install
 npm run serve
 ```
-Dette kan kjøres uavhengig av backenden om man er interessert i det
+### Rekkefølge
+Det er viktig for førstegangsinstallasjon at man kjører ```docker compose up``` før man starter backend. Etter dette er gjort kan man starte frontend
+
+### Dummy data
 
 Dummy-brukere som allerede er tilstede i databasen:
 
@@ -172,7 +170,7 @@ Admin:
 andetel@stud.ntnu.no
 
 TA(Læringsassistent):
-bragem"stud.ntnu.no
+bragem@stud.ntnu.no
 
 Student:
 hasano@stud.ntnu.no

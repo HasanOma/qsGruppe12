@@ -12,6 +12,9 @@ import lombok.experimental.SuperBuilder;
 import javax.persistence.*;
 import java.util.List;
 
+/**
+ * A class representing a user
+ */
 @Entity
 @Getter
 @Setter

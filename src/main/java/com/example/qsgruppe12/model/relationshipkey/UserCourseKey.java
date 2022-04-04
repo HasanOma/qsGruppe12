@@ -9,6 +9,9 @@ import javax.persistence.Embeddable;
 import java.io.Serializable;
 import java.util.Objects;
 
+/**
+ * A class that represents the unique key used as an identifier in {@link com.example.qsgruppe12.model.relationship.User_Course}
+ */
 @Getter
 @Setter
 @Embeddable

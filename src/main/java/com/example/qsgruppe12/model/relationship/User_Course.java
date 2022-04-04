@@ -11,6 +11,9 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class that describes the realationship between a {@link User} and a {@link Course}
+ */
 @Entity
 @Getter
 @Setter

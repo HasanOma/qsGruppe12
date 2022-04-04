@@ -9,6 +9,9 @@ import lombok.experimental.SuperBuilder;
 import javax.persistence.*;
 import java.util.List;
 
+/**
+ * A class that represents a queue of students
+ */
 @Getter
 @Setter
 @NoArgsConstructor

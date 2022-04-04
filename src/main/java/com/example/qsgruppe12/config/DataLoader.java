@@ -85,6 +85,14 @@ public class DataLoader implements ApplicationRunner {
                 .password(cryptPasswordEncoder.encode("passord123"))
                 .role(roleRepository.getByName("Student"))
                 .build());
+        userRepository.save(User.builder()
+                .id(4L)
+                .firstName("Daniel")
+                .lastName("Danielsen")
+                .email("daniel@gmail.com")
+                .password(cryptPasswordEncoder.encode("passord123"))
+                .role(roleRepository.getByName("Student"))
+                .build());
         Course course = Course.builder()
                 .id(1L)
                 .code("IDATT2104")
@@ -95,16 +103,27 @@ public class DataLoader implements ApplicationRunner {
         courseRepository.save(course);
         Queue queue = Queue.builder().id(course.getId()).course(course).build();
         UserInQueue userInQueue = UserInQueue.builder()
-                .fullName("Anders")
+                .fullName("Anders Tellefsen")
                 .courseId(course.getId())
                 .localDate(LocalTime.now())
-                .message("hei test")
-                .room("A4")
+                .message("Test")
+                .room("A4-112")
                 .spot("1")
-                .workNr("3")
-                .workType("heia")
+                .workNr("Øving 3")
+                .workType("Godkjenning")
                 .build();
         userInQueueRepository.save(userInQueue);
+        UserInQueue userInQueue2 = UserInQueue.builder()
+                .fullName("Daniel Danielsen")
+                .courseId(course.getId())
+                .localDate(LocalTime.now())
+                .message("Test 2")
+                .room("A4-112")
+                .spot("1")
+                .workNr("Øving 3")
+                .workType("Godkjenning")
+                .build();
+        userInQueueRepository.save(userInQueue2);
         queueRepository.save(queue);
         course = Course.builder()
                 .id(2L)

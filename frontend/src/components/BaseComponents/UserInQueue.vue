@@ -69,7 +69,7 @@ export default {
         console.log("Route id: " + this.$route.params.id)
 
         let data = {
-          id: this.$props.person.userId,
+          userId: this.$props.person.userId,
         };
 
         axios
@@ -86,7 +86,9 @@ export default {
                 query: {
                   redirect: "/" + this.$route.params.id + "/work_approval",
                   userName: this.$props.person.fullName,
+                  userId: this.$props.person.userId,
                   workNr: this.$props.person.workNr,
+                  courseId: this.$route.params.id
                 },
               });
             }

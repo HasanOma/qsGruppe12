@@ -19,7 +19,7 @@
         aria-expanded="false"
         aria-label="Toggle navigation"
       >
-        <i class="fas fa-bars"></i>
+        <i class="fa fa-bars"></i>
       </button>
 
       <!-- Collapsible wrapper -->

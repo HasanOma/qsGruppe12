@@ -2,6 +2,7 @@ package com.example.qsgruppe12.controller;
 
 import com.example.qsgruppe12.dto.QueueDto;
 import com.example.qsgruppe12.dto.QueueUserIdDto;
+import com.example.qsgruppe12.dto.UpdateUserQueueDto;
 import com.example.qsgruppe12.dto.userdtos.UserDto;
 import com.example.qsgruppe12.dto.userdtos.UserGetInQueueDto;
 import com.example.qsgruppe12.exception.CourseNotFoundException;
@@ -15,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -33,7 +35,7 @@ public class QueueController {
     @Autowired
     SecurityService securityService;
 
-    @PostMapping("activate")
+    @GetMapping("activate")
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "Activate queue for a course", response = RequestResponse.class)
     public RequestResponse activateCourse(@PathVariable Long courseId){
@@ -69,6 +71,7 @@ public class QueueController {
     }
 
     @GetMapping("close")
+    @Transactional
     @ResponseStatus(HttpStatus.ACCEPTED)
     @ApiOperation(value = "Closes a given queue", response = RequestResponse.class)
     public RequestResponse closeQueue(@PathVariable Long courseId){
@@ -95,11 +98,12 @@ public class QueueController {
     }
 
     @PostMapping("{studentId}/update")
+    @Transactional
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "Updates User in queue.", response = RequestResponse.class)
-    public RequestResponse updateStudentInQueue(@PathVariable Long studentId, @PathVariable Long courseId){
+    public RequestResponse updateStudentInQueue(@PathVariable Long studentId, @PathVariable Long courseId, @RequestBody UpdateUserQueueDto action){
         log.debug("[X] Request to update user with id = {}", studentId);
-        return queueService.updateStudentInQueue(studentId);
+        return queueService.updateStudentInQueue(studentId, courseId, action);
     }
 
 }

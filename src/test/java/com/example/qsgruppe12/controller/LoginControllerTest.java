@@ -74,10 +74,12 @@ class LoginControllerTest {
     @Test
     @WithMockUser
     void authenticate() throws Exception {
+
 //        mockMvc.perform(post(URI + "/login")
 //                        .with(csrf())
 //                        .contentType(MediaType.APPLICATION_JSON)
 //                        .content(String.valueOf((jwtRequest))));
+
         mockMvc.perform(
                 post(URI + "/login")
                         .header(HttpHeaders.AUTHORIZATION, "Bearer token"))
@@ -88,3 +90,4 @@ class LoginControllerTest {
     void forgotPassword() {
     }
 }
+

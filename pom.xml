@@ -15,34 +15,35 @@
     <description>qsGruppe12</description>
     <properties>
         <java.version>11</java.version>
+        <kotlin.version>1.6.20</kotlin.version>
     </properties>
     <dependencies>
+<!--        <outputDirectory>target/generated-sources/apt</outputDirectory>-->
         <!--        <dependency>-->
         <!--            <groupId>org.springframework.data</groupId>-->
         <!--            <artifactId>spring-data-commons</artifactId>-->
         <!--        </dependency>-->
 
-        <!--        <dependency>-->
-        <!--            <groupId>com.querydsl</groupId>-->
-        <!--            <artifactId>querydsl-apt</artifactId>-->
-        <!--            <version>${querydsl.version}</version>-->
-        <!--        </dependency>-->
-        <!--        <dependency>-->
-        <!--            <groupId>com.querydsl</groupId>-->
-        <!--            <artifactId>querydsl-jpa</artifactId>-->
-        <!--            <version>${querydsl.version}</version>-->
-        <!--        </dependency>-->
-        <!--        <dependency>-->
-        <!--            <groupId>com.querydsl</groupId>-->
-        <!--            <artifactId>querydsl-sql-spatial</artifactId>-->
-        <!--            <version>${querydsl.version}</version>-->
-        <!--        </dependency>-->
-        <!--        <dependency>-->
-        <!--            <groupId>com.querydsl</groupId>-->
-        <!--            <artifactId>querydsl-sql-spring</artifactId>-->
-        <!--            <version>${querydsl.version}</version>-->
-        <!--        </dependency>-->
-        <!-- Validations -->
+<!--            <dependency>-->
+<!--                <groupId>com.querydsl</groupId>-->
+<!--                <artifactId>querydsl-apt</artifactId>-->
+<!--                <version>${querydsl.version}</version>-->
+<!--            </dependency>-->
+<!--            <dependency>-->
+<!--                <groupId>com.querydsl</groupId>-->
+<!--                <artifactId>querydsl-jpa</artifactId>-->
+<!--                <version>${querydsl.version}</version>-->
+<!--            </dependency>-->
+<!--            <dependency>-->
+<!--                <groupId>com.querydsl</groupId>-->
+<!--                <artifactId>querydsl-sql-spatial</artifactId>-->
+<!--                <version>${querydsl.version}</version>-->
+<!--            </dependency>-->
+<!--            <dependency>-->
+<!--                <groupId>com.querydsl</groupId>-->
+<!--                <artifactId>querydsl-sql-spring</artifactId>-->
+<!--                <version>${querydsl.version}</version>-->
+<!--            </dependency>-->
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger-ui</artifactId>
@@ -90,31 +91,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-        <!-- Websocket dependencies-->
-        <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>webjars-locator-core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>sockjs-client</artifactId>
-            <version>1.0.2</version>
-        </dependency>
-        <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>stomp-websocket</artifactId>
-            <version>2.3.3</version>
-        </dependency>
-        <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>bootstrap</artifactId>
-            <version>3.3.7</version>
-        </dependency>
-        <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>jquery</artifactId>
-            <version>3.1.1-1</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
@@ -172,10 +148,6 @@
             <optional>true</optional>
         </dependency>
         <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>true</optional>
@@ -229,6 +201,22 @@
             <artifactId>commons-io</artifactId>
             <version>2.11.0</version>
         </dependency>
+        <dependency>
+            <groupId>org.jetbrains.kotlin</groupId>
+            <artifactId>kotlin-stdlib-jdk8</artifactId>
+            <version>${kotlin.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jetbrains.kotlin</groupId>
+            <artifactId>kotlin-test</artifactId>
+            <version>${kotlin.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jetbrains.kotlin</groupId>
+            <artifactId>kotlin-stdlib</artifactId>
+            <version>1.6.20</version>
+        </dependency>
 
     </dependencies>
 
@@ -270,6 +258,50 @@
                         </exclude>
                     </excludes>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.jetbrains.kotlin</groupId>
+                <artifactId>kotlin-maven-plugin</artifactId>
+                <version>${kotlin.version}</version>
+                <executions>
+                    <execution>
+                        <id>compile</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>test-compile</id>
+                        <phase>test-compile</phase>
+                        <goals>
+                            <goal>test-compile</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <jvmTarget>1.8</jvmTarget>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>compile</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>testCompile</id>
+                        <phase>test-compile</phase>
+                        <goals>
+                            <goal>testCompile</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
@@ -321,6 +353,22 @@
                         </executions>
                     </plugin>
                     <plugin>
+                    <groupId>com.google.cloud.tools</groupId>
+                    <artifactId>jib-maven-plugin</artifactId>
+                    <version>2.5.2</version>
+                    <configuration>
+                        <from>
+                            <image>openjdk:11</image>
+                        </from>
+                        <container>
+                            <ports>
+                                <port>8080</port>
+                            </ports>
+                            <format>OCI</format>
+                        </container>
+                    </configuration>
+                    </plugin>
+                    <plugin>
                         <artifactId>maven-resources-plugin</artifactId>
                         <executions>
                             <execution>
@@ -341,6 +389,7 @@
                         </executions>
                     </plugin>
                 </plugins>
+                <finalName>qsGruppe12</finalName>
             </build>
         </profile>
     </profiles>

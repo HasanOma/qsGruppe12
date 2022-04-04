@@ -89,6 +89,7 @@ export default {
           .then((user) => {
             let activeCourses = [];
             let archivedCourses = [];
+            console.log(this.state.email)
 
             for (let i = 0; i < user.courses.length; i++) {
               if (!user.courses[i].archived) {

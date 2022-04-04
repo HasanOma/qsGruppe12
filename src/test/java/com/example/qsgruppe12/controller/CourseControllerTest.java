@@ -112,25 +112,24 @@ class CourseControllerTest {
 
 
 
+//    @Test
+//    void createCourse() throws CourseNotFoundException {
+//
+//        Authentication auth;
+//        CourseRegisterDto courseRegisterDto =
+//                CourseRegisterDto.builder()
+//                        .name(course.getName())
+//                        .code(course.getCode())
+//                        .semester(course.getSemester())
+//                        .totalWork(course.getTotalWork())
+//                        .build();
+////        courseRepository.save(course);
+//
+//    }
 
+  
 
 //
-
-//
-
-//
-//    UserLoginDto userLoginDto = new UserLoginDto();
-//
-//
-//    Course course;
-//    User user;
-//    Queue queue;
-
-
-
-
-
-
 //    @Test
 //    void createCourse() throws CourseNotFoundException {
 //
@@ -144,25 +143,26 @@ class CourseControllerTest {
 //                        .build();
 //
 //
-////        courseController.createCourse()
-////        Mockito.when(courseService.createCourse(courseRegisterDto, "mail"))
-////                .thenReturn()
+//        courseController.createCourse()
+//        Mockito.when(courseService.createCourse(courseRegisterDto, "mail"))
+//                .thenReturn()
 //
 //    }
+//
 
 //    @WithMockUser
 //    @Test
 //    void activateQueue() throws Exception {
-////        courseRepository.save(course);
-////        List<Long> list = new ArrayList<>(List.of(1L));
+//        courseRepository.save(course);
+//        List<Long> list = new ArrayList<>(List.of(1L));
 //
 //
-////        this.mvc.perform(MockMvcRequestBuilders
-////                        .get(URI+"active")
-////                        .content(objectMapper.writeValueAsString(list))
-////                        .contentType(MediaType.APPLICATION_JSON))
-////                        .andExpect(status().isOk())
-////                        .andExpect(jsonPath("$.message").value(""));
+//        this.mvc.perform(MockMvcRequestBuilders
+//                        .get(URI+"active")
+//                        .content(objectMapper.writeValueAsString(list))
+//                        .contentType(MediaType.APPLICATION_JSON))
+//                        .andExpect(status().isOk())
+//                        .andExpect(jsonPath("$.message").value(""));
 //    }
 //
 //    @Test

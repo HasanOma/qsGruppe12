@@ -30,7 +30,7 @@ public class Course {
     @NotNull
     private String name;
     @NotNull
-    @Column(unique=true)
+    @Column
     private String code;
     @NotNull
     private String semester;

@@ -30,8 +30,7 @@ public class User {
             strategy = GenerationType.SEQUENCE)
     @Column(name = "user_id")
     private Long id;
-    @NotBlank
-    @Column(nullable = false)
+    @Column
     public String firstName;
     @NotBlank
     @Column(nullable = false)

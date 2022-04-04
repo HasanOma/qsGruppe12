@@ -97,7 +97,7 @@ Modeller & DTOer
 Modellene våre ligger i model-pakken og deres respektive DTOer (Data Transfer Objects) ligger i dto-pakken. Dette er gjort for å decouple/dekople modell-laget fra view-laget slik at de kan utvikle seg så uavhenig av hverandre som nødvendig
 
 ## Sikkerhet
-Sikkerhet er kanskje det viktigste i ett product. Det å bruke ett program der man vet at brukerinformasjonen
+Sikkerhet er kanskje noe det viktigste i ett produkt. Det å bruke et program der man vet at brukerinformasjonen
 er trygg gir en god følelse. Sikkerhet er derfor noe vi har tatt på fokusert mye på under prosjektet. På frontend bruker vi restiktiv routing og authentisering av rolle for å vise fram komponenter. Når frontend og backend kommuniserer bruker vi JWT token for å authentisere bruker rollen. Tokenet til brukeren fornyes hvert 2.time, da køen til godkjenning kan bli litt langvarig til tider. 
 Vi holder fast på at sikkerhet er viktig og har authentikasjon og restriktiv tilgang på mange av endepunktene våre. Passordene i databasen blir kryptert og saltet med Bcrypt passwod encoder import som er en del av spring security. 
 
@@ -144,6 +144,7 @@ Er du interessert i å se mer på swagger så kan du kjøre applikasjonen og nav
 ### Backend
 ```
 git clone https://github.com/HasanOma/qsGruppe12.git
+docker compose up
 mvn clean install spring:boot-run
 ```
 Det er dependencies i pom-fila som gjør at man kjører både frontend og backend med kommandoene over  
@@ -163,9 +164,9 @@ cd frontend
 npm install
 npm run serve
 ```
-Dette kan kjøres uavhengig av backenden
+Dette kan kjøres uavhengig av backenden om man er interessert i det
 
-Dummy brukere som allerede er tilstedet i databasen:
+Dummy-brukere som allerede er tilstede i databasen:
 
 Admin: 
 andetel@stud.ntnu.no

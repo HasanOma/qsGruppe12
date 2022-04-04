@@ -95,12 +95,14 @@ Modeller & DTOer
 Modellene våre ligger i model-pakken og deres respektive DTOer (Data Transfer Objects) ligger i dto-pakken. Dette er gjort for å decouple/dekople modell-laget fra view-laget slik at de kan utvikle seg så uavhenig av hverandre som nødvendig
 
 ## Sikkerhet
+TODO skriv om sikkerhet
 
 
 
 
 
 ## API-dokumentasjon
+TODO skriv om dokumentasjonen og swagger
 
 ## Programvarekrav
 ### Backend

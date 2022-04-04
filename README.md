@@ -142,8 +142,16 @@ Er du interessert i å se mer på swagger så kan du kjøre applikasjonen og nav
 ### Backend
 ```
 git clone https://github.com/HasanOma/qsGruppe12.git
-mvn spring-boot:run
+mvn clean install spring:boot-run
 ```
+Vi har lagt til dependencies i pom-fila vår som gjør at man kjører både frontend og backend med kommandoene over  
+Er du interessert i å kjøre backenden for seg selv må du slette mappen som heter `static` i `target/classes/` og kjøre:
+
+```
+mvn clean spring:boot-run
+```
+
+Vi anbefaler å starte backenden først om man er interessert i å kjøre dem hver for seg, da denne kun fungerer på port 8080, mens frontend velger en annen ledig port om 8080 er opptatt
 
 ### Frontend
 ```
@@ -152,6 +160,7 @@ cd frontend
 npm install
 npm run serve
 ```
+Dette kan kjøres uavhengig av backenden
 
 
 

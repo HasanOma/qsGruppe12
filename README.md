@@ -169,7 +169,8 @@ Dette kan kjøres uavhengig av backenden
 ## CI/CD
 ### CI - Testing
 Vi har hele tiden kjørt tester fortløpende med CI for både frontend og backend ved hjelp av GitHub Actions
-Dette er noe vi kunne ha utnyttet oss bedre av, da vi iblant har pushet tester som feiler
+Dette er noe vi kunne ha utnyttet oss bedre av, da vi iblant har pushet tester som feiler.  
+Generelt testing av backend har vi valgt å kommentere ut da det ikke har blitt undervist i og vi ikke har fått det til å fungere optimalt grunnet tidsbegrensningen på prosjektet. 
 ### CD
 Vi har ikke deployet QS noe sted, så dette punktet er ikke relevant
 

@@ -51,7 +51,9 @@
                       <th>Øving/Type</th>
                       <th>Tid i kø</th>
                       <th>Melding</th>
-                      <th><strong>Rediger</strong><br /></th>
+                      <th>
+                        <strong>Rediger</strong>
+                      </th>
                     </tr>
                   </thead>
                   <tbody>
@@ -110,14 +112,13 @@ export default {
         params: { id: courseId },
       });
     },
-    async activate() {
+    activate() {
 
       let url = "http://localhost:8080/queue/" + this.$props.courseId + "/activate";
 
       console.log(this.$props.courseId)
-      console.log(typeof this.$props.courseId)
 
-      await axios
+      axios
         .post(url, {
           headers: {
             Authorization: "Bearer" + " " + this.$store.getters.jwtToken,
@@ -157,24 +158,9 @@ export default {
     edit(obj) {
       console.log(obj);
       // this.$router.push({ name: "Add to queue", query: { redirect: "/course/:id/add_to_queue", courseName: courseName, courseID: courseID }, params: { id: courseID } });
-    },
-    async updateQueue() {
-      let url = "http://localhost:8080/queue/" + this.courseCode + "/list";
-      await axios
-        .get(url, {
-          headers: {
-            Authorization: "Bearer" + " " + this.$store.getters.jwtToken,
-          },
-        })
-        .then((res) => {
-          this.inQueue = res.data;
-          console.log(res.data);
-        });
-    },
+    }
   },
   created() {
-    // setInterval(this.updateQueue, 100000000)
-
     let url = "http://localhost:8080/queue/" + this.$props.courseId + "/isActive";
 
     axios

@@ -1,6 +1,6 @@
 <template>
-  <div class="container d-flex flex-row">
-    <div class="col-lg-12 d-flex justify-content-lg-center">
+  <div class="container d-flex flex-row justify-content-center">
+    <div class="col-lg-12 d-flex justify-content-center">
       <div class="card shadow mb-3">
         <form @submit.prevent="onSubmit">
           <div class="card-header py-3">
@@ -79,6 +79,13 @@
                 </div>
               </div>
             </div>
+            <BaseButton
+                cssClass="btn btn-primary btn-sm"
+                type="submit"
+                id="ruleBtn"
+            >
+              Lagre
+            </BaseButton>
           </div>
           <div class="card-header py-3">
             <p class="text-primary m-0 fw-bold">Opprett brukere</p>
@@ -96,13 +103,6 @@
             class="d-flex flex-row justify-content-start form-group mb-3"
             style="padding-left: 20px"
           >
-            <BaseButton
-              cssClass="btn btn-primary btn-sm"
-              type="submit"
-              id="ruleBtn"
-            >
-              Lagre
-            </BaseButton>
           </div>
         </form>
       </div>

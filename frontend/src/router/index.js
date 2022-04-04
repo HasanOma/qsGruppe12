@@ -28,7 +28,7 @@ const routes = [
     path: "/course/",
     component: Course,
     meta: {
-      authorize: [],
+      authorize: [Role.TA, Role.Student],
     },
     children: [
       {

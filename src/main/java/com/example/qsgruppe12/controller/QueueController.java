@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -33,7 +34,7 @@ public class QueueController {
     @Autowired
     SecurityService securityService;
 
-    @PostMapping("activate")
+    @GetMapping("activate")
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "Activate queue for a course", response = RequestResponse.class)
     public RequestResponse activateCourse(@PathVariable Long courseId){
@@ -69,6 +70,7 @@ public class QueueController {
     }
 
     @GetMapping("close")
+    @Transactional
     @ResponseStatus(HttpStatus.ACCEPTED)
     @ApiOperation(value = "Closes a given queue", response = RequestResponse.class)
     public RequestResponse closeQueue(@PathVariable Long courseId){

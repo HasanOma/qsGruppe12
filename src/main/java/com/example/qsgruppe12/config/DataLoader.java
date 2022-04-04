@@ -1,6 +1,8 @@
 package com.example.qsgruppe12.config;
 
 import com.example.qsgruppe12.model.*;
+import com.example.qsgruppe12.model.relationship.User_Course;
+import com.example.qsgruppe12.model.relationshipkey.UserCourseKey;
 import com.example.qsgruppe12.repository.*;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -144,5 +146,43 @@ public class DataLoader implements ApplicationRunner {
         courseRepository.save(course);
         queue = Queue.builder().id(course.getId()).course(course).build();
         queueRepository.save(queue);
+
+
+        UserCourseKey userCourseKey = new UserCourseKey();
+        userCourseKey.setUserId(3L);
+        userCourseKey.setCourseId(1L);
+        User_Course uc = User_Course.builder()
+                            .userCourseKey(userCourseKey)
+                            .user(userRepository.getById(3L))
+                            .course(courseRepository.getById(1L))
+                            .build();
+        userCourseRepository.save(uc);
+
+
+
+
+        uc.setCourse(courseRepository.getById(2L));
+        userCourseKey.setCourseId(2L);
+        uc.setUserCourseKey(userCourseKey);
+        userCourseRepository.save(uc);
+
+        uc.setCourse(courseRepository.getById(3L));
+        userCourseKey.setCourseId(3L);
+        uc.setUserCourseKey(userCourseKey);
+        userCourseRepository.save(uc);
+
+
+        uc.setUser(userRepository.getById(4L));
+        uc.setCourse(courseRepository.getById(2L));
+        userCourseKey.setUserId(4L);
+        userCourseKey.setCourseId(2L);
+        userCourseRepository.save(uc);
+
+        uc.setCourse(courseRepository.getById(3L));
+        userCourseKey.setCourseId(3L);
+        uc.setUserCourseKey(userCourseKey);
+        userCourseRepository.save(uc);
+
+
     }
 }

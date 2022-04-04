@@ -54,40 +54,37 @@ class LoginControllerTest {
 
     private JWTRequest jwtRequest;
 
-    @BeforeEach
-    void setUp() {
-        User user = User.builder().id(1L)
-                .firstName("Ola")
-                .lastName("Normann")
-                .email("email@emailsen.no")
-                .password(encoder.encode("hei"))
-                .build();
-        userRepository.save(user);
-        jwtRequest = new JWTRequest(user.getEmail(), user.getPassword());
-
-    }
-
-    @AfterEach
-    void tearDown() {
-    }
-
-    @Test
-    @WithMockUser
-    void authenticate() throws Exception {
-
+//    @BeforeEach
+//    void setUp() {
+//        User user = User.builder().id(1L)
+//                .firstName("Ola")
+//                .lastName("Normann")
+//                .email("email@emailsen.no")
+//                .password(encoder.encode("hei"))
+//                .build();
+//        userRepository.save(user);
+//        jwtRequest = new JWTRequest(user.getEmail(), user.getPassword());
+//
+//    }
+//
+//    @AfterEach
+//    void tearDown() {
+//    }
+//
+//    @Test
+//    @WithMockUser
+//    void authenticate() throws Exception {
 //        mockMvc.perform(post(URI + "/login")
 //                        .with(csrf())
 //                        .contentType(MediaType.APPLICATION_JSON)
 //                        .content(String.valueOf((jwtRequest))));
+//        mockMvc.perform(
+//                post(URI + "/login")
+//                        .header(HttpHeaders.AUTHORIZATION, "Bearer token"))
+//                .andExpect(status().isOk());
+//    }
 
-        mockMvc.perform(
-                post(URI + "/login")
-                        .header(HttpHeaders.AUTHORIZATION, "Bearer token"))
-                .andExpect(status().isOk());
-    }
-
-    @Test
-    void forgotPassword() {
-    }
+//    @Test
+//    void forgotPassword() {
+//    }
 }
-

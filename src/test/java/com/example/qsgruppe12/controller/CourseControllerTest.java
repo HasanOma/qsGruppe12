@@ -61,36 +61,36 @@ class CourseControllerTest {
                 "\"rules\":\"[\"1_2_3\"]\"," +
             "}";
 
-    @BeforeEach
-    void setUp() {
-        List<String> ruleList = new ArrayList<>(List.of("6_1_6"));
-        Course course =
-                Course.builder()
-                        .id(1L)
-                        .name("Fullstack applikasjonsutvikling")
-                        .code("IDATT2105")
-                        .semester("V22")
-                        .queueActive(false)
-                        .totalWork(6)
-                        .rules(ruleList)
-                        .nrOfStudents(0)
-                        .users(new ArrayList<>())
-                        .build();
-        courseRepository.save(course);
-    }
+//    @BeforeEach
+//    void setUp() {
+//        List<String> ruleList = new ArrayList<>(List.of("6_1_6"));
+//        Course course =
+//                Course.builder()
+//                        .id(1L)
+//                        .name("Fullstack applikasjonsutvikling")
+//                        .code("IDATT2105")
+//                        .semester("V22")
+//                        .queueActive(false)
+//                        .totalWork(6)
+//                        .rules(ruleList)
+//                        .nrOfStudents(0)
+//                        .users(new ArrayList<>())
+//                        .build();
+//        courseRepository.save(course);
+//    }
 
-    @Test
-    @DisplayName("Check that course controller is not null after being autowired")
-    public void contextLoads() throws Exception {
-        assertThat(courseController).isNotNull();
-    }
-
-    @Test
-    @DisplayName("Check that student_courses get mapping returns status OK")
-    public void checkThatStudentCourseReturnsStatusOK() throws Exception {
-        mockMvc.perform(get("/courses/student_courses"))
-                .andExpect(status().isOk());
-    }
+//    @Test
+//    @DisplayName("Check that course controller is not null after being autowired")
+//    public void contextLoads() throws Exception {
+//        assertThat(courseController).isNotNull();
+//    }
+//
+//    @Test
+//    @DisplayName("Check that student_courses get mapping returns status OK")
+//    public void checkThatStudentCourseReturnsStatusOK() throws Exception {
+//        mockMvc.perform(get("/courses/student_courses"))
+//                .andExpect(status().isOk());
+//    }
 
 //    @Test
 //    @DisplayName("Check if a course is created if post to add")
@@ -112,6 +112,25 @@ class CourseControllerTest {
 
 
 
+
+
+//
+
+//
+
+//
+//    UserLoginDto userLoginDto = new UserLoginDto();
+//
+//
+//    Course course;
+//    User user;
+//    Queue queue;
+
+
+
+
+
+
 //    @Test
 //    void createCourse() throws CourseNotFoundException {
 //
@@ -123,46 +142,27 @@ class CourseControllerTest {
 //                        .semester(course.getSemester())
 //                        .totalWork(course.getTotalWork())
 //                        .build();
-////        courseRepository.save(course);
+//
+//
+////        courseController.createCourse()
+////        Mockito.when(courseService.createCourse(courseRegisterDto, "mail"))
+////                .thenReturn()
 //
 //    }
-
-  
-
-//
-//    @Test
-//    void createCourse() throws CourseNotFoundException {
-//
-//        Authentication auth;
-//        CourseRegisterDto courseRegisterDto =
-//                CourseRegisterDto.builder()
-//                        .name(course.getName())
-//                        .code(course.getCode())
-//                        .semester(course.getSemester())
-//                        .totalWork(course.getTotalWork())
-//                        .build();
-//
-//
-//        courseController.createCourse()
-//        Mockito.when(courseService.createCourse(courseRegisterDto, "mail"))
-//                .thenReturn()
-//
-//    }
-//
 
 //    @WithMockUser
 //    @Test
 //    void activateQueue() throws Exception {
-//        courseRepository.save(course);
-//        List<Long> list = new ArrayList<>(List.of(1L));
+////        courseRepository.save(course);
+////        List<Long> list = new ArrayList<>(List.of(1L));
 //
 //
-//        this.mvc.perform(MockMvcRequestBuilders
-//                        .get(URI+"active")
-//                        .content(objectMapper.writeValueAsString(list))
-//                        .contentType(MediaType.APPLICATION_JSON))
-//                        .andExpect(status().isOk())
-//                        .andExpect(jsonPath("$.message").value(""));
+////        this.mvc.perform(MockMvcRequestBuilders
+////                        .get(URI+"active")
+////                        .content(objectMapper.writeValueAsString(list))
+////                        .contentType(MediaType.APPLICATION_JSON))
+////                        .andExpect(status().isOk())
+////                        .andExpect(jsonPath("$.message").value(""));
 //    }
 //
 //    @Test

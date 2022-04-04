@@ -5,7 +5,7 @@ QS er et program som enkelt lar studenter holde oversikt over øvingene sine, sa
 Studentassistenter og undervisere/emneansvarlige kan enkelt god- og underkjenne øvinger.   
 Undervisere/emneansvarlig har og tilgang til flere administrative verktøy  
   
-Swagger dokumentasjon finnes på /swagger-ui/
+Swagger dokumentasjon finnes på `/swagger-ui/`
 
 ## Innhold ##
 1. [Medlemmer](#medlemmer)
@@ -101,7 +101,33 @@ TODO skriv om sikkerhet
 
 
 ## API-dokumentasjon
-TODO skriv om dokumentasjonen og swagger
+Vi bruker swagger til api-dokumentasjon  
+  
+  
+![image](https://user-images.githubusercontent.com/56249709/161589261-b853de00-1817-4153-9940-15195f978a4a.png)  
+
+Her kan man se en oversikt over de forskjellige kontrollerne som inneholder endepunktene i applikasjonen  
+
+![image](https://user-images.githubusercontent.com/56249709/161589574-3802a870-9cd6-4a0a-af4e-29e195433aa1.png)  
+
+For å logge inn sender man enkelt og greit inn brukernavn og passord  
+
+![image](https://user-images.githubusercontent.com/56249709/161589787-ddf1b80e-3e58-4fcf-9542-89464653d3b9.png)  
+
+Da vil man få tilbake denne responsen. Herfra henter man ut jwtToken  
+
+![image](https://user-images.githubusercontent.com/56249709/161589998-a0ed8732-39c3-43a2-8d00-737871b77282.png)  
+
+Legger så inn tokenet sammen med 'Bearer' i authorization  
+
+![image](https://user-images.githubusercontent.com/56249709/161590068-7e303884-2980-4f2f-b358-0e6e5b7b813e.png)  
+
+Når man da trykker på enter-tasten kan man se at man er logget inn  
+Er du interessert i å se mer på swagger så kan du kjøre applikasjonen og navigere deg til `/swagger-ui/`
+
+
+
+
 
 ## Programvarekrav
 ### Backend

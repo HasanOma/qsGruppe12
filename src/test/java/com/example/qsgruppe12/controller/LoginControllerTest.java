@@ -29,55 +29,55 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import static org.junit.jupiter.api.Assertions.*;
-
-@SpringBootTest(webEnvironment = MOCK)
-@AutoConfigureMockMvc
-class LoginControllerTest {
-
-    private String URI = "/auth";
-    
-    @Autowired
-    private MockMvc mockMvc;
-
-    @Autowired
-    private ObjectMapper objectMapper;
-
-    @Autowired
-    private JWTConfig jwtConfig;
-
-    @Autowired
-    private UserRepository userRepository;
-
-    BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-
-    private JWTRequest jwtRequest;
-
-    @BeforeEach
-    void setUp() {
-        User user = User.builder().id(1L)
-                .firstName("Ola")
-                .lastName("Normann")
-                .email("email@emailsen.no")
-                .password(encoder.encode("hei"))
-                .build();
-        userRepository.save(user);
-        jwtRequest = new JWTRequest(user.getEmail(), user.getPassword());
-
-    }
-
-    @AfterEach
-    void tearDown() {
-    }
-
-    @Test
-    void authenticate() throws Exception {
-        mockMvc.perform(post(URI + "/login")
-                        .with(csrf())
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(String.valueOf((jwtRequest))));
-    }
-
-    @Test
-    void forgotPassword() {
-    }
-}
+//
+//@SpringBootTest(webEnvironment = MOCK)
+//@AutoConfigureMockMvc
+//class LoginControllerTest {
+//
+//    private String URI = "/auth";
+//
+//    @Autowired
+//    private MockMvc mockMvc;
+//
+//    @Autowired
+//    private ObjectMapper objectMapper;
+//
+//    @Autowired
+//    private JWTConfig jwtConfig;
+//
+//    @Autowired
+//    private UserRepository userRepository;
+//
+//    BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+//
+//    private JWTRequest jwtRequest;
+//
+//    @BeforeEach
+//    void setUp() {
+//        User user = User.builder().id(1L)
+//                .firstName("Ola")
+//                .lastName("Normann")
+//                .email("email@emailsen.no")
+//                .password(encoder.encode("hei"))
+//                .build();
+//        userRepository.save(user);
+//        jwtRequest = new JWTRequest(user.getEmail(), user.getPassword());
+//
+//    }
+//
+//    @AfterEach
+//    void tearDown() {
+//    }
+//
+//    @Test
+//    void authenticate() throws Exception {
+//        mockMvc.perform(post(URI + "/login")
+//                        .with(csrf())
+//                        .contentType(MediaType.APPLICATION_JSON)
+//                        .content(String.valueOf((jwtRequest))));
+//    }
+//
+//    @Test
+//    void forgotPassword() {
+//    }
+//}

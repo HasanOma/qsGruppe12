@@ -17,7 +17,7 @@ import java.util.List;
 //QuerydslPredicateExecutor<User_Course>
 
 @Repository
-public interface User_CourseRepository extends JpaRepository<User_Course, UserCourseKey> {
+public interface User_CourseRepository extends JpaRepository<User_Course, UserCourseKey>{
     Iterable<Long> findAllByUserId(Long user_id);
 
     Iterable<Long> findAllByCourseId(Long course_id);

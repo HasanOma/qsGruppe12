@@ -1,5 +1,6 @@
 package com.example.qsgruppe12.service.user;
 
+import com.example.qsgruppe12.dto.UserFileRegistration;
 import com.example.qsgruppe12.dto.userdtos.*;
 import com.example.qsgruppe12.exception.FileNotSupportedException;
 import com.example.qsgruppe12.model.Course;
@@ -11,6 +12,7 @@ import com.example.qsgruppe12.repository.*;
 import com.example.qsgruppe12.service.course.CourseService;
 import com.example.qsgruppe12.service.email.EmailService;
 import com.example.qsgruppe12.util.RequestResponse;
+import com.opencsv.bean.CsvToBean;
 import com.opencsv.exceptions.CsvValidationException;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -22,12 +24,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.example.qsgruppe12.config.CsvToBean.createCSVToBean;
 
 //import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
@@ -387,50 +388,45 @@ public class UserServiceImpl implements UserService {
      * @throws IOException Filereader throws exception.
      */
     public List<User> handleFile(Long courseId, MultipartFile file) throws IOException, CsvValidationException {
-        BufferedReader br;
-        List<String> result = new ArrayList<>();
-        try {
-            String line;
-            InputStream is = file.getInputStream();
-            br = new BufferedReader(new InputStreamReader(is));
-            while ((line = br.readLine()) != null) {
-                result.add(line);
-            }
-            System.out.println(result);
-        } catch (IOException e) {
-            System.err.println(e.getMessage());
-        }
+        BufferedReader br =  new BufferedReader(new InputStreamReader(file.getInputStream()));
+        CsvToBean list = createCSVToBean(br, UserRegistrationDto.class);
+        List<UserFileRegistration> listOfUsers = list.parse();
         List<User> users = new ArrayList<>();
-//        String line;
-//        while ((line = reader.readLine()) != null) {
-//            String[] variable = line.split(",");
-//            User userToAdd = User.builder()
-//                    .lastName(variable[0])
-//                    .firstName(variable[1])
-//                    .email(variable[2])
-//                    .role(roleRepository.getByName("Student"))
-//                    .build();
-//            users.add(userToAdd);
-//        }
-        if (courseId != 0){
-            Course course = courseRepository.getById(courseId);
-            for(User user : users){
+        for (int j = 0; j < listOfUsers.size(); j++) {
+            users.get(j).setLastName(listOfUsers.get(j).getLastName());
+            users.get(j).setFirstName(listOfUsers.get(j).getFirstName());
+            users.get(j).setEmail(listOfUsers.get(j).getEmail());
+            if (courseId != 0) {
+                User user = users.get(j);
+                Course course = courseRepository.getById(courseId);
                 course.setNrOfStudents(course.getNrOfStudents()+1);
-                courseRepository.save(course);
+
                 long nrOfStudents = userRepository.findAll().size();
                 UserCourseKey userCourseKey = new UserCourseKey();
                 userCourseKey.setUserId(nrOfStudents);
-                userCourseKey.setCourseId(courseId);
+                userCourseKey.setCourseId(course.getId());
                 User_Course userCourse = User_Course.builder()
                         .userCourseKey(userCourseKey)
                         .course(course)
                         .user(user)
                         .workApproved("")
                         .build();
+                for (int i = 0; i < course.getTotalWork(); i++) {
+                    Work work = Work.builder()
+                            .id((long)i)
+                            .user_course(userCourse)
+                            .courseId(course.getId())
+                            .userId(user.getId())
+                            .build();
+                    userCourse.getWorkList().add(work);
+                }
+                user.setCourses(new ArrayList<>());
                 user.getCourses().add(userCourse);
+                courseRepository.save(course);
                 userCourseRepository.save(userCourse);
-                userRepository.save(user);
+                System.out.println(user.getEmail());
             }
+            userRepository.saveAll(users);
         }
         return users;
     }

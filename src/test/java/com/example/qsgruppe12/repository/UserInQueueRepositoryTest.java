@@ -13,32 +13,32 @@ import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class UserInQueueRepositoryTest {
-
-    @Autowired
-    private TestEntityManager entityManager;
-
-    List<String> ruleList = new ArrayList<>(List.of("6_1_6"));
-
-
-    @BeforeEach
-    void setUp() {
-        Course course =
-                Course.builder()
-                        .id(1L)
-                        .name("Fullstack applikasjonsutvikling")
-                        .code("IDATT2105")
-                        .semester("V22")
-                        .queueActive(false)
-                        .totalWork(6)
-                        .rules(ruleList)
-                        .nrOfStudents(100)
-                        .build();
-        entityManager.persist(entityManager.merge(course));
-    }
-
-    @Test
-    void getByCourseId() {
-
-    }
-}
+//class UserInQueueRepositoryTest {
+//
+//    @Autowired
+//    private TestEntityManager entityManager;
+//
+//    List<String> ruleList = new ArrayList<>(List.of("6_1_6"));
+//
+//
+//    @BeforeEach
+//    void setUp() {
+//        Course course =
+//                Course.builder()
+//                        .id(1L)
+//                        .name("Fullstack applikasjonsutvikling")
+//                        .code("IDATT2105")
+//                        .semester("V22")
+//                        .queueActive(false)
+//                        .totalWork(6)
+//                        .rules(ruleList)
+//                        .nrOfStudents(100)
+//                        .build();
+//        entityManager.persist(entityManager.merge(course));
+//    }
+//
+//    @Test
+//    void getByCourseId() {
+//
+//    }
+//}

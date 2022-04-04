@@ -92,9 +92,9 @@ export default {
 
             for (let i = 0; i < user.courses.length; i++) {
               if (!user.courses[i].archived) {
-                activeCourses.append(user.courses[i]);
+                activeCourses.push(user.courses[i]);
               } else {
-                archivedCourses.append(user.courses[i]);
+                archivedCourses.push(user.courses[i]);
               }
             }
 

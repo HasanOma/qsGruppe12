@@ -1,23 +1,22 @@
 package com.example.qsgruppe12.controller;
 
-import com.example.qsgruppe12.dto.QueueDto;
-import com.example.qsgruppe12.dto.userdtos.*;
+import com.example.qsgruppe12.dto.userdtos.UserDto;
+import com.example.qsgruppe12.dto.userdtos.UserEmailsDto;
+import com.example.qsgruppe12.dto.userdtos.UserRegistrationDto;
+import com.example.qsgruppe12.dto.userdtos.UserUpdateDto;
 import com.example.qsgruppe12.service.SecurityService;
+import com.example.qsgruppe12.service.user.UserService;
 import com.example.qsgruppe12.util.RequestResponse;
+import com.opencsv.exceptions.CsvValidationException;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import jakarta.validation.Valid;
-import com.example.qsgruppe12.service.user.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -54,7 +53,7 @@ public class UserController {
     @RequestMapping(value = "add/file" , method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
     @ApiOperation(value = "Adds new users to the database from a file", response = RequestResponse.class)
-    public RequestResponse createUsers(@RequestPart("file") MultipartFile file) throws IOException {
+    public RequestResponse createUsers(@RequestPart("file") MultipartFile file) throws IOException, CsvValidationException {
         log.debug("[X] Request to create users from a file");
 
         return userService.createUser(file);
@@ -73,7 +72,7 @@ public class UserController {
     @ResponseStatus(HttpStatus.CREATED)
     @ApiOperation(value = "Adds new users to the database", response = RequestResponse.class)
     public RequestResponse addUsersToCourse(@PathVariable Long courseId, @RequestPart("file") MultipartFile file)
-            throws IOException {
+            throws IOException, CsvValidationException {
         log.debug("[X] Request to create users from file for course with id = {}",courseId);
 
         return userService.addUsersForCourse(courseId, file);

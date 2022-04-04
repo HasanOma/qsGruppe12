@@ -54,21 +54,15 @@ public class JWTUtil implements Serializable {
         return expiration.before(new Date());
     }
 
-    //generate token for user
-
     /**
-     * Method
-     * @param userDetails
+     * Method to generate token
+     * @param userDetails userDetails
      * @return
      */
     public String generateToken(UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
         return generateToken(claims, userDetails.getUsername());
     }
-
-    //while creating the token -
-    //1. Define  claims of the token, like Issuer, Expiration, Subject, and the ID
-    //2. Sign the JWT using the HS512 algorithm and secret key.
 
     /**
      * Helper method to Generate the JWT token and define the claims ass well

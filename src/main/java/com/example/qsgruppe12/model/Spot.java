@@ -2,7 +2,6 @@ package com.example.qsgruppe12.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.List;
 
 @Entity
 public class Spot {

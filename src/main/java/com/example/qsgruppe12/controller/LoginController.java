@@ -2,11 +2,9 @@ package com.example.qsgruppe12.controller;
 
 import com.example.qsgruppe12.dto.JWTRequest;
 import com.example.qsgruppe12.dto.JWTResponse;
-import com.example.qsgruppe12.dto.course.CourseDto;
 import com.example.qsgruppe12.dto.userdtos.UserForgotPassword;
 import com.example.qsgruppe12.dto.userdtos.UserLoginDto;
 import com.example.qsgruppe12.dto.userdtos.UserLoginReturnDto;
-import com.example.qsgruppe12.repository.UserRepository;
 import com.example.qsgruppe12.service.user.UserService;
 import com.example.qsgruppe12.service.user.UserServiceDetails;
 import com.example.qsgruppe12.util.JWTUtil;
@@ -18,11 +16,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 @Slf4j

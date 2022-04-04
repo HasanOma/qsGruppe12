@@ -115,7 +115,7 @@ export default {
         url: "http://localhost:8080/users/add/file",
         headers: {
           "Content-Type":
-            "multipart/form-data; boundary=---011000010111000001101001",
+            "multipart/form-data",
         },
         data: form,
       };

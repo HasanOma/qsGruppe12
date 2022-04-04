@@ -1,12 +1,9 @@
 package com.example.qsgruppe12.service.user;
 
-import com.example.qsgruppe12.controller.CourseController;
-import com.example.qsgruppe12.dto.QueueDto;
 import com.example.qsgruppe12.dto.userdtos.*;
 import com.example.qsgruppe12.exception.FileNotSupportedException;
 import com.example.qsgruppe12.model.Course;
 import com.example.qsgruppe12.model.User;
-import com.example.qsgruppe12.model.UserInQueue;
 import com.example.qsgruppe12.model.Work;
 import com.example.qsgruppe12.model.relationship.User_Course;
 import com.example.qsgruppe12.model.relationshipkey.UserCourseKey;
@@ -14,30 +11,25 @@ import com.example.qsgruppe12.repository.*;
 import com.example.qsgruppe12.service.course.CourseService;
 import com.example.qsgruppe12.service.email.EmailService;
 import com.example.qsgruppe12.util.RequestResponse;
+import com.opencsv.exceptions.CsvValidationException;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.orm.jpa.EntityManagerProxy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.persistence.*;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaDelete;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.CriteriaUpdate;
-import javax.persistence.metamodel.Metamodel;
-import java.io.*;
-import java.time.LocalDate;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+
+//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 /**
  * Implimentation class of {@link UserService}
@@ -147,7 +139,7 @@ public class UserServiceImpl implements UserService {
      * @throws IOException File reading throws an error.
      */
     @Override
-    public RequestResponse createUser(MultipartFile file) throws IOException {
+    public RequestResponse createUser(MultipartFile file) throws IOException, CsvValidationException {
         log.info("File {} received to add users from.",file.getContentType());
         List<User> users = handleFile(0L,file);
         if (users != null) {
@@ -166,7 +158,7 @@ public class UserServiceImpl implements UserService {
      * @throws IOException
      */
     @Override
-    public RequestResponse addUsersForCourse(Long courseId, MultipartFile file) throws IOException {
+    public RequestResponse addUsersForCourse(Long courseId, MultipartFile file) throws IOException, CsvValidationException {
         log.info("File {} received to add users from.",file.getContentType());
         handleFile(courseId, file);
         return new RequestResponse("Users added successfully for " +
@@ -394,28 +386,32 @@ public class UserServiceImpl implements UserService {
      * @return returns a list of users that have been added to a specific course or will be.
      * @throws IOException Filereader throws exception.
      */
-    public List<User> handleFile(Long courseId, MultipartFile file) throws IOException {
-        File convFile = new File(System.getProperty("java.io.tmpdir")+".csv");
-        file.transferTo(convFile);
-        String fileType = convFile.getName().split("\\.")[1];
-        if (!fileType.equalsIgnoreCase("csv" )){
-//            throw new FileNotSupportedException("File is not a csv file");
-            List<User> userss = null;
-            return userss;
+    public List<User> handleFile(Long courseId, MultipartFile file) throws IOException, CsvValidationException {
+        BufferedReader br;
+        List<String> result = new ArrayList<>();
+        try {
+            String line;
+            InputStream is = file.getInputStream();
+            br = new BufferedReader(new InputStreamReader(is));
+            while ((line = br.readLine()) != null) {
+                result.add(line);
+            }
+            System.out.println(result);
+        } catch (IOException e) {
+            System.err.println(e.getMessage());
         }
         List<User> users = new ArrayList<>();
-        BufferedReader reader = new BufferedReader(new FileReader((File) file));
-        String line;
-        while ((line = reader.readLine()) != null) {
-            String[] variable = line.split(",");
-            User userToAdd = User.builder()
-                    .lastName(variable[0])
-                    .firstName(variable[1])
-                    .email(variable[2])
-                    .role(roleRepository.getByName("Student"))
-                    .build();
-            users.add(userToAdd);
-        }
+//        String line;
+//        while ((line = reader.readLine()) != null) {
+//            String[] variable = line.split(",");
+//            User userToAdd = User.builder()
+//                    .lastName(variable[0])
+//                    .firstName(variable[1])
+//                    .email(variable[2])
+//                    .role(roleRepository.getByName("Student"))
+//                    .build();
+//            users.add(userToAdd);
+//        }
         if (courseId != 0){
             Course course = courseRepository.getById(courseId);
             for(User user : users){

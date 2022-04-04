@@ -221,7 +221,7 @@ public class CourseServiceImpl implements CourseService {
     }
 
     /**
-     *
+     * Method to get overview of course work
      * @param emailsDto
      * @param courseId
      * @return

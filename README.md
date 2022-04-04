@@ -51,7 +51,7 @@ En _studentassistent_ kan:
   - Slette studenter i kø
   
 En _administrator_ kan:
-  - Alt en _studentassisten_ kan
+  - Alt en _studentassistent_ kan
   - Legge til en eller flere studenter i databasesystemet
   - Arkivere emner
   - Opprette emner, med grupperingsregler

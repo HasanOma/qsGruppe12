@@ -150,6 +150,7 @@ Er du interessert i å kjøre backenden for seg selv må du slette mappen som he
 ```
 mvn clean spring:boot-run
 ```
+Evt kan man bare trykke på 'play'-ikonet inne i `src/main/java/com/example/qsgruppe12/QsGruppe12Application.java` om du jobber i en IDE
 
 Vi anbefaler å starte backenden først om man er interessert i å kjøre dem hver for seg, da denne kun fungerer på port 8080, mens frontend velger en annen ledig port om 8080 er opptatt
 

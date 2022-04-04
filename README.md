@@ -4,6 +4,7 @@ QS alternativ presentert av gruppe 12
 QS er et program som enkelt lar studenter holde oversikt over øvingene sine, samt stå i godkjenningskø i sine respektive emner.  
 Studentassistenter og undervisere/emneansvarlige kan enkelt god- og underkjenne øvinger.   
 Undervisere/emneansvarlig har og tilgang til flere administrative verktøy  
+Kildekoden kan finnes på https://github.com/HasanOma/qsGruppe12
   
 Swagger dokumentasjon finnes på `/swagger-ui/`
 
